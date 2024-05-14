@@ -1,0 +1,1 @@
+mvn clean install -Dmaven.test.skip=true & docker build . -t gryffindor937/catalogservicedeployment:1.0  & docker push gryffindor937/catalogservicedeployment:1.0 & kubectl apply -f elasticsearchdeployment.yml & kubectl delete deployment catalogservicedeployment & kubectl apply -f deployment.yml 
