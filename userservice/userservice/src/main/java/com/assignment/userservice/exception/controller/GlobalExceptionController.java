@@ -74,8 +74,24 @@ public class GlobalExceptionController<T> {
 	public ResponseEntity<T> handleException(Exception ex) {
 		if (ex instanceof BadRequestException) {
 			return handleBadRequestException((BadRequestException) ex);
+
 		} else if (ex instanceof ConstraintViolationException) {
 			return handleNotValidException((ConstraintViolationException) ex);
+
+		} else if (ex instanceof GenericJDBCException) {
+			return handleDatabaseException((GenericJDBCException) ex);
+
+		} else if (ex instanceof ServiceBeanException) {
+			return handleInvalidServiceException((ServiceBeanException) ex);
+
+		} else if (ex instanceof UserAlreadyRegisteredException) {
+			return handleAlreadyRegisteredException((UserAlreadyRegisteredException) ex);
+
+		} else if (ex instanceof MethodArgumentNotValidException) {
+			return handleNotValidException((MethodArgumentNotValidException) ex);
+
+		} else if (ex instanceof DataParsingException) {
+			return handleNotValidException((DataParsingException) ex);
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),
