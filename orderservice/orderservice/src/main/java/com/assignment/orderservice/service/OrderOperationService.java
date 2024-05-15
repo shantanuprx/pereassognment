@@ -22,7 +22,13 @@ import com.assignment.orderservice.util.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
-
+/* *
+ * Service class implementation for the order related services
+ * getDetails -  for fetching details of a single order
+ * addDetails -  for adding new order details.
+ * updateDetails - for updating existing order details.
+ * deleteDetails - Not allowed
+ * */
 @SuppressWarnings("unchecked")
 @Service("order")
 @Slf4j

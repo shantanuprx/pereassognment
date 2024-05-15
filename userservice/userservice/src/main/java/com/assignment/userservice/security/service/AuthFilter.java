@@ -44,23 +44,23 @@ public class AuthFilter implements Filter {
 			jsonObject = new JSONObject(requestString);
 			log.debug("Parsed request is {} ", jsonObject);
 			if (jsonObject.has("token")) {
-				if (Boolean.parseBoolean(jedisClientHelper.getValue(jsonObject.getString("token")))) {
+				if (Boolean.parseBoolean(jedisClientHelper.getValue(jsonObject.getString(GatewayServiceConstants.TOKEN)))) {
 					if (GatewayServiceConstants.CUSTOMER_USER_ROLE
-							.equalsIgnoreCase(authTokenService.validateToken(jsonObject.getString("token"))
+							.equalsIgnoreCase(authTokenService.validateToken(jsonObject.getString(GatewayServiceConstants.TOKEN))
 									.get(GatewayServiceConstants.USER_ROLE).toString())) {
-						jedisClientHelper.extendTokenLife(jsonObject.getString("token"));
+						jedisClientHelper.extendTokenLife(jsonObject.getString(GatewayServiceConstants.TOKEN));
 						chain.doFilter(cachedBodyHttpServletRequest, response);
 					} else {
 						log.error("Not a valid role for request {}", jsonObject);
-						((HttpServletResponse) response).sendError(401, "Only registered Customers are allowed");
+						((HttpServletResponse) response).sendError(401, GatewayServiceConstants.ONLY_REGISTERED_CUSTOMERS_ALLOWED);
 					}
 				} else {
 					log.error("Token expired for request {}", jsonObject);
-					((HttpServletResponse) response).sendError(401, "Token Expired");
+					((HttpServletResponse) response).sendError(401, GatewayServiceConstants.TOKEN_EXPIRED);
 				}
 			} else {
 				log.error("No token provided for request {}", jsonObject);
-				((HttpServletResponse) response).sendError(401, "Token not provided");
+				((HttpServletResponse) response).sendError(401, GatewayServiceConstants.TOKEN_NOT_AVAILABLE);
 			}
 		} catch (Exception ex) {
 			((HttpServletResponse) response).sendError(400, "Invalid JSON structure");

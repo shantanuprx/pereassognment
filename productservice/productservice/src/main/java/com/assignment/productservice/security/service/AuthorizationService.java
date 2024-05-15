@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assignment.productservice.constants.GatewayServiceConstants;
-import com.assignment.productservice.util.JedisClientHelper;
 
 import io.jsonwebtoken.Claims;
 
@@ -15,9 +14,6 @@ public class AuthorizationService<T> {
 
 	@Autowired
 	private AuthTokenService authTokenService;
-	
-	@Autowired
-	private JedisClientHelper jedisClientHelper;
 
 	/* *
 	 * Function responsible for setting logged in user id and user role based on the payload passed in JWT token
@@ -29,10 +25,4 @@ public class AuthorizationService<T> {
 		return tokenClaims;
 	}
 
-	/* *
-	 * Function responsible for saving validated JWT token in redis cache.
-	 * */
-	public void saveUserSession(String jwtToken) {
-		jedisClientHelper.saveKeyPair(jwtToken, String.valueOf(true));
-	}
 }

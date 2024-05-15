@@ -1,5 +1,7 @@
 package com.assignment.userservice.exception;
-
+/**
+ * Custom runtime exception class. Throw when requested service is not available.
+ */
 public class ServiceBeanException extends RuntimeException {
 
 	/**

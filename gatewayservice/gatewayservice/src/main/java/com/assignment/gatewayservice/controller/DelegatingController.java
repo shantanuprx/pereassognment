@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.assignment.gatewayservice.util.ServiceLocator;
 
 /**
- * Controller acting as a middle ware router for all the services
+ * Controller acting as a middleware router for all the services
  * 
  * @param <T>
  */

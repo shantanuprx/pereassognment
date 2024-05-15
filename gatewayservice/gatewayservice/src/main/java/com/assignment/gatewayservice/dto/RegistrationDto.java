@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
@@ -42,7 +41,7 @@ public class RegistrationDto {
 
 	@NotEmpty
 	@Email
-	@Max(100)
+	@Size(max = 100)
     private String emailId;
 
 	@NotEmpty

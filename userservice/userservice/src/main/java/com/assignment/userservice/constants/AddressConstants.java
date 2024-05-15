@@ -1,6 +1,13 @@
 package com.assignment.userservice.constants;
 
+/**
+ * Constant file to manage string literals related to address service.
+ */
 public class AddressConstants {
+
+	private AddressConstants() {
+
+	}
 
 	public static final String INVALID_RECORD_REQUEST = "Invalid Address Id or Address doesn't belong to the logged in user";
 	public static final String RECORD_CREATION_MESSAGE = "Address added successfully";

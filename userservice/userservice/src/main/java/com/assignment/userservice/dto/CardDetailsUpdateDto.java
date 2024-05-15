@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class CardDetailsUpdateDto extends BaseDto{
 
-	private int recordId;
+	@NotNull
+	private Integer recordId;
 	
     private int userId;
 

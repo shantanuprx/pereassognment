@@ -21,6 +21,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
+/* *
+ * Service class implementation for the card related services
+ * getDetails -  for fetching details of a single card
+ * addDetails -  for adding new card details.
+ * updateDetails - for updating existing card details.
+ * deleteDetails - for deleting the card details - permanent delete
+ * */
 @SuppressWarnings("unchecked")
 @Service("card")
 @Slf4j

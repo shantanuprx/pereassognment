@@ -9,6 +9,12 @@ import com.assignment.userservice.entity.User;
 
 public class CardDetailsAdapter {
 
+	/**
+	 * Maps entity to dto
+	 * 
+	 * @param productEntity
+	 * @return new CardDetailsDto
+	 */
 	public static CardDetailsDto convertEntityToModel(CardDetails productEntity) {
 		CardDetailsDto cardDetails = new CardDetailsDto();
 		cardDetails.setCardHolderName(productEntity.getCardHolderName());
@@ -17,6 +23,14 @@ public class CardDetailsAdapter {
 		cardDetails.setRecordId(productEntity.getRecordId());
 		return cardDetails;
 	}
+	
+	/**
+	 * Maps Dto to entity
+	 * 
+	 * @param cardDetailsDto
+	 * @param user
+	 * @return new CardDetails Entity
+	 */
 
 	public static CardDetails convertModelToEntityForInsertion(CardDetailsDto cardDetailsDto, User user) {
 		CardDetails cardDetails = new CardDetails();
@@ -29,6 +43,12 @@ public class CardDetailsAdapter {
 		return cardDetails;
 	}
 
+	/**
+	 * Maps dto values to entity
+	 * 
+	 * @param cardDetailsDto
+	 * @param cardEntity
+	 */
 	public static void mapModelValuesToEntityForUpdate(CardDetailsUpdateDto cardDetailsDto, CardDetails cardEntity) {
 		if(cardDetailsDto.getCardHolderName()!=null) {
 			cardEntity.setCardHolderName(cardDetailsDto.getCardHolderName());

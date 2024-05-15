@@ -45,7 +45,7 @@ public class OrdersAdapter {
 	public static Orders convertModelToEntityForInsertion(@Valid OrdersDto ordersDto) {
 		Orders orders = new Orders();
 		orders.setAddressId(ordersDto.getAddressId());
-		orders.setCreatedBy(ordersDto.getCreatedBy());
+		orders.setCreatedBy(ordersDto.getLoggedInUserId());
 		orders.setCreateTimestamp(ordersDto.getCreateTimestamp());
 		orders.setOrderId(ordersDto.getOrderId());
 		orders.setOrderStatus(ordersDto.getOrderStatus());

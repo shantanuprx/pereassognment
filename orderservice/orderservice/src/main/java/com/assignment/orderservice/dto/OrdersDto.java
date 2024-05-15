@@ -5,7 +5,6 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -51,7 +50,7 @@ public class OrdersDto extends BaseDto {
     @Null
     private Date createTimestamp;
 
-    @Max(0)
-    private int createdBy;
+    @Null
+    private Integer createdBy;
 
 }

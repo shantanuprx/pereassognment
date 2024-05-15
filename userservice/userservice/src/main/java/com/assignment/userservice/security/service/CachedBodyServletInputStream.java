@@ -6,7 +6,10 @@ import java.io.InputStream;
 
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
-
+/* *
+* Generic http servlet stream implementation. Enabling multiple reads on input stream.
+* 
+* */
 public class CachedBodyServletInputStream extends ServletInputStream {
 
 	private InputStream cachedBodyInputStream;

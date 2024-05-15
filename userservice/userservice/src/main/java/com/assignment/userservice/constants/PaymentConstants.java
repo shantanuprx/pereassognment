@@ -1,6 +1,13 @@
 package com.assignment.userservice.constants;
 
+/**
+ * Constant file to manage string literals related to payment service.
+ */
 public class PaymentConstants {
+
+	private PaymentConstants() {
+
+	}
 
 	public static final String PAYMENT_TYPE = "paymentType";
 	public static final String INVALID_RECORD_REQUEST = "Invalid Payment Id or Payment Id doesn't belong to the logged in user";

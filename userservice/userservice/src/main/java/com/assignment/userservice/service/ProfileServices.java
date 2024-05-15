@@ -15,6 +15,13 @@ import com.assignment.userservice.exception.BadRequestException;
 import com.assignment.userservice.repository.UserRepository;
 import com.assignment.userservice.util.ResponseUtil;
 
+/* *
+ * Service class implementation for the profile related services
+ * getDetails -  Operation Not Supported
+ * addDetails -  Operation Not Supported
+ * updateDetails - Operation Not Supported
+ * deleteDetails - Operation Not Supported
+ * */
 @SuppressWarnings("unchecked")
 @Service("profile")
 public class ProfileServices<T> implements BaseService<T> {

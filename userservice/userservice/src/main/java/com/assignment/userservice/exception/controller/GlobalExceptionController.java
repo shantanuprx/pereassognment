@@ -13,7 +13,6 @@ import com.assignment.userservice.dto.ErrorDto;
 import com.assignment.userservice.exception.BadRequestException;
 import com.assignment.userservice.exception.DataParsingException;
 import com.assignment.userservice.exception.ServiceBeanException;
-import com.assignment.userservice.exception.UserAlreadyRegisteredException;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -46,12 +45,6 @@ public class GlobalExceptionController<T> {
 				ex.getMessage(), "Invalid request payload", System.currentTimeMillis()));
 	}
 
-	@ExceptionHandler(UserAlreadyRegisteredException.class)
-	public ResponseEntity<T> handleAlreadyRegisteredException(UserAlreadyRegisteredException ex) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((T) new ErrorDto(HttpStatus.BAD_REQUEST,
-				ex.getMessage(), ex.getLocalizedMessage(), System.currentTimeMillis()));
-	}
-
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<T> handleNotValidException(MethodArgumentNotValidException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -70,6 +63,12 @@ public class GlobalExceptionController<T> {
 				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
 	}
 
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<T> handleInvalidArguementsException(IllegalArgumentException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<T> handleException(Exception ex) {
 		if (ex instanceof BadRequestException) {
@@ -84,19 +83,19 @@ public class GlobalExceptionController<T> {
 		} else if (ex instanceof ServiceBeanException) {
 			return handleInvalidServiceException((ServiceBeanException) ex);
 
-		} else if (ex instanceof UserAlreadyRegisteredException) {
-			return handleAlreadyRegisteredException((UserAlreadyRegisteredException) ex);
-
 		} else if (ex instanceof MethodArgumentNotValidException) {
 			return handleNotValidException((MethodArgumentNotValidException) ex);
 
 		} else if (ex instanceof DataParsingException) {
 			return handleNotValidException((DataParsingException) ex);
+			
+		} else if (ex instanceof IllegalArgumentException) {
+			return handleInvalidArguementsException((IllegalArgumentException) ex);
+			
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),
 							System.currentTimeMillis()));
 		}
-
 	}
 }

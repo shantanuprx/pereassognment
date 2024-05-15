@@ -13,7 +13,6 @@ import com.assignment.userservice.constants.AddressConstants;
 import com.assignment.userservice.dto.AddressDto;
 import com.assignment.userservice.dto.AddressUpdateDto;
 import com.assignment.userservice.dto.ResponseDto;
-import com.assignment.userservice.dto.filters.AddressFilters;
 import com.assignment.userservice.entity.Address;
 import com.assignment.userservice.exception.BadRequestException;
 import com.assignment.userservice.repository.AddressRepository;
@@ -21,7 +20,13 @@ import com.assignment.userservice.util.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
-
+/* *
+ * Service class implementation for the address related services
+ * getDetails -  for fetching details of a single address
+ * addDetails -  for adding new address details.
+ * updateDetails - for updating existing address details.
+ * deleteDetails - for deleting the address details - permanent delete
+ * */
 @SuppressWarnings("unchecked")
 @Service("address")
 @Slf4j
@@ -35,9 +40,6 @@ public class AddressServices<T> implements BaseService<T> {
 
 	@Autowired
 	private ResponseUtil<T> responseUtil;
-	
-	@Autowired
-	private AddressFilters addressFilters;
 
 	@Override
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) {
@@ -66,7 +68,6 @@ public class AddressServices<T> implements BaseService<T> {
 		log.info("Entering addDetails Method at {} ", System.currentTimeMillis());
 		try {
 			AddressDto addressDto = new ObjectMapper().convertValue(requestData, AddressDto.class);
-			addressFilters.validateAddressDto(addressDto);
 			Address addressEntityToPersist = AddressAdapter.convertModelToEntityForInsertion(addressDto,
 					profileServices.fetchUserEntity(addressDto.getLoggedInUserId()));
 			addressRepository.save(addressEntityToPersist);

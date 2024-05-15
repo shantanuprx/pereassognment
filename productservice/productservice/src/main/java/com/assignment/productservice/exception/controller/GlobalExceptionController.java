@@ -95,14 +95,15 @@ public class GlobalExceptionController<T> {
 
 		} else if (ex instanceof DataParsingException) {
 			return handleNotValidException((DataParsingException) ex);
+			
 		} else if (ex instanceof IllegalArgumentException) {
 			return handleInvalidArguementsException((IllegalArgumentException) ex);
+			
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),
 							System.currentTimeMillis()));
 		}
-
 	}
 
 }
