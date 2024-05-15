@@ -1,0 +1,1 @@
+mvn clean install -Dmaven.test.skip=true & docker build . -t gryffindor937/productservicedeployment:1.0  & docker push gryffindor937/productservicedeployment:1.0 & kubectl delete deployment productservicedeployment & kubectl apply -f deployment.yml 

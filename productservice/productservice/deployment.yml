@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: productservicedeployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   appName: productservice
+ template:
+  metadata:
+   labels:
+    appName: productservice
+  spec:
+   containers:
+    - name: productservicepods
+      image: gryffindor937/productservicedeployment:1.0
+      imagePullPolicy: Always
+      ports:
+       - containerPort: 8085
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: productservicelb
+spec:
+ selector:
+  appName: productservice
+ ports:
+  - port: 8085
+    targetPort: 8085
+ type: LoadBalancer

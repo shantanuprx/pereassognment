@@ -1,48 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: catalogservicedeployment
+ name: gatewayservicedeployment
 spec:
  replicas: 1
  selector:
   matchLabels:
-   appName: catalogservice
+   appName: gatewayservice
  template:
   metadata:
    labels:
-    appName: catalogservice
+    appName: gatewayservice
   spec:
    containers:
-    - name: configurationservicepods
-      image: gryffindor937/catalogservicedeployment:1.0
+    - name: gatewayservicepods
+      image: gryffindor937/gatewayservicedeployment:1.0
       imagePullPolicy: Always
-      env:
-       - name: eureka_client_service-url_defaultZone
-         valueFrom: 
-          configMapKeyRef: 
-           name: globalconfigmap
-           key: eureka_client_service-url_defaultZone
       ports:
-       - containerPort: 8763
+       - containerPort: 8084
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
- name: catalogservicelb
+ name: gatewayservicelb
 spec:
  selector:
-  appName: catalogservice
+  appName: gatewayservice
  ports:
-  - port: 8763
-    targetPort: 8763
+  - port: 8084
+    targetPort: 8084
  type: LoadBalancer
-
----
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
- name: globalconfigmap
-data:
- eureka_client_service-url_defaultZone: http://discoveryservicelb.default.svc.cluster.local:8761/eureka

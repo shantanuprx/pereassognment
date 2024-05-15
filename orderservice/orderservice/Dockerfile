@@ -20,6 +20,6 @@ ENV LANG C.UTF-8
 ENV JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
 #Configuration specific to amazon docker base image ends here
 
-COPY target/gatewayservice-0.0.1-SNAPSHOT.jar gatewayservice.jar
+COPY target/orderservice-0.0.1-SNAPSHOT.jar orderservice.jar
 
-ENTRYPOINT [ "java", "-jar", "-Dspring.datasource.url=jdbc:mysql://mysqllb.default.svc.cluster.local:3306/pereassignment", "-Dredis.url=redislb.default.svc.cluster.local","-Dredis.port=6379", "gatewayservice.jar"]
+ENTRYPOINT [ "java", "-jar", "-Dspring.datasource.url=jdbc:mysql://mysqllb.default.svc.cluster.local:3306/pereassignment", "-Dredis.url=redislb.default.svc.cluster.local","-Dredis.port=6379", "orderservice.jar"]

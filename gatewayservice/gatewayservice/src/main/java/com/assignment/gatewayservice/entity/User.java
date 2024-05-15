@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +49,7 @@ public class User {
     private String mobileNumber;
 
     @Column(name = "DATE_OF_BIRTH")
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     @Column(name = "PREFERRED_PAYMENT_METHOD")

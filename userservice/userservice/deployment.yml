@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: userservicedeployment
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   appName: userservice
+ template:
+  metadata:
+   labels:
+    appName: userservice
+  spec:
+   containers:
+    - name: userservicepods
+      image: gryffindor937/userservicedeployment:1.0
+      imagePullPolicy: Always
+      ports:
+       - containerPort: 8086
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: userservicelb
+spec:
+ selector:
+  appName: userservice
+ ports:
+  - port: 8086
+    targetPort: 8086
+ type: LoadBalancer

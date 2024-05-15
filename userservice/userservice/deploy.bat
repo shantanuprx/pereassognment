@@ -1,0 +1,1 @@
+mvn clean install -Dmaven.test.skip=true & docker build . -t gryffindor937/userservicedeployment:1.0  & docker push gryffindor937/userservicedeployment:1.0 & kubectl delete deployment userservicedeployment & kubectl apply -f deployment.yml 
