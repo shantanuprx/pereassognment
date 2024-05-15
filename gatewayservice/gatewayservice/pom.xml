@@ -85,7 +85,17 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.11.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -121,12 +131,13 @@
 							<goal>report</goal>
 						</goals>
 						<configuration>
-                        <excludes>
-                            <exclude>com/assignment/gatewayservice/dto/**</exclude> 
-                            <exclude>com/assignment/gatewayservice/exception/**</exclude> 
-                            <exclude>com/assignment/gatewayservice/entity/**</exclude>
-                        </excludes>
-                    </configuration>
+							<excludes>
+								<exclude>com/assignment/gatewayservice/dto/**</exclude>
+								<exclude>
+									com/assignment/gatewayservice/exception/**</exclude>
+								<exclude>com/assignment/gatewayservice/entity/**</exclude>
+							</excludes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

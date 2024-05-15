@@ -1,6 +1,5 @@
 package com.assignment.gatewayservice.security.service;
 
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import com.assignment.gatewayservice.exception.UserAlreadyRegisteredException;
 import com.assignment.gatewayservice.repository.UserRepository;
 import com.assignment.gatewayservice.util.JedisClientHelper;
 
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("unchecked")
@@ -38,7 +36,7 @@ public class AuthorizationService<T> {
 		log.info("Entering createNewUser method at  {} ", System.currentTimeMillis());
 		try {
 			if(userRepository.existsByEmail(registrationDto.getEmailId())) {
-				 throw new UserAlreadyRegisteredException("Email id already registered ");
+				 throw new UserAlreadyRegisteredException(GatewayServiceConstants.EMAIL_ALREADY_REGISTERED);
 			}
 			User userEntity = UserServicesAdapter.convertModelToEntity(registrationDto);
 			userRepository.save(userEntity);
@@ -56,13 +54,6 @@ public class AuthorizationService<T> {
 	public String generateToken(String userName) {
 		Optional<User> userEntity = userRepository.findByEmail(userName);
 		return authTokenService.generateToken(userEntity.get());
-	}
-
-	public Claims validateToken(Map<String, Object> requestMap) {
-		Claims tokenClaims = authTokenService.validateToken(requestMap.get("token").toString());
-		requestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, tokenClaims.get(GatewayServiceConstants.LOGGED_IN_USER_ID));
-		requestMap.put(GatewayServiceConstants.USER_ROLE, tokenClaims.get(GatewayServiceConstants.USER_ROLE));
-		return tokenClaims;
 	}
 
 	public void saveUserSession(String jwtToken) {

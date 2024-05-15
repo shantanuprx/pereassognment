@@ -10,12 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.assignment.gatewayservice.constants.GatewayServiceConstants;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class CustomeUserDetails implements UserDetails {
 
 	/**

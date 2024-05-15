@@ -36,7 +36,6 @@ import com.assignment.orderservice.repository.AddressRepository;
 import com.assignment.orderservice.repository.CardDetailsRepository;
 import com.assignment.orderservice.repository.ProductRepository;
 import com.assignment.orderservice.repository.UserRepository;
-import com.assignment.orderservice.service.OrderOperationService;
 import com.assignment.orderservice.util.JedisClientHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,9 +54,6 @@ public class OrderControllerLayerTest<T> {
 
 	@Autowired
 	private JedisClientHelper clientHelper;
-
-	@Autowired
-	private OrderOperationService<T> orderOperationService;
 
 	@Autowired
 	private UserRepository userRepository;

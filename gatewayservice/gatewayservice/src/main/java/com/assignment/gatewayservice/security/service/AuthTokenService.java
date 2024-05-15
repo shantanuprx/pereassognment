@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.assignment.gatewayservice.constants.GatewayServiceConstants;
 import com.assignment.gatewayservice.entity.User;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -21,11 +20,7 @@ public class AuthTokenService {
 
 	@Value("${jwt.webtoken.secret}")
 	private String secreString;
-
-	public Claims validateToken(final String token) {
-		return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
-	}
-
+	
 	public String generateToken(User user) {
 		return createToken(Map.of(GatewayServiceConstants.LOGGED_IN_USER_ID, user.getUserId(),
 				GatewayServiceConstants.USER_ROLE, user.getUserRole()), user.getEmail());

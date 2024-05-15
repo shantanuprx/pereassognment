@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.assignment.gatewayservice.constants.GatewayServiceConstants;
 import com.assignment.gatewayservice.dto.AuthenticationRequestDto;
 import com.assignment.gatewayservice.dto.ErrorDto;
 import com.assignment.gatewayservice.dto.RegistrationDto;
@@ -51,17 +52,17 @@ public class GatewayController<T> {
 			if (authentication.isAuthenticated()) {
 				String jwtToken = authorizationService.generateToken(authenticationRequestDto.getEmailId());
 				authorizationService.saveUserSession(jwtToken);
-				return ResponseEntity.status(HttpStatus.OK).body((T) Map.of("token", jwtToken, "status", "200"));
+				return ResponseEntity.status(HttpStatus.OK).body((T) Map.of(GatewayServiceConstants.TOKEN, jwtToken, "status", "200"));
 			} else {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((T) new ErrorDto(HttpStatus.UNAUTHORIZED,
-						"Invalid Credentials", null, System.currentTimeMillis()));
+						GatewayServiceConstants.INVALID_CREDS, null, System.currentTimeMillis()));
 			}
 		} catch (LockedException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-					(T) new ErrorDto(HttpStatus.UNAUTHORIZED, "Account Locked", null, System.currentTimeMillis()));
+					(T) new ErrorDto(HttpStatus.UNAUTHORIZED, GatewayServiceConstants.ACCOUNT_LOCKED, null, System.currentTimeMillis()));
 		} catch (BadCredentialsException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-					(T) new ErrorDto(HttpStatus.UNAUTHORIZED, "Invalid Username/Password", null, System.currentTimeMillis()));
+					(T) new ErrorDto(HttpStatus.UNAUTHORIZED, GatewayServiceConstants.INVALID_USER_NAME_OR_PASSWORD, null, System.currentTimeMillis()));
 		} catch (Exception ex) {
 			log.error("Exception occurred while validating the user {} with exception {}",
 					authenticationRequestDto.getEmailId(), ex);

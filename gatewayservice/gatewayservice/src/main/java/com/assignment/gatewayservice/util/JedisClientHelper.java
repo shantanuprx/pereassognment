@@ -21,11 +21,4 @@ public class JedisClientHelper {
 			jedisIntance.set(key, value, new SetParams().ex(60 * 15)); // Setting session for 15 mins
 		}
 	}
-
-	public String getValue(String key) {
-		try (Jedis jedisIntance = jedisPool.getResource()) {
-			log.debug("fetching value for Key {} ", key);
-			return jedisIntance.get(key);
-		}
-	}
 }
