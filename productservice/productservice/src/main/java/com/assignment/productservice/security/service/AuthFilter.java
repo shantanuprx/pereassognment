@@ -18,7 +18,9 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ * Implementation of web filter. Responsible for checking whether token is valid or not.
+ */
 @Slf4j
 @Component
 public class AuthFilter implements Filter {

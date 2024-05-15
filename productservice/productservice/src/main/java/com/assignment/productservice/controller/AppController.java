@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.assignment.productservice.security.service.AuthorizationService;
 import com.assignment.productservice.util.ServiceLocator;
 
+/**
+ * Controller acting as a middleware router for all the services
+ * 
+ * @param <T>
+ */
 @RestController
 @Validated
 public class AppController<T> {

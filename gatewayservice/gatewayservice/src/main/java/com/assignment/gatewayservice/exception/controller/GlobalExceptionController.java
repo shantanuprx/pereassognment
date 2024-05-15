@@ -75,6 +75,12 @@ public class GlobalExceptionController<T> {
 				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
 	}
 	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<T> handleInvalidArguementsException(IllegalArgumentException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<T> handleException(Exception ex) {
 		if (ex instanceof BadRequestException) {
@@ -97,11 +103,12 @@ public class GlobalExceptionController<T> {
 
 		} else if (ex instanceof DataParsingException) {
 			return handleNotValidException((DataParsingException) ex);
+		} else if (ex instanceof IllegalArgumentException) {
+			return handleInvalidArguementsException((IllegalArgumentException) ex);
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),
 							System.currentTimeMillis()));
 		}
-
 	}
 }

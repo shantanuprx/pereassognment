@@ -30,13 +30,13 @@ public class OrdersDto extends BaseDto {
 	@Min(1)
     private int paymentId;
 
-	@Nonnull
+	@NotNull
     private String paymentSource;
 
 	@Min(1)
     private int addressId;
 
-	@Nonnull
+	@NotNull
     private String paymentType;
 
 	@Null

@@ -14,10 +14,8 @@ import com.assignment.productservice.constants.GatewayServiceConstants;
 import com.assignment.productservice.dto.ErrorDto;
 import com.assignment.productservice.exception.DataParsingException;
 import com.assignment.productservice.exception.ServiceBeanException;
-import com.assignment.productservice.exception.UserAlreadyRegisteredException;
 
 import jakarta.validation.ConstraintViolationException;
-
 
 /* *
  * Central Exception handler. It will handle all the exception thrown from the whole application
@@ -43,20 +41,15 @@ public class GlobalExceptionController<T> {
 
 	@ExceptionHandler(ServiceBeanException.class)
 	public ResponseEntity<T> handleInvalidServiceException(ServiceBeanException ex) {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body((T) new ErrorDto(HttpStatus.NOT_FOUND,
-				GatewayServiceConstants.INVALID_SERVICE_NAME, GatewayServiceConstants.INVALID_SERVICE_NAME, System.currentTimeMillis()));
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body((T) new ErrorDto(HttpStatus.NOT_FOUND, GatewayServiceConstants.INVALID_SERVICE_NAME,
+						GatewayServiceConstants.INVALID_SERVICE_NAME, System.currentTimeMillis()));
 	}
 
 	@ExceptionHandler(BadRequestException.class)
 	public ResponseEntity<T> handleBadRequestException(BadRequestException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((T) new ErrorDto(HttpStatus.BAD_REQUEST,
 				ex.getMessage(), GatewayServiceConstants.INVALID_PAYLOAD, System.currentTimeMillis()));
-	}
-
-	@ExceptionHandler(UserAlreadyRegisteredException.class)
-	public ResponseEntity<T> handleAlreadyRegisteredException(UserAlreadyRegisteredException ex) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((T) new ErrorDto(HttpStatus.BAD_REQUEST,
-				ex.getMessage(), ex.getLocalizedMessage(), System.currentTimeMillis()));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -76,7 +69,13 @@ public class GlobalExceptionController<T> {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
 				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
 	}
-	
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<T> handleInvalidArguementsException(IllegalArgumentException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<T> handleException(Exception ex) {
 		if (ex instanceof BadRequestException) {
@@ -91,14 +90,13 @@ public class GlobalExceptionController<T> {
 		} else if (ex instanceof ServiceBeanException) {
 			return handleInvalidServiceException((ServiceBeanException) ex);
 
-		} else if (ex instanceof UserAlreadyRegisteredException) {
-			return handleAlreadyRegisteredException((UserAlreadyRegisteredException) ex);
-
 		} else if (ex instanceof MethodArgumentNotValidException) {
 			return handleNotValidException((MethodArgumentNotValidException) ex);
 
 		} else if (ex instanceof DataParsingException) {
 			return handleNotValidException((DataParsingException) ex);
+		} else if (ex instanceof IllegalArgumentException) {
+			return handleInvalidArguementsException((IllegalArgumentException) ex);
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),

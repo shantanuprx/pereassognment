@@ -1,5 +1,8 @@
 package com.assignment.productservice.constants;
 
+/**
+ * Constant file to manage string literals related to product service.
+ */
 public class ProductsConstants {
 
 	public static final String ACTIVE_FLAG = "A";

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.ToString;
 @JsonInclude(value = Include.NON_NULL)
 public class ProductUpdateDto extends BaseDto{
 
+	@Min(0)
 	private int productId;
 
 	private String productName;
@@ -34,7 +36,5 @@ public class ProductUpdateDto extends BaseDto{
 	private String sellerAddress;
 
 	private BigDecimal price;
-
-	private String session;
 	
 }

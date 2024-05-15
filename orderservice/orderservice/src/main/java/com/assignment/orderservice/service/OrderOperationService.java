@@ -69,8 +69,8 @@ public class OrderOperationService<T> implements BaseService<T> {
 		log.info("Entering addDetails Method at {} ", System.currentTimeMillis());
 		try {
 			OrdersDto ordersDto = new ObjectMapper().convertValue(requestData, OrdersDto.class);
-			orderValidationUtil.validateOrderDetails(ordersDto);
 			Orders orderEntity = OrdersAdapter.convertModelToEntityForInsertion(ordersDto);
+			orderValidationUtil.validateOrderDetails(ordersDto);
 			ordersRepository.save(orderEntity);
 			orderValidationUtil.reduceStockForProduct(orderEntity);
 			log.info("Order details {} successfully created ", orderEntity.getOrderId());
