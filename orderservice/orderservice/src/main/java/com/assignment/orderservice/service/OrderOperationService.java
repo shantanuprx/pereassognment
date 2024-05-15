@@ -97,7 +97,8 @@ public class OrderOperationService<T> implements BaseService<T> {
 			Orders orderEntity = orderEntityOptional.get();
 			OrdersAdapter.mapValuesFromModelToEntityForUpdate(orderEntity, ordersDto);
 			log.info("Order details {} successfully updated by {}", orderEntity.getOrderId(), orderEntity.getUserId());
-			return responseUtil.prepareResponse((T) ordersDto, HttpStatus.OK);
+			return responseUtil.prepareResponse((T) new ResponseDto(orderEntity.getOrderId(), HttpStatus.OK,
+					OrdersConstant.RECORD_UPDATED_SUCCESSFULLY), HttpStatus.OK);
 		} catch (Exception ex) {
 			log.error("Exception occurred while updating order details with exception ", ex);
 			throw ex;

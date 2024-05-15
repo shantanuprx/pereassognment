@@ -124,6 +124,7 @@
 							<excludes>
 								<exclude>com/assignment/userservice/dto/**</exclude>
 								<exclude>com/assignment/userservice/exception/**</exclude>
+								<exclude>com/assignment/userservice/entity/**</exclude>
 							</excludes>
 						</configuration>
 					</execution>

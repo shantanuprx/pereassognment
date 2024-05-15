@@ -9,6 +9,13 @@ import com.assignment.orderservice.entity.Orders;
 
 public class OrdersAdapter {
 
+	/**
+	 * *
+	 * Converting Entity to model 
+	 * 
+	 * @param orderEntity
+	 * @return OrderDto the new order dto
+	 */
 	public static OrdersDto convertEntityToModel(Orders orderEntity) {
 		OrdersDto ordersDto = new OrdersDto();
 		ordersDto.setAddressId(orderEntity.getAddressId());
@@ -24,6 +31,12 @@ public class OrdersAdapter {
 		return ordersDto;
 	}
 
+	/**	
+	 * Converting model to entity for insertion
+	 * 
+	 * @param ordersDto
+	 * @return Orders Entity
+	 */
 	public static Orders convertModelToEntityForInsertion(OrdersDto ordersDto) {
 		Orders orders = new Orders();
 		orders.setAddressId(ordersDto.getAddressId());
@@ -44,6 +57,13 @@ public class OrdersAdapter {
 		return orders;
 	}
 
+	/**
+	 * Update entity for cancellation of order
+	 * 
+	 * @param orderEntity
+	 * @param ordersDto
+	 */
+	
 	public static void mapValuesFromModelToEntityForUpdate(Orders orderEntity, OrdersUpdateDto ordersDto) {
 		if (ordersDto.getOrderStatus() != null
 				&& OrdersConstant.ORDER_CANCELLED_STATUS.equalsIgnoreCase(ordersDto.getOrderStatus())) {

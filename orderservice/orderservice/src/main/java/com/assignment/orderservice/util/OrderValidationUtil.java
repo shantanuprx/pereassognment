@@ -35,17 +35,17 @@ public class OrderValidationUtil {
 		Optional<Product> product = productRepository.findByProductId(ordersDto.getProductId());
 		if (product.isEmpty() || !"A".equalsIgnoreCase(product.get().getStatus())
 				|| product.get().getCurrentStock() == 0) {
-			throw new BadRequestException("Product not eligible for orders");
+			throw new BadRequestException(OrdersConstant.PRODUCT_NOT_ELIGIBLE_FOR_ORDER);
 		}
 		if("card".equalsIgnoreCase(ordersDto.getPaymentSource())) {
 			Optional<CardDetails> cardDetails = cardDetailsRepository.findByRecordId(ordersDto.getPaymentId());
 			if(cardDetails.isEmpty() || cardDetails.get().getExpiryDate().before(new Date())) {
-				throw new BadRequestException("Payment method not eligible for orders");
+				throw new BadRequestException(OrdersConstant.PAYMENT_NOT_ELIGIBLE_FOR_ORDER);
 			}
 		}
 		Optional<Address> addressOptional = addressRepository.findByRecordId(ordersDto.getAddressId());
 		if(addressOptional.isEmpty()) {
-			throw new BadRequestException("Address not eligible for orders");
+			throw new BadRequestException(OrdersConstant.ADDRESS_NOT_ELIGIBLE_FOR_ORDER);
 		}
 		return true;
 	}

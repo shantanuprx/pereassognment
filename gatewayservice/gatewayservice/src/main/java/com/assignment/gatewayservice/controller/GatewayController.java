@@ -51,7 +51,7 @@ public class GatewayController<T> {
 			if (authentication.isAuthenticated()) {
 				String jwtToken = authorizationService.generateToken(authenticationRequestDto.getEmailId());
 				authorizationService.saveUserSession(jwtToken);
-				return ResponseEntity.status(HttpStatus.OK).body((T) Map.of("Token", jwtToken, "status", "200"));
+				return ResponseEntity.status(HttpStatus.OK).body((T) Map.of("token", jwtToken, "status", "200"));
 			} else {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((T) new ErrorDto(HttpStatus.UNAUTHORIZED,
 						"Invalid Credentials", null, System.currentTimeMillis()));

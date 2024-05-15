@@ -26,7 +26,6 @@ public class AddressAdapter {
 		addressEntity.setAddressLine1(addressDto.getAddressLine1());
 		addressEntity.setAddressLine2(addressDto.getAddressLine2());
 		addressEntity.setCity(addressDto.getCity());
-		addressEntity.setCreatedBy(user.getUserId());
 		addressEntity.setPincode(addressDto.getPincode());
 		addressEntity.setState(addressDto.getState());
 		addressEntity.setUser(user);

@@ -124,6 +124,7 @@
                         <excludes>
                             <exclude>com/assignment/gatewayservice/dto/**</exclude> 
                             <exclude>com/assignment/gatewayservice/exception/**</exclude> 
+                            <exclude>com/assignment/gatewayservice/entity/**</exclude>
                         </excludes>
                     </configuration>
 					</execution>

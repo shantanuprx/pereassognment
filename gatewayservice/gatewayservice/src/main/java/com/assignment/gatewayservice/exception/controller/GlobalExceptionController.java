@@ -1,4 +1,4 @@
-package com.assignment.orderservice.exception.controller;
+package com.assignment.gatewayservice.exception.controller;
 
 import java.sql.SQLException;
 
@@ -9,11 +9,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.assignment.orderservice.dto.ErrorDto;
-import com.assignment.orderservice.exception.BadRequestException;
-import com.assignment.orderservice.exception.DataParsingException;
-import com.assignment.orderservice.exception.ServiceBeanException;
-import com.assignment.orderservice.exception.UserAlreadyRegisteredException;
+import com.assignment.gatewayservice.dto.ErrorDto;
+import com.assignment.gatewayservice.exception.BadRequestException;
+import com.assignment.gatewayservice.exception.DataParsingException;
+import com.assignment.gatewayservice.exception.ServiceBeanException;
+import com.assignment.gatewayservice.exception.UserAlreadyRegisteredException;
 
 import jakarta.validation.ConstraintViolationException;
 

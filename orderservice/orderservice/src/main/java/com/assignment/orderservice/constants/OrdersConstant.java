@@ -2,6 +2,10 @@ package com.assignment.orderservice.constants;
 
 public class OrdersConstant {
 
+	private OrdersConstant() {
+
+	}
+
 	public static final String INVALID_RECORD_REQUEST = "Invalid Order Id or Order doesn't belong to the logged in user";
 	public static final String RECORD_CREATION_MESSAGE = "Order created successfully";
 	public static final String RECORD_UPDATED_SUCCESSFULLY = "Order updated successfully";
@@ -11,5 +15,8 @@ public class OrdersConstant {
 	public static final String ORDER_CANCELLED_STATUS = "C";
 	public static final String OUT_OF_STOCK_STATUS = "O";
 	public static final int SYSTEM_USER_ID = -1000;
+	public static final String PRODUCT_NOT_ELIGIBLE_FOR_ORDER = "Product not eligible for orders";
+	public static final String PAYMENT_NOT_ELIGIBLE_FOR_ORDER = "Payment method not eligible for orders";
+	public static final String ADDRESS_NOT_ELIGIBLE_FOR_ORDER = "Address not eligible for orders";
 
 }

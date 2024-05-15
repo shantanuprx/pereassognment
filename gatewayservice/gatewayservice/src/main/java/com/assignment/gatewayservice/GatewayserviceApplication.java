@@ -10,6 +10,11 @@ import org.springframework.context.annotation.Bean;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+/* *
+ * Application starter class with 
+ * Redis pool bean
+ * 
+ * */
 @SpringBootApplication
 public class GatewayserviceApplication {
 	

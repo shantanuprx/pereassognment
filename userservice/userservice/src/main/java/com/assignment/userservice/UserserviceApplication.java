@@ -16,6 +16,11 @@ import com.assignment.userservice.security.service.AuthFilter;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+/* *
+ * Application starter class with 
+ * Redis pool and Auth filter bean
+ * 
+ * */
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class UserserviceApplication {
 
