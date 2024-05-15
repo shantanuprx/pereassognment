@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
+/**
+ * Generic error DTO
+ */
 @Data
 @AllArgsConstructor
 @JsonInclude(value = Include.NON_NULL)

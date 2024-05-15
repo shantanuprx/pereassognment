@@ -24,7 +24,10 @@ import com.assignment.gatewayservice.security.service.AuthorizationService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ * Main controller to handle user registration and token generation call.
+ * @param <T>
+ */
 @RestController
 @RequestMapping("/auth")
 @Validated
@@ -37,11 +40,23 @@ public class GatewayController<T> {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	/**
+	 * Method to register new users
+	 * 
+	 * @param registrationDto
+	 * @return response of registration
+	 * @throws Exception
+	 */
 	@PostMapping("/register")
 	public ResponseEntity<T> registerUser(@Valid @RequestBody RegistrationDto registrationDto) throws Exception {
 		return authorizationService.createNewUser(registrationDto);
 	}
 
+	/**
+	 * 
+	 * @param authenticationRequestDto
+	 * @return newly generated token if authentication is successful
+	 */
 	@SuppressWarnings("unchecked")
 	@PostMapping("/token")
 	public ResponseEntity<T> generateToken(@Valid @RequestBody AuthenticationRequestDto authenticationRequestDto) {

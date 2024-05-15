@@ -11,6 +11,10 @@ import com.assignment.gatewayservice.constants.GatewayServiceConstants;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Implementation for user details interface. Needed for JWT authentication.
+ */
+
 @AllArgsConstructor
 public class CustomeUserDetails implements UserDetails {
 

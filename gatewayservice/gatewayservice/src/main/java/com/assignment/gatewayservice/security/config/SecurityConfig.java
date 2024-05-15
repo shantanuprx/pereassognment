@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * JWT configuration for authentication of registered users.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -39,6 +42,13 @@ public class SecurityConfig {
 		return new CustomUserDetailsService();
 	}
 
+	/**
+	 * Allowing only  /auth/** -> /auth/register, /auth/token
+	 * 
+	 * @param http the HttpSecurity
+	 * @return bean for filter chain
+	 * @throws Exception
+	 */
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(csrf -> csrf.disable())

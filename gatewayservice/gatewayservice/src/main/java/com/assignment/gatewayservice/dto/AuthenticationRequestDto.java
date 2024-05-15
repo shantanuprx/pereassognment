@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO class to map authentication request, in order to validate user credentials
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

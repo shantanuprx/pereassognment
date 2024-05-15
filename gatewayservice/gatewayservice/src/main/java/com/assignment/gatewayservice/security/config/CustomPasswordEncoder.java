@@ -6,6 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.assignment.gatewayservice.util.HashUtil;
 
+/**
+ * Implementation of PasswordEncoder interface. Used for JWT authentication
+ */
 public class CustomPasswordEncoder implements PasswordEncoder {
 
 	@Override

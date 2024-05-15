@@ -1,5 +1,7 @@
 package com.assignment.gatewayservice.exception;
-
+/**
+ * Custom runtime exception. Throw when parsing is failed.
+ */
 public class DataParsingException extends RuntimeException {
 
 	/**

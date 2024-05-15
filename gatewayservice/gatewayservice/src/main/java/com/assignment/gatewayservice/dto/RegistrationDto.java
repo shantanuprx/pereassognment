@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
@@ -18,6 +19,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * DTO class to map registration fields.
+ */
 @Getter
 @Setter
 @ToString
@@ -38,6 +42,7 @@ public class RegistrationDto {
 
 	@NotEmpty
 	@Email
+	@Max(100)
     private String emailId;
 
 	@NotEmpty
@@ -50,7 +55,6 @@ public class RegistrationDto {
 	private Date dateOfBirth;
     
 	@NotEmpty
-//	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message="Minimum eight characters, at least one letter and one number")
     private String password;
 
 }

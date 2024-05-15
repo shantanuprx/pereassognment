@@ -34,6 +34,7 @@ public class GatewayserviceApplication {
 		return jedisPool;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private JedisPoolConfig buildPoolConfig() {
 	    final JedisPoolConfig poolConfig = new JedisPoolConfig();
 	    poolConfig.setMaxTotal(128);

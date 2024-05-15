@@ -14,7 +14,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
+/**
+ * Token helper class, used for Generation of JWT token
+ * @param <T>
+ */
 @Service
 public class AuthTokenService {
 

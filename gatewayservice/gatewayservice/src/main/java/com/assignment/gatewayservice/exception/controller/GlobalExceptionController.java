@@ -17,6 +17,11 @@ import com.assignment.gatewayservice.exception.UserAlreadyRegisteredException;
 
 import jakarta.validation.ConstraintViolationException;
 
+
+/* *
+ * Central Exception handler. It will handle all the exception thrown from the whole application
+ * except JVM error. Please check handleException() method in this class
+ * **/
 @SuppressWarnings("unchecked")
 @ControllerAdvice
 public class GlobalExceptionController<T> {

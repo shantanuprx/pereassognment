@@ -8,6 +8,9 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.params.SetParams;
 
+/**
+ * Redis helper class to save keys on redis server
+ * */
 @Slf4j
 @Component
 public class JedisClientHelper {

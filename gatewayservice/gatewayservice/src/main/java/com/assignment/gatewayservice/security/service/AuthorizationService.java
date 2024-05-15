@@ -18,6 +18,13 @@ import com.assignment.gatewayservice.util.JedisClientHelper;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Authentication helper class, used for 
+ * Registration of user 
+ * Generation of token
+ * Saving token for maintaining the session
+ * @param <T>
+ */
 @SuppressWarnings("unchecked")
 @Service
 @Slf4j

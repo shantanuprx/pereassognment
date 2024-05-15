@@ -52,15 +52,6 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
-    @Column(name = "PREFERRED_PAYMENT_METHOD")
-    private String preferredPaymentMethod;
-
-    @Column(name = "PREFERRED_PAYMENT_METHOD_ID")
-    private int preferredPaymentMethodId;
-
-    @Column(name = "DEFAULT_ADDRESS")
-    private String defaultAddress;
-
     @Column(name = "CREATED_DATE")
     private Date createdDate;
 
@@ -75,12 +66,6 @@ public class User {
 
     @Column(name = "STATUS")
     private String status;
-
-    @Column(name = "LAST_LOGIN_DATE")
-    private Date lastLoginDate;
-
-    @Column(name = "LAST_LOGIN_IP_ADDRESS")
-    private String lastLoginIpAddress;
 
     @Column(name = "ROLE")
     private String userRole;

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.assignment.gatewayservice.entity.User;
 import com.assignment.gatewayservice.repository.UserRepository;
-
+/**
+ * Implementation of UserDetailsService interface. Needed for JWT authentication
+ */
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 

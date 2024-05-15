@@ -1,5 +1,7 @@
 package com.assignment.gatewayservice.exception;
-
+/**
+ * Custom runtime exception. Throw when user is already registered in the system.
+ */
 public class UserAlreadyRegisteredException extends RuntimeException {
 
 	/**

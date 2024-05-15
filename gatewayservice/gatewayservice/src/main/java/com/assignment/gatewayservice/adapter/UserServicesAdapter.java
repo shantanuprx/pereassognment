@@ -10,6 +10,13 @@ import com.assignment.gatewayservice.util.HashUtil;
 
 public class UserServicesAdapter {
 
+	/**
+	 * Converts model to entity for user registration
+	 * 
+	 * @param registrationDto
+	 * @return new User entity for registration
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static User convertModelToEntity(RegistrationDto registrationDto) throws NoSuchAlgorithmException {
 		User entity = new User();
 		entity.setFirstName(registrationDto.getFirstName());
