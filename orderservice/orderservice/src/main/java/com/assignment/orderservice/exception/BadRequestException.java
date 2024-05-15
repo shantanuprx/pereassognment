@@ -1,5 +1,7 @@
 package com.assignment.orderservice.exception;
-
+/**
+ * Custom runtime exception class to map all exception based on business logic.
+ */
 public class BadRequestException extends RuntimeException {
 
 	/**

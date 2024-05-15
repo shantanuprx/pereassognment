@@ -2,16 +2,21 @@ package com.assignment.orderservice.adapters;
 
 import java.util.Date;
 
+import org.springframework.validation.annotation.Validated;
+
 import com.assignment.orderservice.constants.OrdersConstant;
 import com.assignment.orderservice.dto.OrdersDto;
 import com.assignment.orderservice.dto.OrdersUpdateDto;
 import com.assignment.orderservice.entity.Orders;
+import com.assignment.orderservice.exception.BadRequestException;
 
+import jakarta.validation.Valid;
+
+@Validated
 public class OrdersAdapter {
 
 	/**
-	 * *
-	 * Converting Entity to model 
+	 * * Converting Entity to model
 	 * 
 	 * @param orderEntity
 	 * @return OrderDto the new order dto
@@ -31,13 +36,13 @@ public class OrdersAdapter {
 		return ordersDto;
 	}
 
-	/**	
+	/**
 	 * Converting model to entity for insertion
 	 * 
 	 * @param ordersDto
 	 * @return Orders Entity
 	 */
-	public static Orders convertModelToEntityForInsertion(OrdersDto ordersDto) {
+	public static Orders convertModelToEntityForInsertion(@Valid OrdersDto ordersDto) {
 		Orders orders = new Orders();
 		orders.setAddressId(ordersDto.getAddressId());
 		orders.setCreatedBy(ordersDto.getCreatedBy());
@@ -63,8 +68,11 @@ public class OrdersAdapter {
 	 * @param orderEntity
 	 * @param ordersDto
 	 */
-	
-	public static void mapValuesFromModelToEntityForUpdate(Orders orderEntity, OrdersUpdateDto ordersDto) {
+
+	public static void mapValuesFromModelToEntityForUpdate(Orders orderEntity, @Valid OrdersUpdateDto ordersDto) {
+		if (OrdersConstant.ORDER_CANCELLED_STATUS.equalsIgnoreCase(orderEntity.getOrderStatus())) {
+			throw new BadRequestException("Order already Cancelled");
+		}
 		if (ordersDto.getOrderStatus() != null
 				&& OrdersConstant.ORDER_CANCELLED_STATUS.equalsIgnoreCase(ordersDto.getOrderStatus())) {
 			orderEntity.setOrderStatus(OrdersConstant.ORDER_CANCELLED_STATUS);

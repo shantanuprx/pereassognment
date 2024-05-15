@@ -19,7 +19,9 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+/**
+ * Implementation of web filter. Responsible for checking whether token is valid or not.
+ */
 @Component
 public class AuthFilter implements Filter {
 

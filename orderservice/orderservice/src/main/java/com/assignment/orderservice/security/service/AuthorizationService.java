@@ -15,6 +15,9 @@ public class AuthorizationService<T> {
 	@Autowired
 	private AuthTokenService authTokenService;
 
+	/* *
+	 * Function responsible for setting logged in user id and user role based on the payload passed in JWT token
+	 * */
 	public Claims validateToken(Map<String, Object> requestMap) {
 		Claims tokenClaims = authTokenService.validateToken(requestMap.get("token").toString());
 		requestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, tokenClaims.get(GatewayServiceConstants.LOGGED_IN_USER_ID));

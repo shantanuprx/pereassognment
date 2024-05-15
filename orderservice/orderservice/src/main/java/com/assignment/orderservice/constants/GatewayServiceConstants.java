@@ -1,5 +1,7 @@
 package com.assignment.orderservice.constants;
-
+/* *
+ * Class for managing constants related to authentication and Authorization.
+ * */
 public class GatewayServiceConstants {
 
 	private GatewayServiceConstants() {

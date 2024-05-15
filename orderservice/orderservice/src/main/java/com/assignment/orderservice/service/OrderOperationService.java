@@ -96,6 +96,8 @@ public class OrderOperationService<T> implements BaseService<T> {
 			}
 			Orders orderEntity = orderEntityOptional.get();
 			OrdersAdapter.mapValuesFromModelToEntityForUpdate(orderEntity, ordersDto);
+			ordersRepository.save(orderEntity);
+			orderValidationUtil.increaseStockValue(orderEntity);
 			log.info("Order details {} successfully updated by {}", orderEntity.getOrderId(), orderEntity.getUserId());
 			return responseUtil.prepareResponse((T) new ResponseDto(orderEntity.getOrderId(), HttpStatus.OK,
 					OrdersConstant.RECORD_UPDATED_SUCCESSFULLY), HttpStatus.OK);

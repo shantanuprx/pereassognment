@@ -1,5 +1,7 @@
 package com.assignment.orderservice.dto;
-
+/**
+ * Base DTO, needs to be implemented by every DTO. Contains info about logged in user
+ */
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

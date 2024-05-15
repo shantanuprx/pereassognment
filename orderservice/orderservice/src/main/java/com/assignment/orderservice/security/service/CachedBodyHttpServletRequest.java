@@ -11,7 +11,10 @@ import org.springframework.util.StreamUtils;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-
+/* *
+* Generic http servlet wrapper implementation. Enabling multiple reads on input stream
+* 
+* */
 public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
     private byte[] cachedBody;
