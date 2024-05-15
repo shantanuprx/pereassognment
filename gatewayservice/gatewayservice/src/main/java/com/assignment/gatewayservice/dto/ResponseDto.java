@@ -9,6 +9,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ResponseDto {
 
+	private int id;
+	
 	private HttpStatus status;
 	
 	private String message;

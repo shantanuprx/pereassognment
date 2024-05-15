@@ -1,12 +1,14 @@
-package com.assignment.gatewayservice.service;
+package com.assignment.gatewayservice.security.service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.assignment.gatewayservice.constants.GatewayServiceConstants;
+import com.assignment.gatewayservice.entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -24,8 +26,9 @@ public class AuthTokenService {
 		return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
 	}
 
-	public String generateToken(String userName) {
-		return createToken(new HashMap<>(), userName);
+	public String generateToken(User user) {
+		return createToken(Map.of(GatewayServiceConstants.LOGGED_IN_USER_ID, user.getUserId(),
+				GatewayServiceConstants.USER_ROLE, user.getUserRole()), user.getEmail());
 	}
 
 	private String createToken(Map<String, Object> claims, String userName) {

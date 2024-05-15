@@ -1,6 +1,6 @@
-package com.assignment.productservice.exception;
+package com.assignment.gatewayservice.exception;
 
-public class ServiceBeanException extends RuntimeException{
+public class ServiceBeanException extends RuntimeException {
 
 	/**
 	 * 

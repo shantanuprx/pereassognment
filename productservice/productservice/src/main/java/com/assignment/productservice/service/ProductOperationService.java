@@ -21,10 +21,12 @@ import com.assignment.productservice.util.ElasticSearchUtil;
 import com.assignment.productservice.util.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Service("product")
 @Slf4j
+@Setter
 @SuppressWarnings("unchecked")
 public class ProductOperationService<T> implements BaseService<T> {
 

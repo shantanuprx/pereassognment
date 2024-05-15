@@ -22,6 +22,7 @@ public class UserServicesAdapter {
 		entity.setDateOfBirth(registrationDto.getDateOfBirth());
 		entity.setMobileNumber(registrationDto.getMobileNumber());
 		entity.setStatus(GatewayServiceConstants.ACTIVE_FLAG);
+		entity.setUserRole(GatewayServiceConstants.CUSTOMER);
 		return entity;
 	}
 

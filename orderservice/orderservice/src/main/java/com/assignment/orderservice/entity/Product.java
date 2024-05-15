@@ -55,10 +55,10 @@ public class Product {
 	@Column(name = "CREATED_TIMESTAMP", nullable = false, updatable = false)
 	private Timestamp createdTimestamp;
 
-	@Column(name = "UPDATED_TIMESTAMP", nullable = false)
+	@Column(name = "UPDATED_TIMESTAMP")
 	private Timestamp updatedTimestamp;
 
-	@Column(name = "CREATED_BY")
+	@Column(name = "CREATED_BY", nullable = false)
 	private int createdBy;
 
 	@Column(name = "UPDATED_BY")

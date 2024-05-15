@@ -1,52 +1,47 @@
 package com.assignment.gatewayservice;
 
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.client.RestTemplate;
+
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 @SpringBootApplication
-@EnableFeignClients
-@EnableDiscoveryClient
 public class GatewayserviceApplication {
-
-	@Value("${redis.server.uri:localhost}")
-	private String redisUri;
-	
-	@Value("${redis.server.port:6379}")
-	private int redisPort;
-	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayserviceApplication.class, args);
 	}
 
-	@SuppressWarnings("deprecation")
-	@Bean
-	JedisConnectionFactory jedisConnectionFactory() {
-		JedisConnectionFactory jedisConFactory
-	      = new JedisConnectionFactory();
-	    jedisConFactory.setHostName(redisUri);
-	    jedisConFactory.setPort(redisPort);
-	    return jedisConFactory;
-	}
-
-	@Bean
-	RedisTemplate<String, Object> redisTemplate() {
-		RedisTemplate<String, Object> template = new RedisTemplate<>();
-		template.setConnectionFactory(jedisConnectionFactory());
-		return template;
-	}
+	@Value("${redis.url}")
+	private String redisUrl;
+	
+	@Value("${redis.port}")
+	private int redisPort;
 	
 	@Bean
-	RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return new RestTemplate();
+	JedisPool jedisPool() {
+		JedisPool jedisPool = new JedisPool(buildPoolConfig(), redisUrl, redisPort);
+		return jedisPool;
+	}
+	
+	private JedisPoolConfig buildPoolConfig() {
+	    final JedisPoolConfig poolConfig = new JedisPoolConfig();
+	    poolConfig.setMaxTotal(128);
+	    poolConfig.setMaxIdle(128);
+	    poolConfig.setMinIdle(16);
+	    poolConfig.setTestOnBorrow(true);
+	    poolConfig.setTestOnReturn(true);
+	    poolConfig.setTestWhileIdle(true);
+	    poolConfig.setMinEvictableIdleTimeMillis(Duration.ofSeconds(60).toMillis());
+	    poolConfig.setTimeBetweenEvictionRunsMillis(Duration.ofSeconds(30).toMillis());
+	    poolConfig.setNumTestsPerEvictionRun(3);
+	    poolConfig.setBlockWhenExhausted(true);
+	    return poolConfig;
 	}
 
 }

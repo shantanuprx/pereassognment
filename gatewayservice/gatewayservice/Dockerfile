@@ -22,4 +22,4 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
 
 COPY target/gatewayservice-0.0.1-SNAPSHOT.jar gatewayservice.jar
 
-ENTRYPOINT [ "java", "-jar","-Deureka.client.service-url.defaultZone=http://discoveryservicelb.default.svc.cluster.local:8761/eureka", "-Dspring.config.import=configserver:http://configurationservicelb.default.svc.cluster.local:8762/config","catalogservice.jar"]
+ENTRYPOINT [ "java", "-jar", "gatewayservice.jar"]

@@ -1,4 +1,4 @@
-package com.assignment.gatewayservice.securityconfig;
+package com.assignment.gatewayservice.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

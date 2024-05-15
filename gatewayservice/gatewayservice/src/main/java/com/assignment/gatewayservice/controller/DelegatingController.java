@@ -20,22 +20,22 @@ public class DelegatingController<T> {
 	@Autowired
 	private ServiceLocator<T> serviceLocator;
 	
-	@GetMapping("/{serviceName}/fetch/**")
+	@GetMapping("/{serviceName}")
 	public ResponseEntity<T> getDetaislsOfProduct(@PathVariable("serviceName") String serviceName, @RequestBody Map<String, Object> requestMap) {
 		return serviceLocator.locateServiceBean(serviceName).getDetails(requestMap);
 	}
 
-	@PostMapping("/{serviceName}/add/**")
+	@PostMapping("/{serviceName}")
 	public ResponseEntity<T> addProduct(@PathVariable("serviceName") String serviceName, @RequestBody Map<String, Object> requestMap) {
 		return serviceLocator.locateServiceBean(serviceName).addDetails(requestMap);
 	}
 
-	@PutMapping("/{serviceName}/udpate/**")
+	@PutMapping("/{serviceName}")
 	public ResponseEntity<T> updateProduct(@PathVariable("serviceName") String serviceName, @RequestBody Map<String, Object> requestMap) {
 		return serviceLocator.locateServiceBean(serviceName).updateDetails(requestMap);
 	}
 
-	@DeleteMapping("/{serviceName}/delete/**")
+	@DeleteMapping("/{serviceName}")
 	public ResponseEntity<T> deleteProduct(@PathVariable("serviceName") String serviceName, @RequestBody Map<String, Object> requestMap) {
 		return serviceLocator.locateServiceBean(serviceName).deleteDetails(requestMap);
 	}

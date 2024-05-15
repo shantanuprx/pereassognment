@@ -1,4 +1,4 @@
-package com.assignment.gatewayservice.securityconfig;
+package com.assignment.gatewayservice.security.config;
 
 import java.util.Arrays;
 import java.util.Collection;

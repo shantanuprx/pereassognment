@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.assignment.gatewayservice.dto.AuthenticationRequestDto;
 import com.assignment.gatewayservice.dto.ErrorDto;
 import com.assignment.gatewayservice.dto.RegistrationDto;
-import com.assignment.gatewayservice.service.AuthorizationService;
+import com.assignment.gatewayservice.security.service.AuthorizationService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +35,9 @@ public class GatewayController<T> {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
 
 	@PostMapping("/register")
-	public ResponseEntity<T> registerUser(@Valid @RequestBody RegistrationDto registrationDto) {
+	public ResponseEntity<T> registerUser(@Valid @RequestBody RegistrationDto registrationDto) throws Exception {
 		return authorizationService.createNewUser(registrationDto);
 	}
 
@@ -50,7 +50,7 @@ public class GatewayController<T> {
 					authenticationRequestDto.getEmailId(), authenticationRequestDto.getPassword()));
 			if (authentication.isAuthenticated()) {
 				String jwtToken = authorizationService.generateToken(authenticationRequestDto.getEmailId());
-				authorizationService.saveUserSession(authenticationRequestDto, jwtToken);
+				authorizationService.saveUserSession(jwtToken);
 				return ResponseEntity.status(HttpStatus.OK).body((T) Map.of("Token", jwtToken, "status", "200"));
 			} else {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body((T) new ErrorDto(HttpStatus.UNAUTHORIZED,
@@ -59,8 +59,12 @@ public class GatewayController<T> {
 		} catch (LockedException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
 					(T) new ErrorDto(HttpStatus.UNAUTHORIZED, "Account Locked", null, System.currentTimeMillis()));
+		} catch (BadCredentialsException ex) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+					(T) new ErrorDto(HttpStatus.UNAUTHORIZED, "Invalid Username/Password", null, System.currentTimeMillis()));
 		} catch (Exception ex) {
-			log.error("Exception occurred while validating the user {} with exception {}", authenticationRequestDto.getEmailId(), ex);
+			log.error("Exception occurred while validating the user {} with exception {}",
+					authenticationRequestDto.getEmailId(), ex);
 			throw ex;
 		} finally {
 			log.debug("Entering generateToken method for {}", authenticationRequestDto.getEmailId());

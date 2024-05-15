@@ -1,10 +1,10 @@
-package com.assignment.gatewayservice.feignclients;
+package com.assignment.gatewayservice.service;
 
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
-public interface BaseClient<T> {
+public interface BaseService<T> {
 
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData);
 
@@ -13,4 +13,5 @@ public interface BaseClient<T> {
 	public ResponseEntity<T> updateDetails(Map<String, Object> requestData);
 
 	public ResponseEntity<T> deleteDetails(Map<String, Object> requestData);
+
 }
