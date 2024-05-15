@@ -8,6 +8,11 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.params.SetParams;
 
+/**
+ * Redis helper class to save and fetch key value from redis server.
+ * Also helps in extending the expiry of keys.
+ * */
+
 @Slf4j
 @Component
 public class JedisClientHelper {

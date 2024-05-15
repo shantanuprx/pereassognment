@@ -4,6 +4,12 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
+/* *
+ * Base service class that needs to be implemented by each and every service class
+ * implementation of this class will be called from controller.
+ * 
+ * */
+
 public interface BaseService<T> {
 
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) throws Exception;

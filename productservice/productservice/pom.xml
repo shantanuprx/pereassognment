@@ -144,6 +144,7 @@
                         <excludes>
                             <exclude>com/assignment/productservice/dto/**</exclude> 
                             <exclude>com/assignment/productservice/exception/**</exclude> 
+                            <exclude>com/assignment/productservice/entity/**</exclude>
                         </excludes>
                     </configuration>
 					</execution>

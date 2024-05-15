@@ -24,6 +24,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+/* *
+ * Service class implementation for the product related services
+ * getDetails -  for fetching details of a single product
+ * addDetails -  for adding new product details.
+ * updateDetails - for updating existing product details.
+ * deleteDetails - for deleting the product details - Soft delete
+ * */
+
 @Service("product")
 @Slf4j
 @Setter
@@ -131,7 +139,7 @@ public class ProductOperationService<T> implements BaseService<T> {
 			log.info("Product {} successfully deleted by {} ", productEntity.getProductId(),
 					request.getLoggedInUserId());
 			return responseUtil.prepareResponse((T) new ResponseDto(productEntity.getProductId(), HttpStatus.OK,
-					ProductsConstants.RECORD_CREATION_MESSAGE), HttpStatus.OK);
+					ProductsConstants.RECORD_DELETE_MESSAGE), HttpStatus.OK);
 		} catch (Exception ex) {
 			log.error("Exception occurred while deleting the product with exception ", ex);
 			throw ex;

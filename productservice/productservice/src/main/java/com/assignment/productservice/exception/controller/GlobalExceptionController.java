@@ -10,10 +10,19 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.assignment.productservice.constants.GatewayServiceConstants;
 import com.assignment.productservice.dto.ErrorDto;
 import com.assignment.productservice.exception.DataParsingException;
 import com.assignment.productservice.exception.ServiceBeanException;
 import com.assignment.productservice.exception.UserAlreadyRegisteredException;
+
+import jakarta.validation.ConstraintViolationException;
+
+
+/* *
+ * Central Exception handler. It will handle all the exception thrown from the whole application
+ * except JVM error. Please check handleException() method in this class
+ * **/
 
 @SuppressWarnings("unchecked")
 @ControllerAdvice
@@ -35,13 +44,13 @@ public class GlobalExceptionController<T> {
 	@ExceptionHandler(ServiceBeanException.class)
 	public ResponseEntity<T> handleInvalidServiceException(ServiceBeanException ex) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body((T) new ErrorDto(HttpStatus.NOT_FOUND,
-				"Invalid Service name or URL", "Invalid Service name or URL", System.currentTimeMillis()));
+				GatewayServiceConstants.INVALID_SERVICE_NAME, GatewayServiceConstants.INVALID_SERVICE_NAME, System.currentTimeMillis()));
 	}
 
 	@ExceptionHandler(BadRequestException.class)
 	public ResponseEntity<T> handleBadRequestException(BadRequestException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((T) new ErrorDto(HttpStatus.BAD_REQUEST,
-				ex.getMessage(), "Invalid request payload", System.currentTimeMillis()));
+				ex.getMessage(), GatewayServiceConstants.INVALID_PAYLOAD, System.currentTimeMillis()));
 	}
 
 	@ExceptionHandler(UserAlreadyRegisteredException.class)
@@ -62,11 +71,40 @@ public class GlobalExceptionController<T> {
 				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
 	}
 
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<T> handleNotValidException(ConstraintViolationException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<T> handleException(Exception ex) {
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),
-						System.currentTimeMillis()));
+		if (ex instanceof BadRequestException) {
+			return handleBadRequestException((BadRequestException) ex);
+
+		} else if (ex instanceof ConstraintViolationException) {
+			return handleNotValidException((ConstraintViolationException) ex);
+
+		} else if (ex instanceof GenericJDBCException) {
+			return handleDatabaseException((GenericJDBCException) ex);
+
+		} else if (ex instanceof ServiceBeanException) {
+			return handleInvalidServiceException((ServiceBeanException) ex);
+
+		} else if (ex instanceof UserAlreadyRegisteredException) {
+			return handleAlreadyRegisteredException((UserAlreadyRegisteredException) ex);
+
+		} else if (ex instanceof MethodArgumentNotValidException) {
+			return handleNotValidException((MethodArgumentNotValidException) ex);
+
+		} else if (ex instanceof DataParsingException) {
+			return handleNotValidException((DataParsingException) ex);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),
+							System.currentTimeMillis()));
+		}
+
 	}
 
 }

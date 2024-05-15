@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.assignment.productservice.ProductserviceApplication;
 import com.assignment.productservice.auth.TokenGenService;
 import com.assignment.productservice.constants.GatewayServiceConstants;
+import com.assignment.productservice.constants.ProductsConstants;
 import com.assignment.productservice.dto.ProductDto;
 import com.assignment.productservice.dto.ProductUpdateDto;
 import com.assignment.productservice.service.ProductOperationService;
@@ -43,13 +44,13 @@ public class ControllerLayerTest<T> {
 
 	@Value("${jwt.webtoken.secret}")
 	private String secreString;
-	
+
 	@Autowired
 	private JedisClientHelper clientHelper;
 
 	@Autowired
 	private ProductOperationService<T> productOperationService;
-	
+
 	@Test
 	public void createProductDetailsWithStatusOk() throws JsonProcessingException, Exception {
 		ProductDto productDto = new ProductDto();
@@ -61,12 +62,14 @@ public class ControllerLayerTest<T> {
 		productDto.setSeller("Appario");
 		productDto.setSellerAddress("Jaipur");
 		productDto.setPrice(BigDecimal.valueOf(200.0));
-		mvc.perform(MockMvcRequestBuilders.post("/product")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(new ObjectMapper().writeValueAsString(productDto))
-			).andExpect(MockMvcResultMatchers.status().isCreated());
+		String result = mvc
+				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn().getResponse().getContentAsString();
+
+		assertTrue(result.contains(ProductsConstants.RECORD_CREATION_MESSAGE));
 	}
-	
+
 	@Test
 	public void createProductDetailsAndThenFetchDetailsWithStatusOk() throws JsonProcessingException, Exception {
 		ProductDto productDto = new ProductDto();
@@ -78,19 +81,20 @@ public class ControllerLayerTest<T> {
 		productDto.setSeller("Appario");
 		productDto.setSellerAddress("Jaipur");
 		productDto.setPrice(BigDecimal.valueOf(200.0));
-		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/product")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(new ObjectMapper().writeValueAsString(productDto))
-			).andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
-		
+		MvcResult mvcResult = mvc
+				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
+
 		String resultString = mvcResult.getResponse().getContentAsString();
 		JSONObject jsonObject = new JSONObject(resultString);
-		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.LOGGED_IN_USER_ID, 1,
-												"productId", jsonObject.getInt("id"));
+		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.LOGGED_IN_USER_ID, 1, "productId",
+				jsonObject.getInt("id"));
 		ResponseEntity<T> responseEntity = productOperationService.getDetails(requestMap);
 		assertTrue(responseEntity.getStatusCode().equals(HttpStatus.OK));
+		assertTrue(responseEntity.getBody().toString().contains("Asus RAM"));
 	}
-	
+
 	@Test
 	public void createProductAndUpdateWithStatusOk() throws JsonProcessingException, Exception {
 		String token = setUp("ADMIN");
@@ -103,14 +107,14 @@ public class ControllerLayerTest<T> {
 		productDto.setSeller("Appario");
 		productDto.setSellerAddress("Jaipur");
 		productDto.setPrice(BigDecimal.valueOf(200.0));
-		MvcResult mvcResult =  mvc.perform(MockMvcRequestBuilders.post("/product")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(new ObjectMapper().writeValueAsString(productDto))
-			).andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
-		
+		MvcResult mvcResult = mvc
+				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
+
 		String resultString = mvcResult.getResponse().getContentAsString();
 		JSONObject jsonObject = new JSONObject(resultString);
-		
+
 		ProductUpdateDto productUpdateDto = new ProductUpdateDto();
 		productUpdateDto.setCurrentStock(0);
 		productUpdateDto.setToken(token);
@@ -122,13 +126,15 @@ public class ControllerLayerTest<T> {
 		productUpdateDto.setSeller("Appario");
 		productUpdateDto.setSellerAddress("Jaipur");
 		productUpdateDto.setProductId(jsonObject.getInt("id"));
-		
-		mvc.perform(MockMvcRequestBuilders.put("/product")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(new ObjectMapper().writeValueAsString(productUpdateDto))
-			).andExpect(MockMvcResultMatchers.status().isOk());
+
+		String result = mvc
+				.perform(MockMvcRequestBuilders.put("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productUpdateDto)))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertTrue(result.contains(ProductsConstants.RECORD_UPDATE_MESSAGE));
 	}
-	
+
 	@Test
 	public void createProductAndDeleteWithStatusOk() throws JsonProcessingException, Exception {
 		String token = setUp("ADMIN");
@@ -141,25 +147,26 @@ public class ControllerLayerTest<T> {
 		productDto.setSeller("Appario");
 		productDto.setSellerAddress("Jaipur");
 		productDto.setPrice(BigDecimal.valueOf(200.0));
-		MvcResult mvcResult =  mvc.perform(MockMvcRequestBuilders.post("/product")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(new ObjectMapper().writeValueAsString(productDto))
-			).andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
-		
+		MvcResult mvcResult = mvc
+				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
+
 		String resultString = mvcResult.getResponse().getContentAsString();
 		JSONObject jsonObject = new JSONObject(resultString);
-		
+
 		ProductUpdateDto productUpdateDto = new ProductUpdateDto();
 		productUpdateDto.setProductId(jsonObject.getInt("id"));
 		productUpdateDto.setToken(token);
-		
-		mvc.perform(MockMvcRequestBuilders.delete("/product")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(new ObjectMapper().writeValueAsString(productUpdateDto))
-			).andExpect(MockMvcResultMatchers.status().isOk());
+
+		String result = mvc
+				.perform(MockMvcRequestBuilders.delete("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productUpdateDto)))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+		assertTrue(result.contains(ProductsConstants.RECORD_DELETE_MESSAGE));
+
 	}
-	
-	
+
 	private String setUp(String userRole) {
 		String token = TokenGenService.generateToken(1, userRole, "abc@gmail.com", secreString);
 		clientHelper.saveKeyPair(token, String.valueOf(true));

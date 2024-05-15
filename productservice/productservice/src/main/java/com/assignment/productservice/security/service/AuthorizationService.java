@@ -19,13 +19,19 @@ public class AuthorizationService<T> {
 	@Autowired
 	private JedisClientHelper jedisClientHelper;
 
+	/* *
+	 * Function responsible for setting logged in user id and user role based on the payload passed in JWT token
+	 * */
 	public Claims validateToken(Map<String, Object> requestMap) {
-		Claims tokenClaims = authTokenService.validateToken(requestMap.get("token").toString());
+		Claims tokenClaims = authTokenService.validateToken(requestMap.get(GatewayServiceConstants.TOKEN).toString());
 		requestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, tokenClaims.get(GatewayServiceConstants.LOGGED_IN_USER_ID));
 		requestMap.put(GatewayServiceConstants.USER_ROLE, tokenClaims.get(GatewayServiceConstants.USER_ROLE));
 		return tokenClaims;
 	}
 
+	/* *
+	 * Function responsible for saving validated JWT token in redis cache.
+	 * */
 	public void saveUserSession(String jwtToken) {
 		jedisClientHelper.saveKeyPair(jwtToken, String.valueOf(true));
 	}

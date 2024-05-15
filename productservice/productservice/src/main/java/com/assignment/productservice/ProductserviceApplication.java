@@ -11,10 +11,18 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import com.assignment.productservice.constants.GatewayServiceConstants;
 import com.assignment.productservice.security.service.AuthFilter;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+/* *
+ * Application starter class with 
+ * Redis pool and Auth filter bean
+ * 
+ * */
+
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class ProductserviceApplication {
@@ -59,7 +67,7 @@ public class ProductserviceApplication {
 		FilterRegistrationBean authFilterBean = new FilterRegistrationBean();
 		authFilterBean.setFilter(applicationContext.getBean(AuthFilter.class));
 		authFilterBean.addUrlPatterns("/*");
-		authFilterBean.setName("someFilter");
+		authFilterBean.setName(GatewayServiceConstants.AUTH_FILTER);
 		authFilterBean.setOrder(1);
 	    return authFilterBean;
 	}
