@@ -40,6 +40,9 @@ public class AddressServices<T> implements BaseService<T> {
 
 	@Autowired
 	private ResponseUtil<T> responseUtil;
+	
+	@Autowired
+	private AddressAdapter addressAdapter;
 
 	@Override
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) {
@@ -52,7 +55,7 @@ public class AddressServices<T> implements BaseService<T> {
 				throw new BadRequestException(AddressConstants.INVALID_RECORD_REQUEST);
 			}
 			Address addressEntity = addressEntityOptional.get();
-			addressDto = AddressAdapter.convertEntityToModel(addressEntity);
+			addressDto = addressAdapter.convertEntityToModel(addressEntity);
 			log.info("Address {} successfully fetched ", addressEntity.getRecordId());
 			return responseUtil.prepareResponse((T) addressDto, HttpStatus.OK);
 		} catch (Exception ex) {
@@ -68,7 +71,7 @@ public class AddressServices<T> implements BaseService<T> {
 		log.info("Entering addDetails Method at {} ", System.currentTimeMillis());
 		try {
 			AddressDto addressDto = new ObjectMapper().convertValue(requestData, AddressDto.class);
-			Address addressEntityToPersist = AddressAdapter.convertModelToEntityForInsertion(addressDto,
+			Address addressEntityToPersist = addressAdapter.convertModelToEntityForInsertion(addressDto,
 					profileServices.fetchUserEntity(addressDto.getLoggedInUserId()));
 			addressRepository.save(addressEntityToPersist);
 			log.info("Address {} successfully created by {} ", addressEntityToPersist.getRecordId(),
@@ -94,7 +97,7 @@ public class AddressServices<T> implements BaseService<T> {
 				throw new BadRequestException(AddressConstants.INVALID_RECORD_REQUEST);
 			}
 			Address addressEntity = addressEntityOptional.get();
-			AddressAdapter.convertModelToEntityForUpdate(addressEntity, addressDto);
+			addressAdapter.convertModelToEntityForUpdate(addressEntity, addressDto);
 			addressRepository.save(addressEntity);
 			return responseUtil.prepareResponse((T) new ResponseDto(addressDto.getRecordId(), HttpStatus.OK,
 					AddressConstants.RECORD_UPDATED_SUCCESSFULLY), HttpStatus.OK);

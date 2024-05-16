@@ -41,6 +41,9 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 
 	@Autowired
 	private ProfileServices<T> profileServices;
+	
+	@Autowired
+	private CardDetailsAdapter cardDetailsAdapter;
 
 	@Override
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) {
@@ -54,7 +57,7 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 				throw new BadRequestException(PaymentConstants.INVALID_RECORD_REQUEST);
 			}
 			CardDetails cardEntity = cardEntityOptional.get();
-			CardDetailsDto cardDto = CardDetailsAdapter.convertEntityToModel(cardEntity);
+			CardDetailsDto cardDto = cardDetailsAdapter.convertEntityToModel(cardEntity);
 			log.info("Card details {} successfully fetched ", cardEntity.getRecordId());
 			return responseUtil.prepareResponse((T) cardDto, HttpStatus.OK);
 		} catch (Exception ex) {
@@ -70,7 +73,7 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 		log.info("Entering addDetails Method at {} ", System.currentTimeMillis());
 		try {
 			CardDetailsDto cardDetailsDto = new ObjectMapper().convertValue(requestData, CardDetailsDto.class);
-			CardDetails cardEntityToPersist = CardDetailsAdapter.convertModelToEntityForInsertion(cardDetailsDto,
+			CardDetails cardEntityToPersist = cardDetailsAdapter.convertModelToEntityForInsertion(cardDetailsDto,
 					profileServices.fetchUserEntity(cardDetailsDto.getLoggedInUserId()));
 			cardDetailsRepository.save(cardEntityToPersist);
 			log.info("Card details {} successfully created by {} ", cardEntityToPersist.getRecordId(),
@@ -97,7 +100,7 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 				throw new BadRequestException(PaymentConstants.INVALID_RECORD_REQUEST);
 			}
 			CardDetails cardEntity = cardEntityOptional.get();
-			CardDetailsAdapter.mapModelValuesToEntityForUpdate(cardDetailsDto, cardEntity);
+			cardDetailsAdapter.mapModelValuesToEntityForUpdate(cardDetailsDto, cardEntity);
 			cardDetailsRepository.save(cardEntity);
 			log.info("Card details {} successfully updated by {} ", cardEntity.getRecordId(),
 					cardDetailsDto.getUserId());
@@ -123,7 +126,6 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 				throw new BadRequestException(PaymentConstants.INVALID_RECORD_REQUEST);
 			}
 			CardDetails cardEntity = cardEntityOptional.get();
-			CardDetailsAdapter.mapModelValuesToEntityForUpdate(cardDetailsDto, cardEntity);
 			cardDetailsRepository.delete(cardEntity);
 			log.info("Card Details {} successfully deleted by {} ", cardEntity.getRecordId(),
 					cardDetailsDto.getUserId());

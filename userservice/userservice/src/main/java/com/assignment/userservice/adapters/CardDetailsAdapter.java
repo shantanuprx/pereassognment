@@ -2,11 +2,18 @@ package com.assignment.userservice.adapters;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
 import com.assignment.userservice.dto.CardDetailsDto;
 import com.assignment.userservice.dto.CardDetailsUpdateDto;
 import com.assignment.userservice.entity.CardDetails;
 import com.assignment.userservice.entity.User;
 
+import jakarta.validation.Valid;
+
+@Validated
+@Component
 public class CardDetailsAdapter {
 
 	/**
@@ -15,7 +22,7 @@ public class CardDetailsAdapter {
 	 * @param productEntity
 	 * @return new CardDetailsDto
 	 */
-	public static CardDetailsDto convertEntityToModel(CardDetails productEntity) {
+	public CardDetailsDto convertEntityToModel(CardDetails productEntity) {
 		CardDetailsDto cardDetails = new CardDetailsDto();
 		cardDetails.setCardHolderName(productEntity.getCardHolderName());
 		cardDetails.setCardNumber(productEntity.getCardNumber());
@@ -23,7 +30,7 @@ public class CardDetailsAdapter {
 		cardDetails.setRecordId(productEntity.getRecordId());
 		return cardDetails;
 	}
-	
+
 	/**
 	 * Maps Dto to entity
 	 * 
@@ -32,7 +39,7 @@ public class CardDetailsAdapter {
 	 * @return new CardDetails Entity
 	 */
 
-	public static CardDetails convertModelToEntityForInsertion(CardDetailsDto cardDetailsDto, User user) {
+	public CardDetails convertModelToEntityForInsertion(@Valid CardDetailsDto cardDetailsDto, User user) {
 		CardDetails cardDetails = new CardDetails();
 		cardDetails.setCardHolderName(cardDetailsDto.getCardHolderName());
 		cardDetails.setCardNumber(cardDetailsDto.getCardNumber());
@@ -49,19 +56,19 @@ public class CardDetailsAdapter {
 	 * @param cardDetailsDto
 	 * @param cardEntity
 	 */
-	public static void mapModelValuesToEntityForUpdate(CardDetailsUpdateDto cardDetailsDto, CardDetails cardEntity) {
-		if(cardDetailsDto.getCardHolderName()!=null) {
+	public void mapModelValuesToEntityForUpdate(@Valid CardDetailsUpdateDto cardDetailsDto, CardDetails cardEntity) {
+		if (cardDetailsDto.getCardHolderName() != null) {
 			cardEntity.setCardHolderName(cardDetailsDto.getCardHolderName());
 		}
-		
-		if(cardDetailsDto.getCardNumber()!=null) {
+
+		if (cardDetailsDto.getCardNumber() != null) {
 			cardEntity.setCardNumber(cardDetailsDto.getCardNumber());
 		}
-		
-		if(cardDetailsDto.getExpiryDate() != null) {
+
+		if (cardDetailsDto.getExpiryDate() != null) {
 			cardEntity.setExpiryDate(cardDetailsDto.getExpiryDate());
 		}
-		
+
 		cardEntity.setUpdatedBy(cardDetailsDto.getLoggedInUserId());
 		cardEntity.setUpdatedDate(new Date());
 	}

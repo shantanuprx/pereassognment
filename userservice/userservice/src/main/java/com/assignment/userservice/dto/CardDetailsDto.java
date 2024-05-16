@@ -28,7 +28,7 @@ public class CardDetailsDto extends BaseDto {
 	private int recordId;
 
 	@NotNull
-	@Size(min = 16, max = 16)
+	@Size(min = 16, max = 16, message = "Card number should be of 16 digits")
 	private String cardNumber;
 
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "IST")

@@ -46,6 +46,9 @@ public class ProductOperationService<T> implements BaseService<T> {
 
 	@Autowired
 	private ResponseUtil<T> responseUtil;
+	
+	@Autowired
+	private ProductAdapter productAdapter;
 
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) throws Exception {
 		log.info("Entering getDetails Method at {} ", System.currentTimeMillis());
@@ -57,7 +60,7 @@ public class ProductOperationService<T> implements BaseService<T> {
 				throw new BadRequestException(ProductsConstants.INVALID_PRODUCT_ID);
 			}
 			Product productEntity = productEntityOptional.get();
-			ProductDto productDto = ProductAdapter.convertEntityToModel(productEntity);
+			ProductDto productDto = productAdapter.convertEntityToModel(productEntity);
 			log.info("Product {} successfully fetched ", productEntity.getProductId());
 			return responseUtil.prepareResponse((T) productDto, HttpStatus.OK);
 		} catch (Exception ex) {
@@ -75,7 +78,7 @@ public class ProductOperationService<T> implements BaseService<T> {
 			if (!GatewayServiceConstants.ADMIN_USER_ROLE.equalsIgnoreCase(request.getUserRole())) {
 				throw new BadRequestException(ProductsConstants.ONLY_ADMIN_USER_IS_ALLOWED);
 			}
-			Product productEntityToPersist = ProductAdapter.convertModelToEntityForInsertion(request);
+			Product productEntityToPersist = productAdapter.convertModelToEntityForInsertion(request);
 			productEntityToPersist.setCreatedBy(request.getLoggedInUserId());
 			productRepository.save(productEntityToPersist);
 			elasticSearchUtil.indexObject(request);
@@ -103,10 +106,10 @@ public class ProductOperationService<T> implements BaseService<T> {
 				throw new BadRequestException(ProductsConstants.INVALID_PRODUCT_ID);
 			}
 			Product productEntity = productEntityOptional.get();
-			ProductAdapter.mapModelValuesToEntityForUpdate(request, productEntity);
+			productAdapter.mapModelValuesToEntityForUpdate(request, productEntity);
 			productEntity.setUpdatedBy(request.getLoggedInUserId());
 			productRepository.save(productEntity);
-			elasticSearchUtil.updateObject(ProductAdapter.convertEntityToModel(productEntity));
+			elasticSearchUtil.updateObject(productAdapter.convertEntityToModel(productEntity));
 			log.info("Product {} successfully updated by {} ", productEntity.getProductId(),
 					request.getLoggedInUserId());
 			return responseUtil.prepareResponse((T) new ResponseDto(productEntity.getProductId(), HttpStatus.OK,
@@ -132,7 +135,7 @@ public class ProductOperationService<T> implements BaseService<T> {
 				throw new BadRequestException(ProductsConstants.INVALID_PRODUCT_ID);
 			}
 			Product productEntity = productEntityOptional.get();
-			ProductAdapter.updateEntityValuesForDeletion(productEntity, request);
+			productAdapter.updateEntityValuesForDeletion(productEntity, request);
 			productEntity.setUpdatedBy(request.getLoggedInUserId());
 			productRepository.save(productEntity);
 			elasticSearchUtil.deleteItemFromIndex(productEntity.getProductId());

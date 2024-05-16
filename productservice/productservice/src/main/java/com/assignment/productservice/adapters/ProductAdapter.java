@@ -3,6 +3,7 @@ package com.assignment.productservice.adapters;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import com.assignment.productservice.constants.ProductsConstants;
@@ -12,19 +13,16 @@ import com.assignment.productservice.entity.Product;
 
 import jakarta.validation.Valid;
 
+@Component
 @Validated
 public class ProductAdapter {
-
-	private ProductAdapter() {
-
-	}
 
 	/**
 	 * 
 	 * @param model
 	 * @return Product entity that needs to be inserted
 	 */
-	public static Product convertModelToEntityForInsertion(@Valid ProductDto model) {
+	public Product convertModelToEntityForInsertion(@Valid ProductDto model) {
 		Product productEntity = new Product();
 		productEntity.setCurrentStock(model.getCurrentStock());
 		productEntity.setPrice(model.getPrice());
@@ -44,7 +42,7 @@ public class ProductAdapter {
 	 * @param request
 	 * @param product
 	 */
-	public static void mapModelValuesToEntityForUpdate(ProductUpdateDto request, Product product) {
+	public void mapModelValuesToEntityForUpdate(ProductUpdateDto request, Product product) {
 		if (request.getPrice() != null) {
 			if (!product.getPrice().equals(request.getPrice())) {
 				product.setOldPrice(product.getPrice());
@@ -88,7 +86,7 @@ public class ProductAdapter {
 	 * @param productEntity
 	 * @param request
 	 */
-	public static void updateEntityValuesForDeletion(Product productEntity, ProductUpdateDto request) {
+	public void updateEntityValuesForDeletion(Product productEntity, ProductUpdateDto request) {
 		productEntity.setIsDeleted(ProductsConstants.YES_FLAG);
 		productEntity.setUpdatedTimestamp(Timestamp.valueOf(LocalDateTime.now()));
 		productEntity.setUpdatedBy(request.getLoggedInUserId());
@@ -100,7 +98,7 @@ public class ProductAdapter {
 	 * @param productEntity
 	 * @return new Product dto
 	 */
-	public static ProductDto convertEntityToModel(Product productEntity) {
+	public ProductDto convertEntityToModel(Product productEntity) {
 		ProductDto productDto = new ProductDto();
 		productDto.setProductId(productEntity.getProductId());
 		productDto.setPrice(productEntity.getPrice());

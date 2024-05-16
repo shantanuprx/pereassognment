@@ -44,7 +44,7 @@ public class OrderValidationUtil {
 	public boolean validateOrderDetails(OrdersDto ordersDto) {
 		Optional<Product> product = productRepository.findByProductId(ordersDto.getProductId());
 		if (product.isEmpty() || !"A".equalsIgnoreCase(product.get().getStatus())
-				|| product.get().getCurrentStock() == 0) {
+				|| product.get().getCurrentStock() == 0 || "Y".equalsIgnoreCase(product.get().getIsDeleted())) {
 			throw new BadRequestException(OrdersConstant.PRODUCT_NOT_ELIGIBLE_FOR_ORDER);
 		}
 		if ("card".equalsIgnoreCase(ordersDto.getPaymentSource())) {

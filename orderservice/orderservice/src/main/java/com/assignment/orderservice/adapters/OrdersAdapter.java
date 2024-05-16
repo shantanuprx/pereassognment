@@ -2,6 +2,7 @@ package com.assignment.orderservice.adapters;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import com.assignment.orderservice.constants.OrdersConstant;
@@ -12,6 +13,7 @@ import com.assignment.orderservice.exception.BadRequestException;
 
 import jakarta.validation.Valid;
 
+@Component
 @Validated
 public class OrdersAdapter {
 
@@ -21,7 +23,7 @@ public class OrdersAdapter {
 	 * @param orderEntity
 	 * @return OrderDto the new order dto
 	 */
-	public static OrdersDto convertEntityToModel(Orders orderEntity) {
+	public OrdersDto convertEntityToModel(Orders orderEntity) {
 		OrdersDto ordersDto = new OrdersDto();
 		ordersDto.setAddressId(orderEntity.getAddressId());
 		ordersDto.setCreateTimestamp(orderEntity.getCreateTimestamp());
@@ -42,7 +44,7 @@ public class OrdersAdapter {
 	 * @param ordersDto
 	 * @return Orders Entity
 	 */
-	public static Orders convertModelToEntityForInsertion(@Valid OrdersDto ordersDto) {
+	public Orders convertModelToEntityForInsertion(@Valid OrdersDto ordersDto) {
 		Orders orders = new Orders();
 		orders.setAddressId(ordersDto.getAddressId());
 		orders.setCreatedBy(ordersDto.getLoggedInUserId());
@@ -69,7 +71,7 @@ public class OrdersAdapter {
 	 * @param ordersDto
 	 */
 
-	public static void mapValuesFromModelToEntityForUpdate(Orders orderEntity, @Valid OrdersUpdateDto ordersDto) {
+	public void mapValuesFromModelToEntityForUpdate(Orders orderEntity, @Valid OrdersUpdateDto ordersDto) {
 		if (OrdersConstant.ORDER_CANCELLED_STATUS.equalsIgnoreCase(orderEntity.getOrderStatus())) {
 			throw new BadRequestException("Order already Cancelled");
 		}

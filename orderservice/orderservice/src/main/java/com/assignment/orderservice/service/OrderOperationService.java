@@ -47,6 +47,9 @@ public class OrderOperationService<T> implements BaseService<T> {
 	
 	@Autowired
 	private OrderValidationUtil orderValidationUtil;
+	
+	@Autowired
+	private OrdersAdapter ordersAdapter;
 
 	@Override
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) {
@@ -59,7 +62,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 				throw new BadRequestException(OrdersConstant.INVALID_RECORD_REQUEST);
 			}
 			Orders orderEntity = orderEntityOptional.get();
-			OrdersDto orderDto = OrdersAdapter.convertEntityToModel(orderEntity);
+			OrdersDto orderDto = ordersAdapter.convertEntityToModel(orderEntity);
 			log.info("Order details {} successfully fetched ", orderEntity.getOrderId());
 			return responseUtil.prepareResponse((T) orderDto, HttpStatus.OK);
 		} catch (Exception ex) {
@@ -75,7 +78,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 		log.info("Entering addDetails Method at {} ", System.currentTimeMillis());
 		try {
 			OrdersDto ordersDto = new ObjectMapper().convertValue(requestData, OrdersDto.class);
-			Orders orderEntity = OrdersAdapter.convertModelToEntityForInsertion(ordersDto);
+			Orders orderEntity = ordersAdapter.convertModelToEntityForInsertion(ordersDto);
 			orderValidationUtil.validateOrderDetails(ordersDto);
 			ordersRepository.save(orderEntity);
 			orderValidationUtil.reduceStockForProduct(orderEntity);
@@ -101,7 +104,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 				throw new BadRequestException(OrdersConstant.INVALID_RECORD_REQUEST);
 			}
 			Orders orderEntity = orderEntityOptional.get();
-			OrdersAdapter.mapValuesFromModelToEntityForUpdate(orderEntity, ordersDto);
+			ordersAdapter.mapValuesFromModelToEntityForUpdate(orderEntity, ordersDto);
 			ordersRepository.save(orderEntity);
 			orderValidationUtil.increaseStockValue(orderEntity);
 			log.info("Order details {} successfully updated by {}", orderEntity.getOrderId(), orderEntity.getUserId());

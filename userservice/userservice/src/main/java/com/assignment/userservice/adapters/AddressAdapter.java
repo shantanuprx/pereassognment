@@ -3,6 +3,7 @@ package com.assignment.userservice.adapters;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import com.assignment.userservice.dto.AddressDto;
@@ -12,6 +13,7 @@ import com.assignment.userservice.entity.User;
 
 import jakarta.validation.Valid;
 
+@Component
 @Validated
 public class AddressAdapter {
 
@@ -22,7 +24,7 @@ public class AddressAdapter {
 	 * @return new AddressDto
 	 */
 	
-	public static AddressDto convertEntityToModel(Address addressEntity) {
+	public AddressDto convertEntityToModel(Address addressEntity) {
 		AddressDto addressDto = new AddressDto();
 		addressDto.setRecordId(addressEntity.getRecordId());
 		addressDto.setAddressLine1(addressEntity.getAddressLine1());
@@ -41,7 +43,7 @@ public class AddressAdapter {
 	 * @return new Address entity
 	 */
 	
-	public static Address convertModelToEntityForInsertion(@Valid AddressDto addressDto, User user) {
+	public Address convertModelToEntityForInsertion(@Valid AddressDto addressDto, User user) {
 		Address addressEntity = new Address();
 		addressEntity.setAddressLine1(addressDto.getAddressLine1());
 		addressEntity.setAddressLine2(addressDto.getAddressLine2());
@@ -60,7 +62,7 @@ public class AddressAdapter {
 	 * @param addressEntity
 	 * @param addressDto
 	 */
-	public static void convertModelToEntityForUpdate(Address addressEntity, AddressUpdateDto addressDto) {
+	public void convertModelToEntityForUpdate(Address addressEntity, AddressUpdateDto addressDto) {
 		if (addressDto.getAddressLine1() != null) {
 			addressEntity.setAddressLine1(addressDto.getAddressLine1());
 		}
