@@ -18,6 +18,7 @@ import com.assignment.productservice.dto.ResponseDto;
 import com.assignment.productservice.entity.Product;
 import com.assignment.productservice.repository.ProductRepository;
 import com.assignment.productservice.util.ElasticSearchUtil;
+import com.assignment.productservice.util.JedisClientHelper;
 import com.assignment.productservice.util.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,12 +50,20 @@ public class ProductOperationService<T> implements BaseService<T> {
 	
 	@Autowired
 	private ProductAdapter productAdapter;
+	
+	@Autowired
+	private JedisClientHelper jedisClientHelper;
 
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) throws Exception {
 		log.info("Entering getDetails Method at {} ", System.currentTimeMillis());
 
 		try {
 			ProductDto request = new ObjectMapper().convertValue(requestData, ProductDto.class);
+			String productFromCache = jedisClientHelper.loadFromCache(request);
+			if (productFromCache != null) {
+				return responseUtil.prepareResponse(
+						(T) new ObjectMapper().readValue(productFromCache.getBytes(), ProductDto.class), HttpStatus.OK);
+			}
 			Optional<Product> productEntityOptional = productRepository.findById(request.getProductId());
 			if (productEntityOptional.isEmpty()) {
 				throw new BadRequestException(ProductsConstants.INVALID_PRODUCT_ID);
@@ -62,6 +71,7 @@ public class ProductOperationService<T> implements BaseService<T> {
 			Product productEntity = productEntityOptional.get();
 			ProductDto productDto = productAdapter.convertEntityToModel(productEntity);
 			log.info("Product {} successfully fetched ", productEntity.getProductId());
+			jedisClientHelper.saveProductInCache(productDto);
 			return responseUtil.prepareResponse((T) productDto, HttpStatus.OK);
 		} catch (Exception ex) {
 			log.error("Exception occurred while fetching product details with exception ", ex);

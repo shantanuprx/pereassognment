@@ -166,6 +166,24 @@ public class ControllerLayerTest<T> {
 		assertTrue(result.contains(ProductsConstants.RECORD_DELETE_MESSAGE));
 
 	}
+	
+	@Test
+	public void fetchDetailsWithStatus400() throws JsonProcessingException, Exception {
+		ProductDto productDto = new ProductDto();
+		productDto.setProductId(0);
+		productDto.setToken(setUp("CUSTOMER"));
+		mvc.perform(MockMvcRequestBuilders.get("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
+		
+		productDto.setProductId(1000000);
+		productDto.setToken(setUp("CUSTOMER"));
+		String result = mvc
+				.perform(MockMvcRequestBuilders.get("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn().getResponse().getContentAsString();
+		assertTrue(result.contains(ProductsConstants.INVALID_PRODUCT_ID));
+	}
 
 	private String setUp(String userRole) {
 		String token = TokenGenService.generateToken(1, userRole, "abc@gmail.com", secreString);

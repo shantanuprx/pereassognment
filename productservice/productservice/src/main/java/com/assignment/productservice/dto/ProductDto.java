@@ -1,5 +1,6 @@
 package com.assignment.productservice.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -8,8 +9,6 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,8 +27,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Validated
-public class ProductDto extends BaseDto {	
+public class ProductDto extends BaseDto implements Serializable{	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9177132688827244784L;
+
 	private Integer productId;
 
 	@NotBlank
