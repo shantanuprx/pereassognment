@@ -1,5 +1,6 @@
 package com.assignment.userservice.service;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import com.assignment.userservice.constants.PaymentConstants;
 import com.assignment.userservice.dto.CardDetailsDto;
 import com.assignment.userservice.dto.CardDetailsUpdateDto;
 import com.assignment.userservice.dto.ResponseDto;
+import com.assignment.userservice.dto.ValidationDto;
 import com.assignment.userservice.entity.CardDetails;
 import com.assignment.userservice.exception.BadRequestException;
 import com.assignment.userservice.repository.CardDetailsRepository;
@@ -136,6 +138,33 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 			throw ex;
 		} finally {
 			log.info("Exiting deleteDetails method at  {} ", System.currentTimeMillis());
+		}
+	}
+	
+	@Override
+	public ResponseEntity<T> validateDetails(Map<String, Object> requestData) throws Exception {
+		log.info("Entering validateDetails Method at {} ", System.currentTimeMillis());
+		try {
+			CardDetailsDto cardDetailsDto = new ObjectMapper().convertValue(requestData, CardDetailsDto.class);
+			Optional<CardDetails> cardEntityOptional = cardDetailsRepository
+					.findByRecordId(cardDetailsDto.getRecordId());
+			ValidationDto validationDto = new ValidationDto();
+			if (cardEntityOptional.isEmpty()
+					|| cardEntityOptional.get().getUser().getUserId() != cardDetailsDto.getLoggedInUserId()) {
+				validationDto.setValidity(false);
+				validationDto.setErrorMessage(PaymentConstants.INVALID_RECORD_REQUEST);
+			} else if (cardEntityOptional.get().getExpiryDate().before(new Date())) {
+				validationDto.setValidity(false);
+				validationDto.setErrorMessage(PaymentConstants.PAYMENT_NOT_ELIGIBLE_FOR_ORDER);
+			} else {
+				validationDto.setValidity(true);
+			}
+			return responseUtil.prepareResponse((T) validationDto, HttpStatus.OK);
+		} catch (Exception ex) {
+			log.error("Exception occurred while validating card details with exception ", ex);
+			throw ex;
+		} finally {
+			log.info("Exiting validateDetails method at  {} ", System.currentTimeMillis());
 		}
 	}
 }

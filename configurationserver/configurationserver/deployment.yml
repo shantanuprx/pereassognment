@@ -16,12 +16,6 @@ spec:
     - name: configurationservicepods
       image: gryffindor937/configurationservicedeployment:1.0
       imagePullPolicy: Always
-      env:
-       - name: eureka_client_service-url_defaultZone
-         valueFrom: 
-          configMapKeyRef: 
-           name: globalconfigmap
-           key: eureka_client_service-url_defaultZone
       ports:
        - containerPort: 8762
 ---

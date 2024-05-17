@@ -98,6 +98,14 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.11.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -141,12 +149,13 @@
 							<goal>report</goal>
 						</goals>
 						<configuration>
-                        <excludes>
-                            <exclude>com/assignment/productservice/dto/**</exclude> 
-                            <exclude>com/assignment/productservice/exception/**</exclude> 
-                            <exclude>com/assignment/productservice/entity/**</exclude>
-                        </excludes>
-                    </configuration>
+							<excludes>
+								<exclude>com/assignment/productservice/dto/**</exclude>
+								<exclude>
+									com/assignment/productservice/exception/**</exclude>
+								<exclude>com/assignment/productservice/entity/**</exclude>
+							</excludes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

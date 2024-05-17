@@ -32,30 +32,37 @@ public class AppController<T> {
 	private AuthorizationService<T> authorizationService;
 
 	@GetMapping("/{serviceName}/**")
-	public ResponseEntity<T> getDetaislsOfProduct(@PathVariable("serviceName") String serviceName,
+	public ResponseEntity<T> getDetails(@PathVariable("serviceName") String serviceName,
 			@RequestBody Map<String, Object> requestMap) throws Exception {
 		authorizationService.validateToken(requestMap);
 		return serviceLocator.locateServiceBean(serviceName).getDetails(requestMap);
 	}
 
 	@PostMapping("/{serviceName}/**")
-	public ResponseEntity<T> addProduct(@PathVariable("serviceName") String serviceName,
+	public ResponseEntity<T> addDetails(@PathVariable("serviceName") String serviceName,
 			@RequestBody Map<String, Object> requestMap) throws Exception {
 		authorizationService.validateToken(requestMap);
 		return serviceLocator.locateServiceBean(serviceName).addDetails(requestMap);
 	}
 
 	@PutMapping("/{serviceName}/**")
-	public ResponseEntity<T> updateProduct(@PathVariable("serviceName") String serviceName,
+	public ResponseEntity<T> udpateDetails(@PathVariable("serviceName") String serviceName,
 			@RequestBody Map<String, Object> requestMap) throws Exception {
 		authorizationService.validateToken(requestMap);
 		return serviceLocator.locateServiceBean(serviceName).updateDetails(requestMap);
 	}
 
 	@DeleteMapping("/{serviceName}/**")
-	public ResponseEntity<T> deleteProduct(@PathVariable("serviceName") String serviceName,
+	public ResponseEntity<T> deleteDetails(@PathVariable("serviceName") String serviceName,
 			@RequestBody Map<String, Object> requestMap) throws Exception {
 		authorizationService.validateToken(requestMap);
 		return serviceLocator.locateServiceBean(serviceName).deleteDetails(requestMap);
+	}
+	
+	@GetMapping("/{serviceName}/validate")
+	public ResponseEntity<T> validateDetails(@PathVariable("serviceName") String serviceName,
+			@RequestBody Map<String, Object> requestMap) throws Exception {
+		authorizationService.validateToken(requestMap);
+		return serviceLocator.locateServiceBean(serviceName).validateDetails(requestMap);
 	}
 }

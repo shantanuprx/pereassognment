@@ -14,6 +14,8 @@ public class ProductsConstants {
 	public static final String RECORD_DELETE_MESSAGE = "Product deleted Successfully";
 	public static final String ONLY_ADMIN_USER_IS_ALLOWED = "This Operation is allowed only for Admin";
 	public static final String OUT_OF_STOCK_STATUS = "O";
+	public static final String PRODUCT_NOT_ELIGIBLE_FOR_ORDER = "Product not eligible for orders";
+
 
 	private ProductsConstants() {
 		

@@ -54,4 +54,11 @@ public class AppController<T> {
 		authorizationService.validateToken(requestMap);
 		return serviceLocator.locateServiceBean(serviceName).deleteDetails(requestMap);
 	}
+	
+	@GetMapping("/{serviceName}/validate")
+	public ResponseEntity<T> validateDetails(@PathVariable("serviceName") String serviceName,
+			@RequestBody Map<String, Object> requestMap) throws Exception {
+		authorizationService.validateToken(requestMap);
+		return serviceLocator.locateServiceBean(serviceName).validateDetails(requestMap);
+	}
 }

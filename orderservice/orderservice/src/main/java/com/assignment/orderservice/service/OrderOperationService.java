@@ -52,7 +52,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 	private OrdersAdapter ordersAdapter;
 
 	@Override
-	public ResponseEntity<T> getDetails(Map<String, Object> requestData) {
+	public ResponseEntity<T> getDetails(Map<String, Object> requestData) throws Exception{
 		log.info("Entering getDetails Method at {} ", System.currentTimeMillis());
 		try {
 			OrdersDto ordersDto = new ObjectMapper().convertValue(requestData, OrdersDto.class);
@@ -74,7 +74,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 	}
 
 	@Override
-	public ResponseEntity<T> addDetails(Map<String, Object> requestData) {
+	public ResponseEntity<T> addDetails(Map<String, Object> requestData) throws Exception{
 		log.info("Entering addDetails Method at {} ", System.currentTimeMillis());
 		try {
 			OrdersDto ordersDto = new ObjectMapper().convertValue(requestData, OrdersDto.class);
@@ -94,7 +94,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 	}
 
 	@Override
-	public ResponseEntity<T> updateDetails(Map<String, Object> requestData) {
+	public ResponseEntity<T> updateDetails(Map<String, Object> requestData) throws Exception{
 		log.info("Entering updateDetails Method at {} ", System.currentTimeMillis());
 		try {
 			OrdersUpdateDto ordersDto = new ObjectMapper().convertValue(requestData, OrdersUpdateDto.class);
@@ -119,7 +119,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 	}
 
 	@Override
-	public ResponseEntity<T> deleteDetails(Map<String, Object> requestData) {
+	public ResponseEntity<T> deleteDetails(Map<String, Object> requestData) throws Exception {
 		return responseUtil.prepareResponse((T) new ResponseDto(0, HttpStatus.BAD_REQUEST, OPERATION_NOT_SUPPORTED),
 				HttpStatus.BAD_REQUEST);
 	}

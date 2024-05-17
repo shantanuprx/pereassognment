@@ -15,5 +15,7 @@ public class PaymentConstants {
 	public static final String RECORD_UPDATED_SUCCESSFULLY = "Payment method updated successfully";
 	public static final String RECORD_DELETED_SUCCESSFULLY = "Payment method deleted successfully";
 	public static final String USER_ID_NOT_EXIST = "Invalid User Id";
+	public static final String PAYMENT_NOT_ELIGIBLE_FOR_ORDER = "Payment method not eligible for orders";
+
 
 }

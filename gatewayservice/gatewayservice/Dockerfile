@@ -22,4 +22,4 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
 
 COPY target/gatewayservice-0.0.1-SNAPSHOT.jar gatewayservice.jar
 
-ENTRYPOINT [ "java", "-jar", "-Dspring.datasource.url=jdbc:mysql://mysqllb.default.svc.cluster.local:3306/pereassignment", "-Dredis.url=redislb.default.svc.cluster.local","-Dredis.port=6379", "gatewayservice.jar"]
+ENTRYPOINT [ "java", "-jar", "-Dspring.profiles.active=cluster","-Deureka.client.service-url.defaultZone=http://discoveryservicelb.default.svc.cluster.local:8761/eureka", "-Dspring.config.import=configserver:http://configurationservicelb.default.svc.cluster.local:8762/config", "gatewayservice.jar"]

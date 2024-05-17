@@ -2,69 +2,64 @@ package com.assignment.orderservice.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.assignment.orderservice.constants.OrdersConstant;
 import com.assignment.orderservice.dto.OrdersDto;
-import com.assignment.orderservice.entity.Address;
-import com.assignment.orderservice.entity.CardDetails;
 import com.assignment.orderservice.entity.Orders;
 import com.assignment.orderservice.entity.Product;
 import com.assignment.orderservice.exception.BadRequestException;
-import com.assignment.orderservice.repository.AddressRepository;
-import com.assignment.orderservice.repository.CardDetailsRepository;
 import com.assignment.orderservice.repository.ProductRepository;
+import com.assignment.orderservice.service.AddressService;
+import com.assignment.orderservice.service.PaymentService;
+import com.assignment.orderservice.service.ProductService;
 
 @Component
 public class OrderValidationUtil {
 
 	@Autowired
-	private AddressRepository addressRepository;
+	private ProductService productService;
 
 	@Autowired
-	private CardDetailsRepository cardDetailsRepository;
+	private AddressService addressService;
+
+	@Autowired
+	private PaymentService paymentService;
 
 	@Autowired
 	private ProductRepository productRepository;
 
 	/**
-	 * Checks and informs whether order could be placed or not
-	 * Valid Address
-	 * Valid Product
-	 * Valid payment 
-	 * Above points are checked.
+	 * Checks and informs whether order could be placed or not Valid Address Valid
+	 * Product Valid payment Above points are checked.
 	 * 
 	 * @param ordersDto
-	 * @return boolean 
+	 * @return boolean
+	 * @throws Exception
 	 */
-	public boolean validateOrderDetails(OrdersDto ordersDto) {
-		Optional<Product> product = productRepository.findByProductId(ordersDto.getProductId());
-		if (product.isEmpty() || !"A".equalsIgnoreCase(product.get().getStatus())
-				|| product.get().getCurrentStock() == 0 || "Y".equalsIgnoreCase(product.get().getIsDeleted())) {
-			throw new BadRequestException(OrdersConstant.PRODUCT_NOT_ELIGIBLE_FOR_ORDER);
-		}
-		if ("card".equalsIgnoreCase(ordersDto.getPaymentSource())) {
-			Optional<CardDetails> cardDetails = cardDetailsRepository.findByRecordId(ordersDto.getPaymentId());
-			if (cardDetails.isEmpty() || cardDetails.get().getExpiryDate().before(new Date())) {
-				throw new BadRequestException(OrdersConstant.PAYMENT_NOT_ELIGIBLE_FOR_ORDER);
-			}
-		} else {
-			throw new BadRequestException(OrdersConstant.PAYMENT_TYPE_NOT_ALLOWED);
+	public boolean validateOrderDetails(OrdersDto ordersDto) throws Exception {
+		String productValidationError = productService.validateProduct(ordersDto);
+		if (productValidationError != null) {
+			throw new BadRequestException(productValidationError);
 		}
 
-		Optional<Address> addressOptional = addressRepository.findByRecordId(ordersDto.getAddressId());
-		if (addressOptional.isEmpty()) {
-			throw new BadRequestException(OrdersConstant.ADDRESS_NOT_ELIGIBLE_FOR_ORDER);
+		String paymentValidationError = paymentService.validatePayment(ordersDto);
+		if (paymentValidationError != null) {
+			throw new BadRequestException(paymentValidationError);
+		}
+
+		String addressValidationError = addressService.validateAddress(ordersDto);
+		if (addressValidationError != null) {
+			throw new BadRequestException(addressValidationError);
 		}
 		return true;
 	}
 
 	/**
 	 * Reduce the stock of product for which order is place.
+	 * 
 	 * @param orderEntity
 	 */
 	public void reduceStockForProduct(Orders orderEntity) {
@@ -80,6 +75,7 @@ public class OrderValidationUtil {
 
 	/**
 	 * increase the stock of product for which order is cancelled.
+	 * 
 	 * @param orderEntity
 	 */
 	public void increaseStockValue(Orders orderEntity) {

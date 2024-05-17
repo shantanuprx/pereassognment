@@ -15,6 +15,7 @@ import com.assignment.productservice.constants.ProductsConstants;
 import com.assignment.productservice.dto.ProductDto;
 import com.assignment.productservice.dto.ProductUpdateDto;
 import com.assignment.productservice.dto.ResponseDto;
+import com.assignment.productservice.dto.ValidationDto;
 import com.assignment.productservice.entity.Product;
 import com.assignment.productservice.repository.ProductRepository;
 import com.assignment.productservice.util.ElasticSearchUtil;
@@ -158,6 +159,32 @@ public class ProductOperationService<T> implements BaseService<T> {
 			throw ex;
 		} finally {
 			log.info("Exiting deleteProduct method at  {} ", System.currentTimeMillis());
+		}
+	}
+
+	@Override
+	public ResponseEntity<T> validateDetails(Map<String, Object> requestData) throws Exception {
+		log.info("Entering validateDetails Method at {} ", System.currentTimeMillis());
+
+		try {
+			ProductDto request = new ObjectMapper().convertValue(requestData, ProductDto.class);
+			Optional<Product> productEntityOptional = productRepository.findByProductId(request.getProductId());
+			ValidationDto validationDto = new ValidationDto();
+			if (productEntityOptional.isEmpty()
+					|| !ProductsConstants.ACTIVE_FLAG.equalsIgnoreCase(productEntityOptional.get().getStatus())
+					|| productEntityOptional.get().getCurrentStock() == 0
+					|| ProductsConstants.YES_FLAG.equalsIgnoreCase(productEntityOptional.get().getIsDeleted())) {
+				validationDto.setErrorMessage(ProductsConstants.PRODUCT_NOT_ELIGIBLE_FOR_ORDER);
+				validationDto.setValidity(false);
+			} else {
+				validationDto.setValidity(true);
+			}
+			return responseUtil.prepareResponse((T) validationDto, HttpStatus.OK);
+		} catch (Exception ex) {
+			log.error("Exception occurred while validating product details with exception ", ex);
+			throw ex;
+		} finally {
+			log.info("Exiting validateDetails method at  {} ", System.currentTimeMillis());
 		}
 	}
 

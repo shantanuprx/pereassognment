@@ -14,5 +14,7 @@ public class AddressConstants {
 	public static final String RECORD_UPDATED_SUCCESSFULLY = "Address updated successfully";
 	public static final String RECORD_DELETED_SUCCESSFULLY = "Address deleted successfully";
 	public static final String USER_ID_NOT_EXIST = "Invalid User Id";
+	public static final String ADDRESS_NOT_ELIGIBLE_FOR_ORDER = "Address not eligible for orders";
+
 
 }

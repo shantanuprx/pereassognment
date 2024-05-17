@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
@@ -21,7 +22,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * Redis pool and Auth filter bean
  * 
  * */
-
+@EnableFeignClients
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class OrderserviceApplication {
 

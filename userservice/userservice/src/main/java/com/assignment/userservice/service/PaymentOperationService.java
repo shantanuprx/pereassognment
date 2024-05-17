@@ -39,6 +39,11 @@ public class PaymentOperationService<T> implements BaseService<T> {
 	public ResponseEntity<T> deleteDetails(Map<String, Object> requestData) throws Exception {
 		return serviceLocator.locateServiceBean(fetchPaymentType(requestData)).deleteDetails(requestData);
 	}
+	
+	@Override
+	public ResponseEntity<T> validateDetails(Map<String, Object> requestData) throws Exception {
+		return serviceLocator.locateServiceBean(fetchPaymentType(requestData)).validateDetails(requestData);
+	}
 
 	/**
 	 * fetching payment type from the request payload
@@ -55,4 +60,5 @@ public class PaymentOperationService<T> implements BaseService<T> {
 			throw new BadRequestException("Payment Type is required");
 		}
 	}
+	
 }

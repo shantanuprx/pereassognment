@@ -66,4 +66,10 @@ public class ProfileServices<T> implements BaseService<T> {
 		return loggedInEntity.get();
 	}
 
+	@Override
+	public ResponseEntity<T> validateDetails(Map<String, Object> requestData) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

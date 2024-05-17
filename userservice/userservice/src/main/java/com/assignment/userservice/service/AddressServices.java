@@ -13,6 +13,7 @@ import com.assignment.userservice.constants.AddressConstants;
 import com.assignment.userservice.dto.AddressDto;
 import com.assignment.userservice.dto.AddressUpdateDto;
 import com.assignment.userservice.dto.ResponseDto;
+import com.assignment.userservice.dto.ValidationDto;
 import com.assignment.userservice.entity.Address;
 import com.assignment.userservice.exception.BadRequestException;
 import com.assignment.userservice.repository.AddressRepository;
@@ -128,6 +129,29 @@ public class AddressServices<T> implements BaseService<T> {
 			throw ex;
 		} finally {
 			log.info("Exiting deleteDetails method at  {} ", System.currentTimeMillis());
+		}
+	}
+
+	@Override
+	public ResponseEntity<T> validateDetails(Map<String, Object> requestData) throws Exception {
+		log.info("Entering validateDetails Method at {} ", System.currentTimeMillis());
+		try {
+			AddressDto addressDto = new ObjectMapper().convertValue(requestData, AddressDto.class);
+			Optional<Address> addressEntityOptional = addressRepository.findByRecordId(addressDto.getRecordId());
+			ValidationDto validationDto = new ValidationDto();
+			if (addressEntityOptional.isEmpty()
+					|| addressEntityOptional.get().getUser().getUserId() != addressDto.getLoggedInUserId()) {
+				validationDto.setValidity(false);
+				validationDto.setErrorMessage(AddressConstants.ADDRESS_NOT_ELIGIBLE_FOR_ORDER);
+			} else {
+				validationDto.setValidity(true);
+			}
+			return responseUtil.prepareResponse((T) validationDto, HttpStatus.OK);
+		} catch (Exception ex) {
+			log.error("Exception occurred while validating address details with exception ", ex);
+			throw ex;
+		} finally {
+			log.info("Exiting validateDetails method at  {} ", System.currentTimeMillis());
 		}
 	}
 

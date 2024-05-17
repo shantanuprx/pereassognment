@@ -19,5 +19,8 @@ public interface BaseService<T> {
 	public ResponseEntity<T> updateDetails(Map<String, Object> requestData) throws Exception;
 
 	public ResponseEntity<T> deleteDetails(Map<String, Object> requestData) throws Exception;
+	
+	public ResponseEntity<T> validateDetails(Map<String, Object> requestData) throws Exception;
+
 
 }
