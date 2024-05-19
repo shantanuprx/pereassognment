@@ -186,6 +186,60 @@ public class ControllerLayerTest<T> {
 				.andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(ProductsConstants.INVALID_PRODUCT_ID));
 	}
+	
+	@Test
+	public void createProductDetailsAndValidateDetailsWithStatusOk() throws JsonProcessingException, Exception {
+		ProductDto productDto = new ProductDto();
+		productDto.setToken(setUp("ADMIN"));
+		productDto.setProductName("Asus RAM");
+		productDto.setProductDescription("RAM");
+		productDto.setCurrentStock(10);
+		productDto.setStatus("A");
+		productDto.setSeller("Appario");
+		productDto.setSellerAddress("Jaipur");
+		productDto.setPrice(BigDecimal.valueOf(200.0));
+		MvcResult mvcResult = mvc
+				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
+
+		String resultString = mvcResult.getResponse().getContentAsString();
+		JSONObject jsonObject = new JSONObject(resultString);
+		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.TOKEN, setUp("CUSTOMER"), "productId",
+				jsonObject.getInt("id"));
+		String validateResult = mvc
+				.perform(MockMvcRequestBuilders.get("/product/validate").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(requestMap)))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+		assertTrue(validateResult.contains(String.valueOf(true)));
+	}
+	
+	@Test
+	public void createProductDetailsAndFailedValidateDetailsWithStatusOk() throws JsonProcessingException, Exception {
+		ProductDto productDto = new ProductDto();
+		productDto.setToken(setUp("ADMIN"));
+		productDto.setProductName("Asus RAM");
+		productDto.setProductDescription("RAM");
+		productDto.setCurrentStock(10);
+		productDto.setStatus("A");
+		productDto.setSeller("Appario");
+		productDto.setSellerAddress("Jaipur");
+		productDto.setPrice(BigDecimal.valueOf(200.0));
+		MvcResult mvcResult = mvc
+				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(productDto)))
+				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
+
+		String resultString = mvcResult.getResponse().getContentAsString();
+		JSONObject jsonObject = new JSONObject(resultString);
+		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.TOKEN, setUp("CUSTOMER"), "productId",
+				2000);
+		String validateResult = mvc
+				.perform(MockMvcRequestBuilders.get("/product/validate").contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().writeValueAsString(requestMap)))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+		assertTrue(validateResult.contains(String.valueOf(false)));
+	}
 
 	private String setUp(String userRole) {
 		String token = TokenGenService.generateToken(1, userRole, "abc@gmail.com", secreString);
