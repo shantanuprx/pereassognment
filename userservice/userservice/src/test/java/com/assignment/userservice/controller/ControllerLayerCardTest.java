@@ -225,6 +225,100 @@ public class ControllerLayerCardTest<T> {
 		
 	}
 	
+	@Test
+	public void createCardDetailsAndValidateWithStatusOk() throws JsonProcessingException, Exception {
+		User entity = new User();
+		entity.setFirstName("Shantanu");
+		entity.setMidName(null);
+		entity.setLastName("Kumar");
+		entity.setEmail("kumar93782@gmail.com");
+		entity.setPassword("abcdefg");
+		entity.setCreatedBy(GatewayServiceConstants.GATEWAY_SERVICE);
+		entity.setCreatedDate(new Date());
+		entity.setDateOfBirth(new Date());
+		entity.setMobileNumber("9521635420");
+		entity.setStatus(GatewayServiceConstants.ACTIVE_FLAG);
+		entity.setUserRole(GatewayServiceConstants.CUSTOMER_USER_ROLE);
+		
+		userRepository.save(entity);
+		
+		Map<String, Object> requestMap = new HashMap<>();
+		requestMap.put("cardHolderName","SHANTANU KUMAR");
+		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
+		requestMap.put("cardNumber", "1234123412341234");
+		requestMap.put("expiryDate", "12/12/2025");
+		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
+		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString(requestMap))
+			).andExpect(MockMvcResultMatchers.status().isCreated())
+		     .andReturn().getResponse().getContentAsString();
+		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
+		
+		JSONObject jsonObject = new JSONObject(result);
+		
+		Map<String, Object> getRequestMap = new HashMap<>();
+		getRequestMap.put("recordId", jsonObject.getInt("id"));
+		getRequestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, entity.getUserId());
+		getRequestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
+		getRequestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
+		
+		String validateResult = mvc.perform(MockMvcRequestBuilders.get("/payment/validate")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString(getRequestMap))
+			).andExpect(MockMvcResultMatchers.status().isOk())
+		     .andReturn().getResponse().getContentAsString();
+		assertTrue(validateResult.contains(String.valueOf(true)));
+		
+	}
+	
+	@Test
+	public void createCardDetailsAndFailedValidateWithStatusOk() throws JsonProcessingException, Exception {
+		User entity = new User();
+		entity.setFirstName("Shantanu");
+		entity.setMidName(null);
+		entity.setLastName("Kumar");
+		entity.setEmail("kumar93782@gmail.com");
+		entity.setPassword("abcdefg");
+		entity.setCreatedBy(GatewayServiceConstants.GATEWAY_SERVICE);
+		entity.setCreatedDate(new Date());
+		entity.setDateOfBirth(new Date());
+		entity.setMobileNumber("9521635420");
+		entity.setStatus(GatewayServiceConstants.ACTIVE_FLAG);
+		entity.setUserRole(GatewayServiceConstants.CUSTOMER_USER_ROLE);
+		
+		userRepository.save(entity);
+		
+		Map<String, Object> requestMap = new HashMap<>();
+		requestMap.put("cardHolderName","SHANTANU KUMAR");
+		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
+		requestMap.put("cardNumber", "1234123412341234");
+		requestMap.put("expiryDate", "12/12/2025");
+		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
+		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString(requestMap))
+			).andExpect(MockMvcResultMatchers.status().isCreated())
+		     .andReturn().getResponse().getContentAsString();
+		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
+		
+		JSONObject jsonObject = new JSONObject(result);
+		
+		Map<String, Object> getRequestMap = new HashMap<>();
+		getRequestMap.put("recordId", 20000);
+		getRequestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, entity.getUserId());
+		getRequestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
+		getRequestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
+		
+		String validateResult = mvc.perform(MockMvcRequestBuilders.get("/payment/validate")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString(getRequestMap))
+			).andExpect(MockMvcResultMatchers.status().isOk())
+		     .andReturn().getResponse().getContentAsString();
+		assertTrue(validateResult.contains(String.valueOf(false)));
+		
+	}
+	
 	private String setUp(String userRole, int userId) {
 		String token = TokenGenService.generateToken(userId, userRole, "abc@gmail.com", secreString);
 		clientHelper.saveKeyPair(token, String.valueOf(true));

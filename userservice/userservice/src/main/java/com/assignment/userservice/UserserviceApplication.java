@@ -64,7 +64,7 @@ public class UserserviceApplication {
 		FilterRegistrationBean authFilterBean = new FilterRegistrationBean();
 		authFilterBean.setFilter(applicationContext.getBean(AuthFilter.class));
 		authFilterBean.addUrlPatterns("/*");
-		authFilterBean.setName("someFilter");
+		authFilterBean.setName("authFilter");
 		authFilterBean.setOrder(1);
 	    return authFilterBean;
 	}
