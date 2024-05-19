@@ -22,5 +22,6 @@ public class OrdersConstant {
 	public static final String PAYMENT_NOT_ELIGIBLE_FOR_ORDER = "Payment method not eligible for orders";
 	public static final String ADDRESS_NOT_ELIGIBLE_FOR_ORDER = "Address not eligible for orders";
 	public static final String PAYMENT_TYPE_NOT_ALLOWED = "Payment type not allowed";
+	public static final String SERVICE_UNAVAILABLE = "Service unavailable - Order could not be processed at the moment";
 
 }

@@ -19,6 +19,12 @@ public class AddressService {
 	@Autowired
 	private AddressServiceFeignClient addressServiceFeignClient;
 
+	/**
+	 * Service method to call validation service in order to validate address
+	 * @param ordersDto
+	 * @return
+	 * @throws Exception
+	 */
 	public String validateAddress(OrdersDto ordersDto) throws Exception {
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put(GatewayServiceConstants.TOKEN, ordersDto.getToken());
@@ -31,5 +37,10 @@ public class AddressService {
 			return validationDto.getErrorMessage();
 		}
 	}
+	
+//	@SuppressWarnings("unused")
+//	private String validateAddressFallBackMethod(OrdersDto ordersDto) throws Exception{
+//		return OrdersConstant.SERVICE_UNAVAILABLE;
+//	}
 
 }

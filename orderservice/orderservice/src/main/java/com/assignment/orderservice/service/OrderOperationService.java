@@ -17,6 +17,7 @@ import com.assignment.orderservice.dto.ResponseDto;
 import com.assignment.orderservice.entity.Orders;
 import com.assignment.orderservice.exception.BadRequestException;
 import com.assignment.orderservice.repository.OrdersRepository;
+import com.assignment.orderservice.util.KafkaClientForOrderNotification;
 import com.assignment.orderservice.util.OrderValidationUtil;
 import com.assignment.orderservice.util.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,6 +51,9 @@ public class OrderOperationService<T> implements BaseService<T> {
 	
 	@Autowired
 	private OrdersAdapter ordersAdapter;
+	
+	@Autowired
+	private KafkaClientForOrderNotification clientForOrderNotification;
 
 	@Override
 	public ResponseEntity<T> getDetails(Map<String, Object> requestData) throws Exception{
@@ -82,6 +86,7 @@ public class OrderOperationService<T> implements BaseService<T> {
 			orderValidationUtil.validateOrderDetails(ordersDto);
 			ordersRepository.save(orderEntity);
 			orderValidationUtil.reduceStockForProduct(orderEntity);
+			clientForOrderNotification.sendMessage("Order created and order id is " + orderEntity.getOrderId());
 			log.info("Order details {} successfully created ", orderEntity.getOrderId());
 			return responseUtil.prepareResponse((T) new ResponseDto(orderEntity.getOrderId(), HttpStatus.CREATED,
 					OrdersConstant.RECORD_CREATION_MESSAGE), HttpStatus.CREATED);

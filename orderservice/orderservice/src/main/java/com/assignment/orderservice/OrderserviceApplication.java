@@ -1,7 +1,11 @@
 package com.assignment.orderservice;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +15,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
 
 import com.assignment.orderservice.security.service.AuthFilter;
 
@@ -20,6 +27,7 @@ import redis.clients.jedis.JedisPoolConfig;
 /* *
  * Application starter class with 
  * Redis pool and Auth filter bean
+ * Also contains configuration for kafka client
  * 
  * */
 @EnableFeignClients
@@ -38,6 +46,9 @@ public class OrderserviceApplication {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
+	
+	@Value("${kafka.bootstrap.server}")
+	private String bootstrapAddress;
 	
 	@Bean
 	JedisPool jedisPool() {
@@ -67,8 +78,28 @@ public class OrderserviceApplication {
 		FilterRegistrationBean authFilterBean = new FilterRegistrationBean();
 		authFilterBean.setFilter(applicationContext.getBean(AuthFilter.class));
 		authFilterBean.addUrlPatterns("/*");
-		authFilterBean.setName("someFilter");
+		authFilterBean.setName("authFilter");
 		authFilterBean.setOrder(1);
 	    return authFilterBean;
 	}
+	
+	@Bean
+    ProducerFactory<String, String> producerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(
+          ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
+          bootstrapAddress);
+        configProps.put(
+          ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
+          StringSerializer.class);
+        configProps.put(
+          ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, 
+          StringSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean
+    KafkaTemplate<String, String> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
+    }
 }

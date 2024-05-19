@@ -25,6 +25,12 @@ public class PaymentService {
 
 	private static final Set<String> ALLOWED_PAYMENT_SOURCE = new HashSet<>(Arrays.asList("card"));
 
+	/**
+	 * Service method to call validation service in order to validate payment
+	 * @param ordersDto
+	 * @return
+	 * @throws Exception
+	 */
 	public String validatePayment(OrdersDto ordersDto) throws Exception {
 		if (ALLOWED_PAYMENT_SOURCE.contains(ordersDto.getPaymentSource())) {
 			Map<String, Object> requestMap = new HashMap<>();

@@ -16,7 +16,10 @@ import com.assignment.orderservice.service.AddressService;
 import com.assignment.orderservice.service.PaymentService;
 import com.assignment.orderservice.service.ProductService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class OrderValidationUtil {
 
 	@Autowired
@@ -40,6 +43,7 @@ public class OrderValidationUtil {
 	 * @throws Exception
 	 */
 	public boolean validateOrderDetails(OrdersDto ordersDto) throws Exception {
+		log.info("Entering validateOrderDetails method at {}", System.currentTimeMillis());
 		String productValidationError = productService.validateProduct(ordersDto);
 		if (productValidationError != null) {
 			throw new BadRequestException(productValidationError);
@@ -54,6 +58,7 @@ public class OrderValidationUtil {
 		if (addressValidationError != null) {
 			throw new BadRequestException(addressValidationError);
 		}
+		log.info("Exiting validateOrderDetails method at {}", System.currentTimeMillis());
 		return true;
 	}
 

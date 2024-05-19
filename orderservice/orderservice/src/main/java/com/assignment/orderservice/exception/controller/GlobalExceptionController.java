@@ -14,6 +14,7 @@ import com.assignment.orderservice.exception.BadRequestException;
 import com.assignment.orderservice.exception.DataParsingException;
 import com.assignment.orderservice.exception.ServiceBeanException;
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import jakarta.validation.ConstraintViolationException;
 
 @SuppressWarnings("unchecked")
@@ -68,6 +69,11 @@ public class GlobalExceptionController<T> {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
 				(T) new ErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
 	}
+	@ExceptionHandler(CallNotPermittedException.class)
+	public ResponseEntity<T> handleCallNotPermittedException(CallNotPermittedException ex) {
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
+				(T) new ErrorDto(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage(), ex.getMessage(), System.currentTimeMillis()));
+	}
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<T> handleException(Exception ex) {
@@ -88,8 +94,13 @@ public class GlobalExceptionController<T> {
 
 		} else if (ex instanceof DataParsingException) {
 			return handleNotValidException((DataParsingException) ex);
+			
 		} else if (ex instanceof IllegalArgumentException) {
 			return handleInvalidArguementsException((IllegalArgumentException) ex);
+			
+		} else if (ex instanceof CallNotPermittedException) {
+			return handleCallNotPermittedException((CallNotPermittedException)ex);
+			
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body((T) new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex.getLocalizedMessage(),
