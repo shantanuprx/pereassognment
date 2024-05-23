@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
  name: globalconfigmap
 data:
+ eureka_client_service-url_defaultZone: http://discoveryservicelb.default.svc.cluster.local:8761/eureka
  MYSQL_ROOT_PASSWORD: Mysql@123
