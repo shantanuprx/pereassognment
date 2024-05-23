@@ -35,7 +35,8 @@ public class ProductService {
 			Map<String, Object> requestMap = new HashMap<>();
 			requestMap.put(GatewayServiceConstants.TOKEN, ordersDto.getToken());
 			requestMap.put("productId", ordersDto.getProductId());
-			ResponseEntity<Object> response = productServiceFeignClient.validateDetails("product", requestMap);
+			ResponseEntity<Object> response = productServiceFeignClient.validateDetails(requestMap,
+					Map.of(GatewayServiceConstants.TOKEN, ordersDto.getToken()), "product");
 			ValidationDto validationDto = new ObjectMapper().convertValue(response.getBody(), ValidationDto.class);
 			System.out.println(validationDto);
 			if (validationDto.getValidity()) {

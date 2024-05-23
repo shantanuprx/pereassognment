@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.assignment.orderservice.feignclients.fallbacks.ProductServiceFeignClientFallBack;
 
@@ -14,6 +15,7 @@ import com.assignment.orderservice.feignclients.fallbacks.ProductServiceFeignCli
 public interface ProductServiceFeignClient {
 
 	@GetMapping("/{serviceName}/validate")
-	public ResponseEntity<Object> validateDetails(@PathVariable("serviceName") String serviceName,
-			@RequestBody Map<String, Object> requestMap) throws Exception;
+	public ResponseEntity<Object> validateDetails(@RequestBody Map<String, Object> requestMap,
+			@RequestHeader Map<String, String> headers, @PathVariable("serviceName") String serviceName)
+			throws Exception;
 }

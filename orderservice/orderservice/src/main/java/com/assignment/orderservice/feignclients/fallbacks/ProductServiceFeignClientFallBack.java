@@ -13,7 +13,8 @@ import com.assignment.orderservice.feignclients.ProductServiceFeignClient;
 public class ProductServiceFeignClientFallBack implements ProductServiceFeignClient {
 
 	@Override
-	public ResponseEntity<Object> validateDetails(String serviceName, Map<String, Object> requestMap) throws Exception {
+	public ResponseEntity<Object> validateDetails(Map<String, Object> requestMap, Map<String, String> requestHeaders,
+			String serviceName) throws Exception {
 		ValidationDto validationDto = new ValidationDto();
 		validationDto.setValidity(false);
 		validationDto.setErrorMessage("Product details cannot be verified right now");

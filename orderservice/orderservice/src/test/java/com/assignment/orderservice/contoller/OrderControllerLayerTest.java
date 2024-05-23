@@ -142,24 +142,24 @@ public class OrderControllerLayerTest<T> {
 		ordersDto.setPaymentId(cardDetails.getRecordId());
 		ordersDto.setPaymentSource("card");
 		ordersDto.setPaymentType("Online");
-		ordersDto.setToken(setUp("CUSTOMER", userEnity.getUserId()));
 		ordersDto.setPaymentStatus("Pending");
 		ordersDto.setAddressId(addressEntity.getRecordId());
 
 		ValidationDto validationDto = new ValidationDto(true, null);
 
-		when(addressServiceFeignClient.validateDetails(Mockito.contains("address"), Mockito.anyMap()))
+		when(addressServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("address")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
-		when(paymentServiceFeignClient.validateDetails(Mockito.contains("payment"), Mockito.anyMap()))
+		when(paymentServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("payment")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
-		when(productServiceFeignClient.validateDetails(Mockito.contains("product"), Mockito.anyMap()))
+		when(productServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("product")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
 		String result = mvc
 				.perform(MockMvcRequestBuilders.post("/order").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(ordersDto)))
+						.content(new ObjectMapper().writeValueAsString(ordersDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", userEnity.getUserId())))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(OrdersConstant.RECORD_CREATION_MESSAGE));
 	}
@@ -217,25 +217,25 @@ public class OrderControllerLayerTest<T> {
 		ordersDto.setPaymentId(cardDetails.getRecordId());
 		ordersDto.setPaymentSource("card");
 		ordersDto.setPaymentType("Online");
-		ordersDto.setToken(setUp("CUSTOMER", userEnity.getUserId()));
 		ordersDto.setPaymentStatus("Pending");
 		ordersDto.setAddressId(addressEntity.getRecordId());
 
 		ValidationDto validationDto = new ValidationDto(true, null);
 		ValidationDto validationDtoForPayment = new ValidationDto(false, OrdersConstant.PAYMENT_NOT_ELIGIBLE_FOR_ORDER);
 
-		when(addressServiceFeignClient.validateDetails(Mockito.contains("address"), Mockito.anyMap()))
+		when(addressServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("address")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
-		when(paymentServiceFeignClient.validateDetails(Mockito.contains("payment"), Mockito.anyMap()))
+		when(paymentServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("payment")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDtoForPayment));
 
-		when(productServiceFeignClient.validateDetails(Mockito.contains("product"), Mockito.anyMap()))
+		when(productServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("product")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
 		String result = mvc
 				.perform(MockMvcRequestBuilders.post("/order").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(ordersDto)))
+						.content(new ObjectMapper().writeValueAsString(ordersDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", userEnity.getUserId())))
 				.andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString();
 		assertTrue(result.contains(OrdersConstant.PAYMENT_NOT_ELIGIBLE_FOR_ORDER));
@@ -294,24 +294,24 @@ public class OrderControllerLayerTest<T> {
 		ordersDto.setPaymentId(cardDetails.getRecordId());
 		ordersDto.setPaymentSource("card");
 		ordersDto.setPaymentType("Online");
-		ordersDto.setToken(setUp("CUSTOMER", userEnity.getUserId()));
 		ordersDto.setPaymentStatus("Pending");
 		ordersDto.setAddressId(addressEntity.getRecordId());
 
 		ValidationDto validationDto = new ValidationDto(true, null);
 
-		when(addressServiceFeignClient.validateDetails(Mockito.contains("address"), Mockito.anyMap()))
+		when(addressServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("address")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
-		when(paymentServiceFeignClient.validateDetails(Mockito.contains("payment"), Mockito.anyMap()))
+		when(paymentServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("payment")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
-		when(productServiceFeignClient.validateDetails(Mockito.contains("product"), Mockito.anyMap()))
+		when(productServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("product")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
 		String result = mvc
 				.perform(MockMvcRequestBuilders.post("/order").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(ordersDto)))
+						.content(new ObjectMapper().writeValueAsString(ordersDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", userEnity.getUserId())))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(OrdersConstant.RECORD_CREATION_MESSAGE));
 
@@ -320,11 +320,11 @@ public class OrderControllerLayerTest<T> {
 		OrdersUpdateDto ordersUpdateDto = new OrdersUpdateDto();
 		ordersUpdateDto.setOrderId(jsonObject.getInt("id"));
 		ordersUpdateDto.setOrderStatus("C");
-		ordersUpdateDto.setToken(setUp("CUSTOMER", userEnity.getUserId()));
 
 		String updateResult = mvc
 				.perform(MockMvcRequestBuilders.put("/order").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(ordersUpdateDto)))
+						.content(new ObjectMapper().writeValueAsString(ordersUpdateDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", userEnity.getUserId())))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
 		assertTrue(updateResult.contains(OrdersConstant.RECORD_UPDATED_SUCCESSFULLY));
 
@@ -383,24 +383,24 @@ public class OrderControllerLayerTest<T> {
 		ordersDto.setPaymentId(cardDetails.getRecordId());
 		ordersDto.setPaymentSource("card");
 		ordersDto.setPaymentType("Online");
-		ordersDto.setToken(setUp("CUSTOMER", userEnity.getUserId()));
 		ordersDto.setPaymentStatus("Pending");
 		ordersDto.setAddressId(addressEntity.getRecordId());
 
 		ValidationDto validationDto = new ValidationDto(true, null);
 
-		when(addressServiceFeignClient.validateDetails(Mockito.contains("address"), Mockito.anyMap()))
+		when(addressServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("address")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
-		when(paymentServiceFeignClient.validateDetails(Mockito.contains("payment"), Mockito.anyMap()))
+		when(paymentServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("payment")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
-		when(productServiceFeignClient.validateDetails(Mockito.contains("product"), Mockito.anyMap()))
+		when(productServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("product")))
 				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
 
 		String result = mvc
 				.perform(MockMvcRequestBuilders.post("/order").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(ordersDto)))
+						.content(new ObjectMapper().writeValueAsString(ordersDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", userEnity.getUserId())))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(OrdersConstant.RECORD_CREATION_MESSAGE));
 
@@ -409,11 +409,11 @@ public class OrderControllerLayerTest<T> {
 		OrdersDto fetchDto = new OrdersDto();
 		fetchDto.setOrderId(jsonObject.getInt("id"));
 		fetchDto.setOrderStatus("C");
-		fetchDto.setToken(setUp("CUSTOMER", userEnity.getUserId()));
 
 		String updateResult = mvc
 				.perform(MockMvcRequestBuilders.get("/order").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(fetchDto)))
+						.content(new ObjectMapper().writeValueAsString(fetchDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", userEnity.getUserId())))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
 		assertTrue(updateResult.contains("Online"));
 	}
@@ -460,4 +460,79 @@ public class OrderControllerLayerTest<T> {
 		clientHelper.saveKeyPair(token, String.valueOf(true));
 		return token;
 	}
+	
+//	@Test
+//	public void createOrderDetailsWithBadRequestDuetoUnavailabityOfActualService() throws JsonProcessingException, Exception {
+//		User userEnity = new User();
+//		userEnity.setFirstName("Shantanu");
+//		userEnity.setMidName(null);
+//		userEnity.setLastName("Kumar");
+//		userEnity.setEmail("kumar93782@gmail.com");
+//		userEnity.setPassword("abcdefg");
+//		userEnity.setCreatedBy(GatewayServiceConstants.GATEWAY_SERVICE);
+//		userEnity.setCreatedDate(new Date());
+//		userEnity.setDateOfBirth(new Date());
+//		userEnity.setMobileNumber("9521635420");
+//		userEnity.setStatus(GatewayServiceConstants.ACTIVE_FLAG);
+//		userEnity.setUserRole(GatewayServiceConstants.CUSTOMER_USER_ROLE);
+//		userRepository.save(userEnity);
+//
+//		Address addressEntity = new Address();
+//		addressEntity.setAddressLine1("Address Line 1");
+//		addressEntity.setAddressLine2("Address Line 2");
+//		addressEntity.setCity("City");
+//		addressEntity.setPincode("302002");
+//		addressEntity.setState("State");
+//		addressEntity.setUser(userEnity);
+//		addressEntity.setCreatedBy(userEnity.getUserId());
+//		addressEntity.setCreatedDate(Timestamp.valueOf(LocalDateTime.now()));
+//		addressReposiory.save(addressEntity);
+//
+//		CardDetails cardDetails = new CardDetails();
+//		cardDetails.setCardHolderName("SHANTANU KUMAR");
+//		cardDetails.setCardNumber("12341234124412434");
+//		cardDetails.setCreatedBy(userEnity.getUserId());
+//		cardDetails.setCreatedDate(new Date());
+//		cardDetails.setExpiryDate(new Date(System.currentTimeMillis() + 60000000));
+//		cardDetails.setUser(userEnity);
+//		cardDetailsRepository.save(cardDetails);
+//
+//		Product productEntity = new Product();
+//		productEntity.setCurrentStock(1);
+//		productEntity.setPrice(BigDecimal.valueOf(3000.0));
+//		productEntity.setProductDescription("7800 XT");
+//		productEntity.setProductName("78000 XT graphic card");
+//		productEntity.setSeller("Appario");
+//		productEntity.setSellerAddress("Jaipur");
+//		productEntity.setStatus("A");
+//		productEntity.setCreatedBy(userEnity.getUserId());
+//		productEntity.setCreatedTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+//		productRepository.save(productEntity);
+//
+//		OrdersDto ordersDto = new OrdersDto();
+//		ordersDto.setProductId(productEntity.getProductId());
+//		ordersDto.setPaymentId(cardDetails.getRecordId());
+//		ordersDto.setPaymentSource("card");
+//		ordersDto.setPaymentType("Online");
+//		ordersDto.setPaymentStatus("Pending");
+//		ordersDto.setAddressId(addressEntity.getRecordId());
+//
+//		ValidationDto validationDto = new ValidationDto(true, null);
+//
+//		when(addressServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("address")))
+//				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
+//
+//		when(paymentServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("payment")))
+//				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
+//
+//		when(productServiceFeignClient.validateDetails(Mockito.anyMap(), Mockito.anyMap(), Mockito.contains("product")))
+//				.thenReturn(ResponseEntity.status(HttpStatus.OK).body(validationDto));
+//
+//		String result = mvc
+//				.perform(MockMvcRequestBuilders.post("/order").contentType(MediaType.APPLICATION_JSON)
+//						.content(new ObjectMapper().writeValueAsString(ordersDto))
+//						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", userEnity.getUserId())))
+//				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn().getResponse().getContentAsString();
+//		assertTrue(result.contains(OrdersConstant.RECORD_CREATION_MESSAGE));
+//	}
 }

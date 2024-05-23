@@ -13,7 +13,8 @@ import com.assignment.orderservice.feignclients.AddressServiceFeignClient;
 public class AddressServiceFeignClientFallBack implements AddressServiceFeignClient {
 
 	@Override
-	public ResponseEntity<Object> validateDetails(String serviceName, Map<String, Object> requestMap) throws Exception {
+	public ResponseEntity<Object> validateDetails(Map<String, Object> requestMap, Map<String, String> headers,
+			String serviceName) throws Exception {
 		ValidationDto validationDto = new ValidationDto();
 		validationDto.setValidity(false);
 		validationDto.setErrorMessage("Address details cannot be verified right now");

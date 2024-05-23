@@ -3,6 +3,7 @@ package com.assignment.orderservice.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ public class KafkaClientForOrderNotification {
 	@Value("${kafka.topic.notification-topic}")
 	private String emailTopicName;
 
+	@Async
 	public void sendMessage(String msg) {
 		log.debug("Entering sendMessage method at  {}", System.currentTimeMillis());
 		try {

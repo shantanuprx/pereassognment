@@ -45,7 +45,8 @@ public class PaymentService {
 				requestMap.put(GatewayServiceConstants.TOKEN, ordersDto.getToken());
 				requestMap.put("recordId", ordersDto.getPaymentId());
 				requestMap.put("paymentType", ordersDto.getPaymentSource());
-				ResponseEntity<Object> response = paymentServiceFeignClient.validateDetails("payment", requestMap);
+				ResponseEntity<Object> response = paymentServiceFeignClient.validateDetails(requestMap,
+						Map.of(GatewayServiceConstants.TOKEN, ordersDto.getToken()), "payment");
 				ValidationDto validationDto = new ObjectMapper().convertValue(response.getBody(), ValidationDto.class);
 				System.out.println(validationDto);
 				if (validationDto.getValidity()) {

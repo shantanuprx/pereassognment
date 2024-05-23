@@ -37,7 +37,8 @@ public class AddressService {
 			Map<String, Object> requestMap = new HashMap<>();
 			requestMap.put(GatewayServiceConstants.TOKEN, ordersDto.getToken());
 			requestMap.put("recordId", ordersDto.getAddressId());
-			ResponseEntity<Object> response = addressServiceFeignClient.validateDetails("address", requestMap);
+			ResponseEntity<Object> response = addressServiceFeignClient.validateDetails(requestMap,
+					Map.of(GatewayServiceConstants.TOKEN, ordersDto.getToken()), "address");
 			ValidationDto validationDto = new ObjectMapper().convertValue(response.getBody(), ValidationDto.class);
 			if (validationDto.getValidity()) {
 				return null;

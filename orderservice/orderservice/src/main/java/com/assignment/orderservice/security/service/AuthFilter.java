@@ -43,16 +43,17 @@ public class AuthFilter implements Filter {
 		try {
 			jsonObject = new JSONObject(requestString);
 			log.debug("Parsed request is {} ", jsonObject);
-			if (jsonObject.has("token")) {
-				if (Boolean.parseBoolean(jedisClientHelper.getValue(jsonObject.getString(GatewayServiceConstants.TOKEN)))) {
-					if (GatewayServiceConstants.CUSTOMER_USER_ROLE
-							.equalsIgnoreCase(authTokenService.validateToken(jsonObject.getString(GatewayServiceConstants.TOKEN))
-									.get(GatewayServiceConstants.USER_ROLE).toString())) {
-						jedisClientHelper.extendTokenLife(jsonObject.getString(GatewayServiceConstants.TOKEN));
+			String token = cachedBodyHttpServletRequest.getHeader(GatewayServiceConstants.TOKEN);
+			if (token != null) {
+				if (Boolean.parseBoolean(jedisClientHelper.getValue(token))) {
+					if (GatewayServiceConstants.CUSTOMER_USER_ROLE.equalsIgnoreCase(
+							authTokenService.validateToken(token).get(GatewayServiceConstants.USER_ROLE).toString())) {
+						jedisClientHelper.extendTokenLife(token);
 						chain.doFilter(cachedBodyHttpServletRequest, response);
 					} else {
 						log.error("Not a valid role for request {}", jsonObject);
-						((HttpServletResponse) response).sendError(401, GatewayServiceConstants.ONLY_REGISTERED_CUSTOMERS_ALLOWED);
+						((HttpServletResponse) response).sendError(401,
+								GatewayServiceConstants.ONLY_REGISTERED_CUSTOMERS_ALLOWED);
 					}
 				} else {
 					log.error("Token expired for request {}", jsonObject);
