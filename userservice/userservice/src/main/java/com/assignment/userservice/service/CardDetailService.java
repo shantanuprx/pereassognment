@@ -105,7 +105,7 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 			cardDetailsAdapter.mapModelValuesToEntityForUpdate(cardDetailsDto, cardEntity);
 			cardDetailsRepository.save(cardEntity);
 			log.info("Card details {} successfully updated by {} ", cardEntity.getRecordId(),
-					cardDetailsDto.getUserId());
+					cardDetailsDto.getLoggedInUserId());
 			return responseUtil.prepareResponse((T) new ResponseDto(cardEntity.getRecordId(), HttpStatus.OK,
 					PaymentConstants.RECORD_UPDATED_SUCCESSFULLY), HttpStatus.OK);
 		} catch (Exception ex) {
@@ -130,7 +130,7 @@ public class CardDetailService<T> extends PaymentOperationService<T> {
 			CardDetails cardEntity = cardEntityOptional.get();
 			cardDetailsRepository.delete(cardEntity);
 			log.info("Card Details {} successfully deleted by {} ", cardEntity.getRecordId(),
-					cardDetailsDto.getUserId());
+					cardDetailsDto.getLoggedInUserId());
 			return responseUtil.prepareResponse((T) new ResponseDto(cardEntity.getRecordId(), HttpStatus.OK,
 					PaymentConstants.RECORD_DELETED_SUCCESSFULLY), HttpStatus.OK);
 		} catch (Exception ex) {
