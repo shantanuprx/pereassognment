@@ -13,10 +13,16 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"orderId\":17\r\n}",
+					"raw": "{\r\n    \"orderId\":17\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,10 +47,16 @@
 			"name": "create order",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2NDQ3Nzk4LCJleHAiOjE3MTY0NDk1OTh9.XXpJL4c96Fq5bo9dm3tegYJcSw96gGf9eMP2vwpbDI0",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"productId\": 3,\r\n    \"paymentId\": 2,\r\n    \"paymentSource\": \"card\",\r\n    \"addressId\": 2,\r\n    \"paymentType\": \"Online\",\r\n    \"paymentStatus\": \"Pending\",\r\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU\"\r\n}",
+					"raw": "{\r\n    \"productId\": 4,\r\n    \"paymentId\": 2,\r\n    \"paymentSource\": \"card\",\r\n    \"addressId\": 2,\r\n    \"paymentType\": \"Online\",\r\n    \"paymentStatus\": \"Pending\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,10 +81,16 @@
 			"name": "Cancel Order",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyUm9sZSI6IkNVU1RPTUVSIiwibG9nZ2VkSW5Vc2VySWQiOjcsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODQ5ODU1LCJleHAiOjE3MTU4NTE2NTV9.vsqwYP2xWnchVrxeCehOSmKJYsFfCAu7t1A2HPp2s08",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyUm9sZSI6IkNVU1RPTUVSIiwibG9nZ2VkSW5Vc2VySWQiOjcsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODQ5ODU1LCJleHAiOjE3MTU4NTE2NTV9.vsqwYP2xWnchVrxeCehOSmKJYsFfCAu7t1A2HPp2s08\",\r\n    \"orderId\":19,\r\n    \"orderStatus\":\"C\"\r\n}",
+					"raw": "{\r\n    \"orderId\":19,\r\n    \"orderStatus\":\"C\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

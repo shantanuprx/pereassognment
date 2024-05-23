@@ -13,10 +13,16 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2NDQyOTM2LCJleHAiOjE3MTY0NDQ3MzZ9.aoad2f0qssuDnrR6zgWhXh1oHWhy1bxAYQUShCGNdc4",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"recordId\":4\r\n}",
+					"raw": "{\r\n    \"recordId\":1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,10 +47,16 @@
 			"name": "Adding address",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2NDQ3Nzk4LCJleHAiOjE3MTY0NDk1OTh9.XXpJL4c96Fq5bo9dm3tegYJcSw96gGf9eMP2vwpbDI0",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"addressLine1\":\"Air force school\",\r\n    \"addressLine2\": null,\r\n    \"city\":\"Jaipur\",\r\n    \"state\":\"Rajasthan\",\r\n    \"pincode\":\"302002\",\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU\"\r\n}",
+					"raw": "{\r\n    \"addressLine1\":\"Air force school\",\r\n    \"addressLine2\": null,\r\n    \"city\":\"Jaipur\",\r\n    \"state\":\"Rajasthan\",\r\n    \"pincode\":\"302002\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,10 +81,16 @@
 			"name": "Update address",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"recordId\":4,\r\n    \"addressLine1\":\"58, Jalmahal\",\r\n    \"addressLine2\": \"Air force school\",\r\n    \"city\":\"Jaipur\",\r\n    \"state\":\"Rajasthan\",\r\n    \"pincode\":\"302002\",\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\"\r\n}",
+					"raw": "{\r\n    \"recordId\":4,\r\n    \"addressLine1\":\"58, Jalmahal\",\r\n    \"addressLine2\": \"Air force school\",\r\n    \"city\":\"Jaipur\",\r\n    \"state\":\"Rajasthan\",\r\n    \"pincode\":\"302002\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -97,10 +115,16 @@
 			"name": "Delete address",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"recordId\":5,\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\"\r\n}",
+					"raw": "{\r\n    \"recordId\":5\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

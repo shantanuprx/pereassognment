@@ -10,10 +10,16 @@
 			"name": "Delete product",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6OCwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI1OTIzLCJleHAiOjE3MTU4Mjc3MjN9.UVi9qmkt91jE0eLHDg_kjGEVnGTruu0YnTxwaiXDKXY",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6OCwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI1OTIzLCJleHAiOjE3MTU4Mjc3MjN9.UVi9qmkt91jE0eLHDg_kjGEVnGTruu0YnTxwaiXDKXY\",\r\n    \"productId\":12\r\n\r\n}",
+					"raw": "{\r\n    \"productId\":12\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -38,10 +44,16 @@
 			"name": "Add product",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MiwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE2NDQ4MDEyLCJleHAiOjE3MTY0NDk4MTJ9.4_ETdrPkCiDRqjXRSvWNbeGutf1NGWcu9LiUpzb0a3g",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MiwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1NzY0LCJleHAiOjE3MTYzNzc1NjR9.O2DVhrz6MYFg8cwURXGwzM7T8Stshb7-poJEsLxfwII\",\r\n    \"productName\":\"7800 XT\",\r\n    \"productDescription\":\"Graphic card\",\r\n    \"currentStock\":2,\r\n    \"status\":\"A\",\r\n    \"seller\":\"Appario\",\r\n    \"sellerAddress\":\"Jaipur\",\r\n    \"price\":52900.45\r\n\r\n}",
+					"raw": "{\r\n    \"productName\":\"7800 XT\",\r\n    \"productDescription\":\"Graphic card\",\r\n    \"currentStock\":2,\r\n    \"status\":\"A\",\r\n    \"seller\":\"Appario\",\r\n    \"sellerAddress\":\"Jaipur\",\r\n    \"price\":52900.45\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -66,10 +78,16 @@
 			"name": "Update Product",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MiwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1NzY0LCJleHAiOjE3MTYzNzc1NjR9.O2DVhrz6MYFg8cwURXGwzM7T8Stshb7-poJEsLxfwII",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MiwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1NzY0LCJleHAiOjE3MTYzNzc1NjR9.O2DVhrz6MYFg8cwURXGwzM7T8Stshb7-poJEsLxfwII\",\r\n    \"productName\":\"7800 XT\",\r\n    \"productDescription\":\"Graphic card\",\r\n    \"currentStock\":2,\r\n    \"status\":\"A\",\r\n    \"seller\":\"Appario\",\r\n    \"sellerAddress\":\"Jaipur\",\r\n    \"price\":51900.45,\r\n    \"productId\":3\r\n\r\n}",
+					"raw": "{\r\n    \"productName\":\"7800 XT\",\r\n    \"productDescription\":\"Graphic card\",\r\n    \"currentStock\":2,\r\n    \"status\":\"A\",\r\n    \"seller\":\"Appario\",\r\n    \"sellerAddress\":\"Jaipur\",\r\n    \"price\":51900.45,\r\n    \"productId\":3\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -97,10 +115,16 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU\",\r\n    \"productId\":3\r\n}",
+					"raw": "{\r\n    \"productId\":3\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

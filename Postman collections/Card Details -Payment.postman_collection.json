@@ -13,10 +13,16 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"paymentType\":\"card\",\r\n    \"recordId\":6\r\n}",
+					"raw": "{\r\n    \"paymentType\":\"card\",\r\n    \"recordId\":6\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,10 +47,16 @@
 			"name": "add payment method",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2NDQ3Nzk4LCJleHAiOjE3MTY0NDk1OTh9.XXpJL4c96Fq5bo9dm3tegYJcSw96gGf9eMP2vwpbDI0",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU\",\r\n    \"paymentType\":\"card\",\r\n    \"cardNumber\":\"4561789812344561\",\r\n    \"cardHolderName\":\"Shantanu Kumar\",\r\n    \"expiryDate\":\"12/12/2026\"\r\n}",
+					"raw": "{\r\n    \"paymentType\":\"card\",\r\n    \"cardNumber\":\"4561789812344561\",\r\n    \"cardHolderName\":\"Shantanu Kumar\",\r\n    \"expiryDate\":\"12/12/2026\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,10 +81,16 @@
 			"name": "Update Payment details",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"paymentType\":\"card\",\r\n    \"cardNumber\":\"4561789812344588\",\r\n    \"cardHolderName\":\"Shantanu Singh\",\r\n    \"expiryDate\":\"13/12/2024\",\r\n    \"recordId\":5\r\n}",
+					"raw": "{\r\n    \"paymentType\":\"card\",\r\n    \"cardNumber\":\"4561789812344588\",\r\n    \"cardHolderName\":\"Shantanu Singh\",\r\n    \"expiryDate\":\"13/12/2024\",\r\n    \"recordId\":5\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -97,10 +115,16 @@
 			"name": "delete payment method",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"paymentType\":\"card\",\r\n    \"recordId\":6\r\n}",
+					"raw": "{\r\n    \"paymentType\":\"card\",\r\n    \"recordId\":6\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
