@@ -17,7 +17,12 @@ import com.assignment.orderservice.dto.ValidationDto;
 import com.assignment.orderservice.feignclients.PaymentServiceFeignClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
+@AllArgsConstructor
 public class PaymentService {
 
 	@Autowired
@@ -27,26 +32,35 @@ public class PaymentService {
 
 	/**
 	 * Service method to call validation service in order to validate payment
+	 * 
 	 * @param ordersDto
 	 * @return
 	 * @throws Exception
 	 */
 	public String validatePayment(OrdersDto ordersDto) throws Exception {
-		if (ALLOWED_PAYMENT_SOURCE.contains(ordersDto.getPaymentSource())) {
-			Map<String, Object> requestMap = new HashMap<>();
-			requestMap.put(GatewayServiceConstants.TOKEN, ordersDto.getToken());
-			requestMap.put("recordId", ordersDto.getPaymentId());
-			requestMap.put("paymentType", ordersDto.getPaymentSource());
-			ResponseEntity<Object> response = paymentServiceFeignClient.validateDetails("payment", requestMap);
-			ValidationDto validationDto = new ObjectMapper().convertValue(response.getBody(), ValidationDto.class);
-			System.out.println(validationDto);
-			if (validationDto.getValidity()) {
-				return null;
+		log.debug("Entering validatePayment method at {}", System.currentTimeMillis());
+		try {
+			if (ALLOWED_PAYMENT_SOURCE.contains(ordersDto.getPaymentSource())) {
+				Map<String, Object> requestMap = new HashMap<>();
+				requestMap.put(GatewayServiceConstants.TOKEN, ordersDto.getToken());
+				requestMap.put("recordId", ordersDto.getPaymentId());
+				requestMap.put("paymentType", ordersDto.getPaymentSource());
+				ResponseEntity<Object> response = paymentServiceFeignClient.validateDetails("payment", requestMap);
+				ValidationDto validationDto = new ObjectMapper().convertValue(response.getBody(), ValidationDto.class);
+				System.out.println(validationDto);
+				if (validationDto.getValidity()) {
+					return null;
+				} else {
+					return validationDto.getErrorMessage();
+				}
 			} else {
-				return validationDto.getErrorMessage();
+				return OrdersConstant.PAYMENT_TYPE_NOT_ALLOWED;
 			}
-		} else {
-			return OrdersConstant.PAYMENT_TYPE_NOT_ALLOWED;
+		} catch (Exception ex) {
+			log.debug("Exception occurred while validating payment details with exception", ex);
+			throw new Exception(ex);
+		} finally {
+			log.debug("Exiting validatePayment method at {}", System.currentTimeMillis());
 		}
 	}
 
