@@ -82,11 +82,11 @@ public class ControllerLayerAddressTest<T> {
 		addressDto.setLoggedInUserId(1);
 		addressDto.setPincode("PINCODE");
 		addressDto.setState("State");
-		addressDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressDto.setUserRole("CUSTOMER");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(AddressConstants.RECORD_CREATION_MESSAGE));
@@ -116,11 +116,11 @@ public class ControllerLayerAddressTest<T> {
 		addressDto.setLoggedInUserId(1);
 		addressDto.setPincode("PINCODE");
 		addressDto.setState("State");
-		addressDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressDto.setUserRole("CUSTOMER");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(AddressConstants.RECORD_CREATION_MESSAGE));
@@ -134,12 +134,12 @@ public class ControllerLayerAddressTest<T> {
 		addressUpdateDto.setLoggedInUserId(1);
 		addressUpdateDto.setPincode("PINCODE");
 		addressUpdateDto.setState("State");
-		addressUpdateDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressUpdateDto.setUserRole("CUSTOMER");
 		addressUpdateDto.setRecordId(jsonObject.getInt("id"));
 		String updateResult = mvc.perform(MockMvcRequestBuilders.put("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressUpdateDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(updateResult.contains(AddressConstants.RECORD_UPDATED_SUCCESSFULLY));
@@ -169,11 +169,11 @@ public class ControllerLayerAddressTest<T> {
 		addressDto.setLoggedInUserId(1);
 		addressDto.setPincode("PINCODE");
 		addressDto.setState("State");
-		addressDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressDto.setUserRole("CUSTOMER");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(AddressConstants.RECORD_CREATION_MESSAGE));
@@ -181,12 +181,12 @@ public class ControllerLayerAddressTest<T> {
 		JSONObject jsonObject = new JSONObject(result);
 		
 		AddressUpdateDto addressUpdateDto = new AddressUpdateDto();
-		addressUpdateDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressUpdateDto.setUserRole("CUSTOMER");
 		addressUpdateDto.setRecordId(jsonObject.getInt("id"));
 		String updateResult = mvc.perform(MockMvcRequestBuilders.delete("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressUpdateDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(updateResult.contains(AddressConstants.RECORD_DELETED_SUCCESSFULLY));
@@ -216,11 +216,11 @@ public class ControllerLayerAddressTest<T> {
 		addressDto.setLoggedInUserId(1);
 		addressDto.setPincode("PINCODE");
 		addressDto.setState("State");
-		addressDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressDto.setUserRole("CUSTOMER");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(AddressConstants.RECORD_CREATION_MESSAGE));
@@ -258,11 +258,11 @@ public class ControllerLayerAddressTest<T> {
 		addressDto.setLoggedInUserId(1);
 		addressDto.setPincode("PINCODE");
 		addressDto.setState("State");
-		addressDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressDto.setUserRole("CUSTOMER");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(AddressConstants.RECORD_CREATION_MESSAGE));
@@ -270,11 +270,11 @@ public class ControllerLayerAddressTest<T> {
 		JSONObject jsonObject = new JSONObject(result);
 		
 		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.LOGGED_IN_USER_ID, entity.getUserId(),
-																"recordId", jsonObject.getInt("id"),
-												GatewayServiceConstants.TOKEN, addressDto.getToken());
+																"recordId", jsonObject.getInt("id"));
 		String validateResult = mvc.perform(MockMvcRequestBuilders.get("/address/validate")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(validateResult.contains(String.valueOf(true)));
@@ -304,11 +304,11 @@ public class ControllerLayerAddressTest<T> {
 		addressDto.setLoggedInUserId(1);
 		addressDto.setPincode("PINCODE");
 		addressDto.setState("State");
-		addressDto.setToken(setUp("CUSTOMER", entity.getUserId()));
 		addressDto.setUserRole("CUSTOMER");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/address")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(addressDto))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(AddressConstants.RECORD_CREATION_MESSAGE));
@@ -316,11 +316,11 @@ public class ControllerLayerAddressTest<T> {
 		JSONObject jsonObject = new JSONObject(result);
 		
 		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.LOGGED_IN_USER_ID, entity.getUserId(),
-																"recordId", 20000,
-												GatewayServiceConstants.TOKEN, addressDto.getToken());
+																"recordId", 20000);
 		String validateResult = mvc.perform(MockMvcRequestBuilders.get("/address/validate")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(validateResult.contains(String.valueOf(false)));

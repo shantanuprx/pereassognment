@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,13 +17,15 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * Implementation of web filter. Responsible for checking whether token is valid or not.
+ * Implementation of web filter. Responsible for checking whether token is valid
+ * or not.
  */
 @Component
+@Slf4j
 public class AuthFilter implements Filter {
-
-    private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
 	@Autowired
 	private JedisClientHelper jedisClientHelper;
@@ -43,16 +43,17 @@ public class AuthFilter implements Filter {
 		try {
 			jsonObject = new JSONObject(requestString);
 			log.debug("Parsed request is {} ", jsonObject);
-			if (jsonObject.has("token")) {
-				if (Boolean.parseBoolean(jedisClientHelper.getValue(jsonObject.getString(GatewayServiceConstants.TOKEN)))) {
-					if (GatewayServiceConstants.CUSTOMER_USER_ROLE
-							.equalsIgnoreCase(authTokenService.validateToken(jsonObject.getString(GatewayServiceConstants.TOKEN))
-									.get(GatewayServiceConstants.USER_ROLE).toString())) {
-						jedisClientHelper.extendTokenLife(jsonObject.getString(GatewayServiceConstants.TOKEN));
+			String token = cachedBodyHttpServletRequest.getHeader(GatewayServiceConstants.TOKEN);
+			if (token != null) {
+				if (Boolean.parseBoolean(jedisClientHelper.getValue(token))) {
+					if (GatewayServiceConstants.CUSTOMER_USER_ROLE.equalsIgnoreCase(
+							authTokenService.validateToken(token).get(GatewayServiceConstants.USER_ROLE).toString())) {
+						jedisClientHelper.extendTokenLife(token);
 						chain.doFilter(cachedBodyHttpServletRequest, response);
 					} else {
 						log.error("Not a valid role for request {}", jsonObject);
-						((HttpServletResponse) response).sendError(401, GatewayServiceConstants.ONLY_REGISTERED_CUSTOMERS_ALLOWED);
+						((HttpServletResponse) response).sendError(401,
+								GatewayServiceConstants.ONLY_REGISTERED_CUSTOMERS_ALLOWED);
 					}
 				} else {
 					log.error("Token expired for request {}", jsonObject);

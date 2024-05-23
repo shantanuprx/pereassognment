@@ -77,13 +77,13 @@ public class ControllerLayerCardTest<T> {
 		
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("cardHolderName","SHANTANU KUMAR");
-		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		requestMap.put("cardNumber", "1234123412341234");
 		requestMap.put("expiryDate", "12/12/2025");
 		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
@@ -110,13 +110,13 @@ public class ControllerLayerCardTest<T> {
 		
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("cardHolderName","SHANTANU KUMAR");
-		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		requestMap.put("cardNumber", "1234123412341234");
 		requestMap.put("expiryDate", "12/12/2025");
 		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
@@ -126,13 +126,13 @@ public class ControllerLayerCardTest<T> {
 		Map<String, Object> updateRequestMap = new HashMap<>();
 		updateRequestMap.put("recordId", jsonObject.getInt("id"));
 		updateRequestMap.put("cardHolderName","SHANTANU KUMAR");
-		updateRequestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		updateRequestMap.put("cardNumber", "1234123412341234");
 		updateRequestMap.put("expiryDate", "12/12/2025");
 		updateRequestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String updateResult = mvc.perform(MockMvcRequestBuilders.put("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(updateRequestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(updateResult.contains(PaymentConstants.RECORD_UPDATED_SUCCESSFULLY));
@@ -157,13 +157,13 @@ public class ControllerLayerCardTest<T> {
 		
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("cardHolderName","SHANTANU KUMAR");
-		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		requestMap.put("cardNumber", "1234123412341234");
 		requestMap.put("expiryDate", "12/12/2025");
 		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
@@ -172,11 +172,11 @@ public class ControllerLayerCardTest<T> {
 		
 		Map<String, Object> updateRequestMap = new HashMap<>();
 		updateRequestMap.put("recordId", jsonObject.getInt("id"));
-		updateRequestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		updateRequestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String updateResult = mvc.perform(MockMvcRequestBuilders.delete("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(updateRequestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(updateResult.contains(PaymentConstants.RECORD_DELETED_SUCCESSFULLY));
@@ -201,13 +201,13 @@ public class ControllerLayerCardTest<T> {
 		
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("cardHolderName","SHANTANU KUMAR");
-		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		requestMap.put("cardNumber", "1234123412341234");
 		requestMap.put("expiryDate", "12/12/2025");
 		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
@@ -217,7 +217,6 @@ public class ControllerLayerCardTest<T> {
 		Map<String, Object> getRequestMap = new HashMap<>();
 		getRequestMap.put("recordId", jsonObject.getInt("id"));
 		getRequestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, entity.getUserId());
-		getRequestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		
 		ResponseEntity<T> response = cardDetailService.getDetails(getRequestMap);
 		assertTrue(response.getStatusCode().equals(HttpStatus.OK));
@@ -244,13 +243,13 @@ public class ControllerLayerCardTest<T> {
 		
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("cardHolderName","SHANTANU KUMAR");
-		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		requestMap.put("cardNumber", "1234123412341234");
 		requestMap.put("expiryDate", "12/12/2025");
 		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
@@ -260,12 +259,12 @@ public class ControllerLayerCardTest<T> {
 		Map<String, Object> getRequestMap = new HashMap<>();
 		getRequestMap.put("recordId", jsonObject.getInt("id"));
 		getRequestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, entity.getUserId());
-		getRequestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		getRequestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		
 		String validateResult = mvc.perform(MockMvcRequestBuilders.get("/payment/validate")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(getRequestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(validateResult.contains(String.valueOf(true)));
@@ -291,13 +290,13 @@ public class ControllerLayerCardTest<T> {
 		
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("cardHolderName","SHANTANU KUMAR");
-		requestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		requestMap.put("cardNumber", "1234123412341234");
 		requestMap.put("expiryDate", "12/12/2025");
 		requestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		String result = mvc.perform(MockMvcRequestBuilders.post("/payment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(requestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isCreated())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(PaymentConstants.RECORD_CREATION_MESSAGE));
@@ -307,12 +306,12 @@ public class ControllerLayerCardTest<T> {
 		Map<String, Object> getRequestMap = new HashMap<>();
 		getRequestMap.put("recordId", 20000);
 		getRequestMap.put(GatewayServiceConstants.LOGGED_IN_USER_ID, entity.getUserId());
-		getRequestMap.put("token",(setUp("CUSTOMER", entity.getUserId())));
 		getRequestMap.put(PaymentConstants.PAYMENT_TYPE, "card");
 		
 		String validateResult = mvc.perform(MockMvcRequestBuilders.get("/payment/validate")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new ObjectMapper().writeValueAsString(getRequestMap))
+				.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER", entity.getUserId()))
 			).andExpect(MockMvcResultMatchers.status().isOk())
 		     .andReturn().getResponse().getContentAsString();
 		assertTrue(validateResult.contains(String.valueOf(false)));
