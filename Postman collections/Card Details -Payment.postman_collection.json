@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "8a2adc68-e9d1-42c8-9e5b-6e4f7e087586",
+		"name": "Card Details -Payment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34884347"
+	},
+	"item": [
+		{
+			"name": "Fetch payment details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"paymentType\":\"card\",\r\n    \"recordId\":6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/payment",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add payment method",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU\",\r\n    \"paymentType\":\"card\",\r\n    \"cardNumber\":\"4561789812344561\",\r\n    \"cardHolderName\":\"Shantanu Kumar\",\r\n    \"expiryDate\":\"12/12/2026\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/payment",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Payment details",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"paymentType\":\"card\",\r\n    \"cardNumber\":\"4561789812344588\",\r\n    \"cardHolderName\":\"Shantanu Singh\",\r\n    \"expiryDate\":\"13/12/2024\",\r\n    \"recordId\":5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/payment",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete payment method",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"paymentType\":\"card\",\r\n    \"recordId\":6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/payment",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"payment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

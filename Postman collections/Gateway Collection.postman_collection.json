@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "9dffdf02-1b30-4f4e-b2a5-4e6044d56a80",
+		"name": "Gateway Collection",
+		"description": "API Specifcations for registering a new user and authenticating a new user.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34884347"
+	},
+	"item": [
+		{
+			"name": "User registration",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "payload",
+							"value": "{}",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Shantanu\",\r\n    \"lastName\":\"Kumar\",\r\n    \"emailId\":\"kumar93781@gmail.com\",\r\n    \"mobileNumber\":\"9521635420\",\r\n    \"dateOfBirth\":\"12/12/2022\",\r\n    \"password\":\"Oracle@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/auth/register",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				},
+				"description": "Request to register a new user."
+			},
+			"response": [
+				{
+					"name": "User registration Sample",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"Shantanu\", \r\n    \"lastName\":\"Kumar\", \r\n    \"midName\": \"Singh\", \r\n    \"emailId\":\"kumar93781@gmail.com\",\r\n    \"mobileNumber\":\"9521635420\",\r\n    \"dateOfBirth\":\"12/12/2022\",\r\n    \"password\":\"Oracle@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8084/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Token generation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"emailId\":\"kumar93781@gmail.com\",\r\n    \"password\":\"Oracle@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/auth/token",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

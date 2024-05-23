@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "bab5237d-4d3a-463b-9205-4ddffd3612a9",
+		"name": "Product collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34884347"
+	},
+	"item": [
+		{
+			"name": "Delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6OCwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI1OTIzLCJleHAiOjE3MTU4Mjc3MjN9.UVi9qmkt91jE0eLHDg_kjGEVnGTruu0YnTxwaiXDKXY\",\r\n    \"productId\":12\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/product",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MiwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1NzY0LCJleHAiOjE3MTYzNzc1NjR9.O2DVhrz6MYFg8cwURXGwzM7T8Stshb7-poJEsLxfwII\",\r\n    \"productName\":\"7800 XT\",\r\n    \"productDescription\":\"Graphic card\",\r\n    \"currentStock\":2,\r\n    \"status\":\"A\",\r\n    \"seller\":\"Appario\",\r\n    \"sellerAddress\":\"Jaipur\",\r\n    \"price\":52900.45\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/product",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MiwidXNlclJvbGUiOiJBRE1JTiIsInN1YiI6Imt1bWFyOTM3ODFAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1NzY0LCJleHAiOjE3MTYzNzc1NjR9.O2DVhrz6MYFg8cwURXGwzM7T8Stshb7-poJEsLxfwII\",\r\n    \"productName\":\"7800 XT\",\r\n    \"productDescription\":\"Graphic card\",\r\n    \"currentStock\":2,\r\n    \"status\":\"A\",\r\n    \"seller\":\"Appario\",\r\n    \"sellerAddress\":\"Jaipur\",\r\n    \"price\":51900.45,\r\n    \"productId\":3\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/product",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU\",\r\n    \"productId\":3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/product/",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"product",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

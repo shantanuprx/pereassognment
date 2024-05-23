@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "90e59447-da61-441d-93a8-d444f8a050cb",
+		"name": "AddressDetails",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34884347"
+	},
+	"item": [
+		{
+			"name": "Fetching address",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\",\r\n    \"recordId\":4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/address",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adding address",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"addressLine1\":\"Air force school\",\r\n    \"addressLine2\": null,\r\n    \"city\":\"Jaipur\",\r\n    \"state\":\"Rajasthan\",\r\n    \"pincode\":\"302002\",\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6MSwidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE2Mzc1MjAyLCJleHAiOjE3MTYzNzcwMDJ9.-iD03fJRcXO5_f4k86MJAHIxxmW0Sxvx0GdI0D916PU\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/address",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update address",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recordId\":4,\r\n    \"addressLine1\":\"58, Jalmahal\",\r\n    \"addressLine2\": \"Air force school\",\r\n    \"city\":\"Jaipur\",\r\n    \"state\":\"Rajasthan\",\r\n    \"pincode\":\"302002\",\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/address",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete address",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recordId\":5,\r\n    \"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJsb2dnZWRJblVzZXJJZCI6NywidXNlclJvbGUiOiJDVVNUT01FUiIsInN1YiI6Imt1bWFyOTM3ODJAZ21haWwuY29tIiwiaWF0IjoxNzE1ODI2OTA4LCJleHAiOjE3MTU4Mjg3MDh9.eJTGBLXl-NHtM4qUU_iZE44TA-woJeLXGJSihFc6K1g\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "kubernetes.docker.internal/address",
+					"host": [
+						"kubernetes",
+						"docker",
+						"internal"
+					],
+					"path": [
+						"address"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
