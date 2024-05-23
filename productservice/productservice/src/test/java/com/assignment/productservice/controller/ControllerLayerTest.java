@@ -56,7 +56,6 @@ public class ControllerLayerTest<T> {
 	@Test
 	public void createProductDetailsWithStatusOk() throws JsonProcessingException, Exception {
 		ProductDto productDto = new ProductDto();
-		productDto.setToken(setUp("ADMIN"));
 		productDto.setProductName("Asus RAM");
 		productDto.setProductDescription("RAM");
 		productDto.setCurrentStock(10);
@@ -66,7 +65,8 @@ public class ControllerLayerTest<T> {
 		productDto.setPrice(BigDecimal.valueOf(200.0));
 		String result = mvc
 				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn().getResponse().getContentAsString();
 
 		assertTrue(result.contains(ProductsConstants.RECORD_CREATION_MESSAGE));
@@ -75,7 +75,6 @@ public class ControllerLayerTest<T> {
 	@Test
 	public void createProductDetailsAndThenFetchDetailsWithStatusOk() throws JsonProcessingException, Exception {
 		ProductDto productDto = new ProductDto();
-		productDto.setToken(setUp("ADMIN"));
 		productDto.setProductName("Asus RAM");
 		productDto.setProductDescription("RAM");
 		productDto.setCurrentStock(10);
@@ -85,7 +84,8 @@ public class ControllerLayerTest<T> {
 		productDto.setPrice(BigDecimal.valueOf(200.0));
 		MvcResult mvcResult = mvc
 				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
 
 		String resultString = mvcResult.getResponse().getContentAsString();
@@ -99,9 +99,7 @@ public class ControllerLayerTest<T> {
 
 	@Test
 	public void createProductAndUpdateWithStatusOk() throws JsonProcessingException, Exception {
-		String token = setUp("ADMIN");
 		ProductDto productDto = new ProductDto();
-		productDto.setToken(token);
 		productDto.setProductName("Asus RAM");
 		productDto.setProductDescription("RAM");
 		productDto.setCurrentStock(10);
@@ -111,7 +109,8 @@ public class ControllerLayerTest<T> {
 		productDto.setPrice(BigDecimal.valueOf(200.0));
 		MvcResult mvcResult = mvc
 				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
 
 		String resultString = mvcResult.getResponse().getContentAsString();
@@ -119,7 +118,6 @@ public class ControllerLayerTest<T> {
 
 		ProductUpdateDto productUpdateDto = new ProductUpdateDto();
 		productUpdateDto.setCurrentStock(0);
-		productUpdateDto.setToken(token);
 		productUpdateDto.setPrice(BigDecimal.ZERO);
 		productUpdateDto.setProductName("new prodcutName");
 		productUpdateDto.setProductDescription("RAM");
@@ -131,7 +129,8 @@ public class ControllerLayerTest<T> {
 
 		String result = mvc
 				.perform(MockMvcRequestBuilders.put("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productUpdateDto)))
+						.content(new ObjectMapper().writeValueAsString(productUpdateDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
 
 		assertTrue(result.contains(ProductsConstants.RECORD_UPDATE_MESSAGE));
@@ -139,9 +138,7 @@ public class ControllerLayerTest<T> {
 
 	@Test
 	public void createProductAndDeleteWithStatusOk() throws JsonProcessingException, Exception {
-		String token = setUp("ADMIN");
 		ProductDto productDto = new ProductDto();
-		productDto.setToken(token);
 		productDto.setProductName("Asus RAM");
 		productDto.setProductDescription("RAM");
 		productDto.setCurrentStock(10);
@@ -151,7 +148,8 @@ public class ControllerLayerTest<T> {
 		productDto.setPrice(BigDecimal.valueOf(200.0));
 		MvcResult mvcResult = mvc
 				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
 
 		String resultString = mvcResult.getResponse().getContentAsString();
@@ -159,11 +157,11 @@ public class ControllerLayerTest<T> {
 
 		ProductUpdateDto productUpdateDto = new ProductUpdateDto();
 		productUpdateDto.setProductId(jsonObject.getInt("id"));
-		productUpdateDto.setToken(token);
 
 		String result = mvc
 				.perform(MockMvcRequestBuilders.delete("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productUpdateDto)))
+						.content(new ObjectMapper().writeValueAsString(productUpdateDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(ProductsConstants.RECORD_DELETE_MESSAGE));
 
@@ -173,16 +171,17 @@ public class ControllerLayerTest<T> {
 	public void fetchDetailsWithStatus400() throws JsonProcessingException, Exception {
 		ProductDto productDto = new ProductDto();
 		productDto.setProductId(0);
-		productDto.setToken(setUp("CUSTOMER"));
 		mvc.perform(MockMvcRequestBuilders.get("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER")))
 				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 		
 		productDto.setProductId(1000000);
-		productDto.setToken(setUp("CUSTOMER"));
 		String result = mvc
 				.perform(MockMvcRequestBuilders.get("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER"))
+						)
 				.andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn().getResponse().getContentAsString();
 		assertTrue(result.contains(ProductsConstants.INVALID_PRODUCT_ID));
 	}
@@ -190,7 +189,6 @@ public class ControllerLayerTest<T> {
 	@Test
 	public void createProductDetailsAndValidateDetailsWithStatusOk() throws JsonProcessingException, Exception {
 		ProductDto productDto = new ProductDto();
-		productDto.setToken(setUp("ADMIN"));
 		productDto.setProductName("Asus RAM");
 		productDto.setProductDescription("RAM");
 		productDto.setCurrentStock(10);
@@ -200,16 +198,19 @@ public class ControllerLayerTest<T> {
 		productDto.setPrice(BigDecimal.valueOf(200.0));
 		MvcResult mvcResult = mvc
 				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
+
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
 
 		String resultString = mvcResult.getResponse().getContentAsString();
 		JSONObject jsonObject = new JSONObject(resultString);
-		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.TOKEN, setUp("CUSTOMER"), "productId",
+		Map<String, Object> requestMap = Map.of("productId",
 				jsonObject.getInt("id"));
 		String validateResult = mvc
 				.perform(MockMvcRequestBuilders.get("/product/validate").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(requestMap)))
+						.content(new ObjectMapper().writeValueAsString(requestMap))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER")))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
 		assertTrue(validateResult.contains(String.valueOf(true)));
 	}
@@ -217,7 +218,6 @@ public class ControllerLayerTest<T> {
 	@Test
 	public void createProductDetailsAndFailedValidateDetailsWithStatusOk() throws JsonProcessingException, Exception {
 		ProductDto productDto = new ProductDto();
-		productDto.setToken(setUp("ADMIN"));
 		productDto.setProductName("Asus RAM");
 		productDto.setProductDescription("RAM");
 		productDto.setCurrentStock(10);
@@ -227,16 +227,18 @@ public class ControllerLayerTest<T> {
 		productDto.setPrice(BigDecimal.valueOf(200.0));
 		MvcResult mvcResult = mvc
 				.perform(MockMvcRequestBuilders.post("/product").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(productDto)))
+						.content(new ObjectMapper().writeValueAsString(productDto))
+						.header(GatewayServiceConstants.TOKEN, setUp("ADMIN")))
 				.andExpect(MockMvcResultMatchers.status().isCreated()).andReturn();
 
 		String resultString = mvcResult.getResponse().getContentAsString();
 		JSONObject jsonObject = new JSONObject(resultString);
-		Map<String, Object> requestMap = Map.of(GatewayServiceConstants.TOKEN, setUp("CUSTOMER"), "productId",
+		Map<String, Object> requestMap = Map.of( "productId",
 				2000);
 		String validateResult = mvc
 				.perform(MockMvcRequestBuilders.get("/product/validate").contentType(MediaType.APPLICATION_JSON)
-						.content(new ObjectMapper().writeValueAsString(requestMap)))
+						.content(new ObjectMapper().writeValueAsString(requestMap))
+						.header(GatewayServiceConstants.TOKEN, setUp("CUSTOMER")))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
 		assertTrue(validateResult.contains(String.valueOf(false)));
 	}

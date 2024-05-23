@@ -18,8 +18,10 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+
 /**
- * Implementation of web filter. Responsible for checking whether token is valid or not.
+ * Implementation of web filter. Responsible for checking whether token is valid
+ * or not.
  */
 @Slf4j
 @Component
@@ -34,17 +36,25 @@ public class AuthFilter implements Filter {
 		CachedBodyHttpServletRequest cachedBodyHttpServletRequest = new CachedBodyHttpServletRequest(
 				(HttpServletRequest) request);
 		String requestString = IOUtils.toString(cachedBodyHttpServletRequest.getReader());
-		JSONObject jsonObject = new JSONObject(requestString);
-		log.debug("Parsed request is {} ", jsonObject);
-		if (jsonObject.has(GatewayServiceConstants.TOKEN)) {
-			if (Boolean.parseBoolean(jedisClientHelper.getValue(jsonObject.getString(GatewayServiceConstants.TOKEN)))) {
-				jedisClientHelper.extendTokenLife(jsonObject.getString(GatewayServiceConstants.TOKEN));
-				chain.doFilter(cachedBodyHttpServletRequest, response);
+		JSONObject jsonObject = null;
+		try {
+			jsonObject = new JSONObject(requestString);
+			log.debug("Parsed request is {} ", jsonObject);
+			String token = cachedBodyHttpServletRequest.getHeader(GatewayServiceConstants.TOKEN);
+			if (token != null) {
+				if (Boolean.parseBoolean(jedisClientHelper.getValue(token))) {
+					jedisClientHelper.extendTokenLife(token);
+					chain.doFilter(cachedBodyHttpServletRequest, response);
+				} else {
+					log.error("Token expired for request {}", jsonObject);
+					((HttpServletResponse) response).sendError(401, GatewayServiceConstants.TOKEN_EXPIRED);
+				}
 			} else {
-				((HttpServletResponse) response).sendError(401, GatewayServiceConstants.TOKEN_EXPIRED);
+				log.error("No token provided for request {}", jsonObject);
+				((HttpServletResponse) response).sendError(401, GatewayServiceConstants.TOKEN_NOT_AVAILABLE);
 			}
-		} else {
-			((HttpServletResponse) response).sendError(401, GatewayServiceConstants.TOKEN_NOT_AVAILABLE);
+		} catch (Exception ex) {
+			((HttpServletResponse) response).sendError(400, "Invalid JSON structure");
 		}
 	}
 }
