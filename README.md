@@ -17,4 +17,4 @@ Please follow below steps in order to use this microservice setup (This setup is
    d. Productservice
    e. Userservice
    f. Orderservice.
-   g. you can setup catalogserivce as well but implementation for elastic search is not available as of now.
+   g. you can setup catalogserivce as well but implementation for elastic search is not available as of now
