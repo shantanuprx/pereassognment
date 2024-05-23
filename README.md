@@ -18,3 +18,6 @@ Please follow below steps in order to use this microservice setup (This setup is
    e. Userservice
    f. Orderservice.
    g. you can setup catalogserivce as well but implementation for elastic search is not available as of now
+9. Start apispecservice in your local and check "http://localhost:9999/swagger-ui/index.html#/" for  api specs. Also you can import postman collection to make calls.
+
+Note:- There is no direct registration for admin users as of now. So just register a user and update the role in DB as 'ADMIN', to make the user admin.
