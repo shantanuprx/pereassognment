@@ -1,6 +1,6 @@
-create database PEREASSIGNMENT;
+create database pereassignment;
 
-use PEREASSIGNMENT;
+use pereassignment;
 
 CREATE TABLE USER (
     USER_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -93,9 +93,9 @@ CREATE TABLE ORDERS (
 
 
 
-create database PEREASSIGNMENTTEST;
+create database pereassignmenttest;
 
-use PEREASSIGNMENTTEST;
+use pereassignmenttest;
 
 CREATE TABLE USER (
     USER_ID INT AUTO_INCREMENT PRIMARY KEY,
