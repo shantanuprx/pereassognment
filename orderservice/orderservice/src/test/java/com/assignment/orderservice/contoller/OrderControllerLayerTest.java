@@ -118,7 +118,7 @@ public class OrderControllerLayerTest<T> {
 
 		CardDetails cardDetails = new CardDetails();
 		cardDetails.setCardHolderName("SHANTANU KUMAR");
-		cardDetails.setCardNumber("12341234124412434");
+		cardDetails.setCardNumber("1234123412441243");
 		cardDetails.setCreatedBy(userEnity.getUserId());
 		cardDetails.setCreatedDate(new Date());
 		cardDetails.setExpiryDate(new Date(System.currentTimeMillis() + 60000000));
@@ -193,7 +193,7 @@ public class OrderControllerLayerTest<T> {
 
 		CardDetails cardDetails = new CardDetails();
 		cardDetails.setCardHolderName("SHANTANU KUMAR");
-		cardDetails.setCardNumber("12341234124412434");
+		cardDetails.setCardNumber("1234123412441243");
 		cardDetails.setCreatedBy(userEnity.getUserId());
 		cardDetails.setCreatedDate(new Date());
 		cardDetails.setExpiryDate(new Date(System.currentTimeMillis() - 60000000));
@@ -270,7 +270,7 @@ public class OrderControllerLayerTest<T> {
 
 		CardDetails cardDetails = new CardDetails();
 		cardDetails.setCardHolderName("SHANTANU KUMAR");
-		cardDetails.setCardNumber("12341234124412434");
+		cardDetails.setCardNumber("1234123412441243");
 		cardDetails.setCreatedBy(userEnity.getUserId());
 		cardDetails.setCreatedDate(new Date());
 		cardDetails.setExpiryDate(new Date(System.currentTimeMillis() + 60000000));
@@ -359,7 +359,7 @@ public class OrderControllerLayerTest<T> {
 
 		CardDetails cardDetails = new CardDetails();
 		cardDetails.setCardHolderName("SHANTANU KUMAR");
-		cardDetails.setCardNumber("12341234124412434");
+		cardDetails.setCardNumber("1234123412441243");
 		cardDetails.setCreatedBy(userEnity.getUserId());
 		cardDetails.setCreatedDate(new Date());
 		cardDetails.setExpiryDate(new Date(System.currentTimeMillis() + 60000000));
