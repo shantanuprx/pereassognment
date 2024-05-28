@@ -1,189 +1,188 @@
-create database PEREASSIGNMENT;
+create database pereassignment;
 
-use PEREASSIGNMENT;
+use pereassignment;
 
-CREATE TABLE USER (
-    USER_ID INT AUTO_INCREMENT PRIMARY KEY,
-    USER_FIRST_NAME VARCHAR(50),
-    USER_MID_NAME VARCHAR(50),
-    USER_LAST_NAME VARCHAR(50),
-    USER_PASSWORD VARCHAR(100),
-    EMAIL_ID VARCHAR(100),
-    MOBILE_NUMBER VARCHAR(15),
-    DATE_OF_BIRTH DATE,
-    PREFERRED_PAYMENT_METHOD VARCHAR(50),
-    PREFERRED_PAYMENT_METHOD_ID INT,
-    DEFAULT_ADDRESS VARCHAR(255),
-    CREATED_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-    UPDATED_DATE TIMESTAMP,
-    UPDATED_BY VARCHAR(50),
-    STATUS VARCHAR(100),
-    LAST_LOGIN_DATE TIMESTAMP,
-    LAST_LOGIN_IP_ADDRESS VARCHAR(50)
+create table user (
+    user_id int auto_increment primary key,
+    user_first_name varchar(50),
+    user_mid_name varchar(50),
+    user_last_name varchar(50),
+    user_password varchar(100),
+    email_id varchar(100),
+    mobile_number varchar(15),
+    date_of_birth date,
+    preferred_payment_method varchar(50),
+    preferred_payment_method_id int,
+    default_address varchar(255),
+    created_date timestamp default current_timestamp,
+    created_by varchar(50) not null,
+    updated_date timestamp,
+    updated_by varchar(50),
+    status varchar(100),
+    last_login_date timestamp,
+    last_login_ip_address varchar(50)
 );
-ALTER TABLE USER MODIFY ROLE VARCHAR(10) DEFAULT 'CUSTOMER';
+alter table user modify role varchar(10) default 'customer';
 
-CREATE TABLE PRODUCTS (
-    PRODUCT_ID INT AUTO_INCREMENT PRIMARY KEY,
-    PRODUCT_NAME VARCHAR(100),
-    PRODUCT_DESCRIPTION TEXT,
-    CURRENT_STOCK INT,
-    STATUS VARCHAR(100),
-    SELLER VARCHAR(100),
-    IS_DELETED BOOLEAN DEFAULT false,
-    SELLER_ADDRESS VARCHAR(255),
-    PRICE DECIMAL(10, 2),
-    OLD_PRICE DECIMAL(10, 2),
-    CREATED_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATED_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-    UPDATED_BY VARCHAR(50)
-);
-
-
-CREATE TABLE CARD_DETIALS (
-    RECORD_ID INT AUTO_INCREMENT PRIMARY KEY,
-    USER_ID INT,
-    CARD_NUMBER VARCHAR(16),
-    EXPIRY_DATE DATE,
-    CARD_HOLDER_NAME VARCHAR(100),
-    CREATE_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATE_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-	UPDATED_BY VARCHAR(50),
-    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
-);
-
-CREATE TABLE ADDRESS (
-    RECORD_ID INT AUTO_INCREMENT PRIMARY KEY,
-    USER_ID INT,
-    ADDRESS_LINE_1 VARCHAR(255) NOT NULL,
-    ADDRESS_LINE_2 VARCHAR(255),
-    CITY VARCHAR(100),
-    STATE VARCHAR(100),
-    PINCODE VARCHAR(20),
-    CREATE_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATE_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-	UPDATED_BY VARCHAR(50),
-    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
+create table products (
+    product_id int auto_increment primary key,
+    product_name varchar(100),
+    product_description text,
+    current_stock int,
+    status varchar(100),
+    seller varchar(100),
+    is_deleted boolean default false,
+    seller_address varchar(255),
+    price decimal(10, 2),
+    old_price decimal(10, 2),
+    created_timestamp timestamp default current_timestamp,
+    updated_timestamp timestamp,
+    created_by varchar(50) not null,
+    updated_by varchar(50)
 );
 
 
-CREATE TABLE ORDERS (
-    ORDER_ID INT AUTO_INCREMENT PRIMARY KEY,
-    PRODUCT_ID INT,
-    USER_ID INT,
-    PAYMENT_ID INT,
-    PAYMENT_SOURCE VARCHAR(10),
-    ADDRESS_ID INT,
-    PAYMENT_TYPE varchar(100) NOT NULL,
-    REFUND_STATUS VARCHAR(50),
-    ORDER_STATUS VARCHAR(50),
-    PAYMENT_STATUS VARCHAR(50),
-    CREATE_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATE_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-	UPDATED_BY VARCHAR(50),
-    FOREIGN KEY (PRODUCT_ID) REFERENCES PRODUCTS(PRODUCT_ID),
-    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID),
-    FOREIGN KEY (ADDRESS_ID) REFERENCES ADDRESS(RECORD_ID)
+create table card_details (
+    record_id int auto_increment primary key,
+    user_id int,
+    card_number varchar(16),
+    expiry_date date,
+    card_holder_name varchar(100),
+    create_timestamp timestamp default current_timestamp,
+    update_timestamp timestamp,
+    created_by varchar(50) not null,
+	updated_by varchar(50),
+    foreign key (user_id) references user(user_id)
+);
+
+create table address (
+    record_id int auto_increment primary key,
+    user_id int,
+    address_line_1 varchar(255) not null,
+    address_line_2 varchar(255),
+    city varchar(100),
+    state varchar(100),
+    pincode varchar(20),
+    create_timestamp timestamp default current_timestamp,
+    update_timestamp timestamp,
+    created_by varchar(50) not null,
+	updated_by varchar(50),
+    foreign key (user_id) references user(user_id)
+);
+
+
+create table orders (
+    order_id int auto_increment primary key,
+    product_id int,
+    user_id int,
+    payment_id int,
+    payment_source varchar(10),
+    address_id int,
+    payment_type varchar(100) not null,
+    refund_status varchar(50),
+    order_status varchar(50),
+    payment_status varchar(50),
+    create_timestamp timestamp default current_timestamp,
+    update_timestamp timestamp,
+    created_by varchar(50) not null,
+	updated_by varchar(50),
+    foreign key (product_id) references products(product_id),
+    foreign key (user_id) references user(user_id),
+    foreign key (address_id) references address(record_id)
 );
 
 
 
-create database PEREASSIGNMENTTEST;
+create database pereassignmenttest;
 
-use PEREASSIGNMENTTEST;
+use pereassignmenttest;
 
-CREATE TABLE USER (
-    USER_ID INT AUTO_INCREMENT PRIMARY KEY,
-    USER_FIRST_NAME VARCHAR(50),
-    USER_MID_NAME VARCHAR(50),
-    USER_LAST_NAME VARCHAR(50),
-    USER_PASSWORD VARCHAR(100),
-    EMAIL_ID VARCHAR(100),
-    MOBILE_NUMBER VARCHAR(15),
-    DATE_OF_BIRTH DATE,
-    PREFERRED_PAYMENT_METHOD VARCHAR(50),
-    PREFERRED_PAYMENT_METHOD_ID INT,
-    DEFAULT_ADDRESS VARCHAR(255),
-    CREATED_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-    UPDATED_DATE TIMESTAMP,
-    UPDATED_BY VARCHAR(50),
-    STATUS VARCHAR(100),
-    LAST_LOGIN_DATE TIMESTAMP,
-    LAST_LOGIN_IP_ADDRESS VARCHAR(50)
+create table user (
+    user_id int auto_increment primary key,
+    user_first_name varchar(50),
+    user_mid_name varchar(50),
+    user_last_name varchar(50),
+    user_password varchar(100),
+    email_id varchar(100),
+    mobile_number varchar(15),
+    date_of_birth date,
+    preferred_payment_method varchar(50),
+    preferred_payment_method_id int,
+    default_address varchar(255),
+    created_date timestamp default current_timestamp,
+    created_by varchar(50) not null,
+    updated_date timestamp,
+    updated_by varchar(50),
+    status varchar(100),
+    last_login_date timestamp,
+    last_login_ip_address varchar(50)
 );
-ALTER TABLE USER MODIFY ROLE VARCHAR(10) DEFAULT 'CUSTOMER';
+alter table user modify role varchar(10) default 'customer';
 
-CREATE TABLE PRODUCTS (
-    PRODUCT_ID INT AUTO_INCREMENT PRIMARY KEY,
-    PRODUCT_NAME VARCHAR(100),
-    PRODUCT_DESCRIPTION TEXT,
-    CURRENT_STOCK INT,
-    STATUS VARCHAR(100),
-    SELLER VARCHAR(100),
-    IS_DELETED BOOLEAN DEFAULT false,
-    SELLER_ADDRESS VARCHAR(255),
-    PRICE DECIMAL(10, 2),
-    OLD_PRICE DECIMAL(10, 2),
-    CREATED_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATED_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-    UPDATED_BY VARCHAR(50)
-);
-
-
-CREATE TABLE CARD_DETIALS (
-    RECORD_ID INT AUTO_INCREMENT PRIMARY KEY,
-    USER_ID INT,
-    CARD_NUMBER VARCHAR(16),
-    EXPIRY_DATE DATE,
-    CARD_HOLDER_NAME VARCHAR(100),
-    CREATE_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATE_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-	UPDATED_BY VARCHAR(50),
-    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
-);
-
-CREATE TABLE ADDRESS (
-    RECORD_ID INT AUTO_INCREMENT PRIMARY KEY,
-    USER_ID INT,
-    ADDRESS_LINE_1 VARCHAR(255) NOT NULL,
-    ADDRESS_LINE_2 VARCHAR(255),
-    CITY VARCHAR(100),
-    STATE VARCHAR(100),
-    PINCODE VARCHAR(20),
-    CREATE_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATE_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-	UPDATED_BY VARCHAR(50),
-    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
+create table products (
+    product_id int auto_increment primary key,
+    product_name varchar(100),
+    product_description text,
+    current_stock int,
+    status varchar(100),
+    seller varchar(100),
+    is_deleted boolean default false,
+    seller_address varchar(255),
+    price decimal(10, 2),
+    old_price decimal(10, 2),
+    created_timestamp timestamp default current_timestamp,
+    updated_timestamp timestamp,
+    created_by varchar(50) not null,
+    updated_by varchar(50)
 );
 
 
-CREATE TABLE ORDERS (
-    ORDER_ID INT AUTO_INCREMENT PRIMARY KEY,
-    PRODUCT_ID INT,
-    USER_ID INT,
-    PAYMENT_ID INT,
-    PAYMENT_SOURCE VARCHAR(10),
-    ADDRESS_ID INT,
-    PAYMENT_TYPE varchar(100) NOT NULL,
-    REFUND_STATUS VARCHAR(50),
-    ORDER_STATUS VARCHAR(50),
-    PAYMENT_STATUS VARCHAR(50),
-    CREATE_TIMESTAMP TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATE_TIMESTAMP TIMESTAMP,
-    CREATED_BY VARCHAR(50) NOT NULL,
-	UPDATED_BY VARCHAR(50),
-    FOREIGN KEY (PRODUCT_ID) REFERENCES PRODUCTS(PRODUCT_ID),
-    FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID),
-    FOREIGN KEY (ADDRESS_ID) REFERENCES ADDRESS(RECORD_ID)
+create table card_details (
+    record_id int auto_increment primary key,
+    user_id int,
+    card_number varchar(16),
+    expiry_date date,
+    card_holder_name varchar(100),
+    create_timestamp timestamp default current_timestamp,
+    update_timestamp timestamp,
+    created_by varchar(50) not null,
+	updated_by varchar(50),
+    foreign key (user_id) references user(user_id)
 );
 
+create table address (
+    record_id int auto_increment primary key,
+    user_id int,
+    address_line_1 varchar(255) not null,
+    address_line_2 varchar(255),
+    city varchar(100),
+    state varchar(100),
+    pincode varchar(20),
+    create_timestamp timestamp default current_timestamp,
+    update_timestamp timestamp,
+    created_by varchar(50) not null,
+	updated_by varchar(50),
+    foreign key (user_id) references user(user_id)
+);
+
+
+create table orders (
+    order_id int auto_increment primary key,
+    product_id int,
+    user_id int,
+    payment_id int,
+    payment_source varchar(10),
+    address_id int,
+    payment_type varchar(100) not null,
+    refund_status varchar(50),
+    order_status varchar(50),
+    payment_status varchar(50),
+    create_timestamp timestamp default current_timestamp,
+    update_timestamp timestamp,
+    created_by varchar(50) not null,
+	updated_by varchar(50),
+    foreign key (product_id) references products(product_id),
+    foreign key (user_id) references user(user_id),
+    foreign key (address_id) references address(record_id)
+);
 
