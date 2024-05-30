@@ -1,0 +1,56 @@
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: jaegarcollectordeployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: jaegarservicelb
+spec:
+ selector:
+    app: jaeger
+    app.kubernetes.io/component: all-in-one
+    app.kubernetes.io/instance: jaegarcollectordeployment
+    app.kubernetes.io/managed-by: jaeger-operator
+    app.kubernetes.io/name: jaegarcollectordeployment
+    app.kubernetes.io/part-of: jaeger
+ ports:
+  - port: 16686
+    targetPort: 16686
+    name: "uiport"
+  - port: 14250
+    targetPort: 14250
+    name: "reportingport"
+ type: LoadBalancer
+ 
+---
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jaegeringress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /jaeger
+        pathType: Prefix
+        backend:
+          service:
+            name: jaegarservicelb
+            port:
+              number: 16686
+      - path: /static
+        pathType: Prefix
+        backend:
+          service:
+            name: jaegarservicelb
+            port:
+              number: 16686

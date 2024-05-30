@@ -1,0 +1,1 @@
+kubectl apply -f customresourcedefinitionsforcertmanager.yaml & kubectl apply -f jaegeroperatordeployment.yaml & kubectl apply -f jaegercollectorinstancedeployment.yaml
