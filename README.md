@@ -5,12 +5,13 @@ Please follow below steps in order to use this microservice setup (This setup is
 3. Once installation is completed, verify with "kubectl get pods --namespace=ingress-nginx". All pods should be up and running.
 4. Now we need to setup mysql for this. Go to https://github.com/shantanuprx/pereassognment/tree/main/gatewayservice/gatewayservice and apply the "globalconfigmap.yml" and then "mysqldeployment.yml". Now mysql pods should be up and running. 
 5. Try connecting to mysql service, either by going inside the pod or through a client like Mysql Workbench on localhost:3306. Username :- root , password = Mysql@123.
-6. Now its time to setup the remaining microservices, for the ease of setup. One "deploy.bat" is included in each microservice. Edit that deploy.bat and replace "gryffindor937" with your own docker hub user.
-7. Pre-requisite for running the deploy.bat are:-
+6. For distributed tracing we will be installing jaegar. For this just go to (https://github.com/shantanuprx/pereassognment/tree/main/gatewayservice/gatewayservice) and run jaegardeployment.bat. Check for pods of "jaegarcollectordeployment" pod, it should be up and running.
+7. Now its time to setup the remaining microservices, for the ease of setup. One "deploy.bat" is included in each microservice. Edit that deploy.bat and replace "gryffindor937" with your own docker hub user.
+8. Pre-requisite for running the deploy.bat are:-
    a. Maven setup should be available on the system.
    b. Docker client should be logged in docker hub.
    c. Jdk 17 should be available on the system.
-8. Now start setting up the microservices in following order.
+9. Now start setting up the microservices in following order.
    a. Discoveryservice
    b. Configurationserver.
    c. Gatewayservice
@@ -18,6 +19,6 @@ Please follow below steps in order to use this microservice setup (This setup is
    e. Userservice
    f. Orderservice.
    g. you can setup catalogserivce as well but implementation for elastic search is not available as of now
-9. Start apispecservice in your local and check "http://localhost:9999/swagger-ui/index.html#/" for  api specs. Also you can import postman collection to make calls.
+10. Start apispecservice in your local and check "http://localhost:9999/swagger-ui/index.html#/" for  api specs. Also you can import postman collection to make calls.
 
 Note:- There is no direct registration for admin users as of now. So just register a user and update the role in DB as 'ADMIN', to make the user admin.
