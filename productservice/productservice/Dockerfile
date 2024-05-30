@@ -22,4 +22,6 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
 
 COPY target/productservice-0.0.1-SNAPSHOT.jar productservice.jar
 
-ENTRYPOINT [ "java", "-jar", "-Dspring.profiles.active=cluster","-Deureka.client.service-url.defaultZone=http://discoveryservicelb.default.svc.cluster.local:8761/eureka", "-Dspring.config.import=configserver:http://configurationservicelb.default.svc.cluster.local:8762/config", "productservice.jar"]
+ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.32.0/opentelemetry-javaagent.jar .
+
+ENTRYPOINT [ "java", "-javaagent:opentelemetry-javaagent.jar", "-jar",  "productservice.jar"]

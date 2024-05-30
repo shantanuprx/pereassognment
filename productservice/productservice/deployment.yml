@@ -18,6 +18,21 @@ spec:
       imagePullPolicy: Always
       ports:
        - containerPort: 8085
+      env:
+       - name: OTEL_SERVICE_NAME
+         value: productservice
+       - name: OTEL_METRICS_EXPORTER
+         value: none
+       - name: OTEL_TRACES_EXPORTER
+         value: jaeger
+       - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+         value: http://jaegarservicelb.default.svc.cluster.local:14250
+       - name: spring_profiles_active
+         value: cluster
+       - name: eureka_client_service-url_defaultZone
+         value: http://discoveryservicelb.default.svc.cluster.local:8761/eureka
+       - name: spring_config_import
+         value: configserver:http://configurationservicelb.default.svc.cluster.local:8762/config
 ---
 
 apiVersion: v1
@@ -31,7 +46,7 @@ spec:
   - port: 8085
     targetPort: 8085
  type: LoadBalancer
- 
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
